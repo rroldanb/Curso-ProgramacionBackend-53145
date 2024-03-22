@@ -1,14 +1,14 @@
 const fs = require("fs");
-
+const path = "./productosSync.json";
 
 class ProductManager {
   #products;
-  contadorId;
+  #contadorId;
   #path;
   #archivoLeido;
 
   constructor() {
-    this.#path = "./productos.json";
+    this.#path = path;
     this.#readFile();
   }
 
@@ -17,19 +17,19 @@ class ProductManager {
       const data = fs.readFileSync(this.#path, "utf-8");
       const [products, contadorId] = JSON.parse(data);
       this.#products = products;
-      this.contadorId = Number(contadorId);
+      this.#contadorId = Number(contadorId);
       console.log("Archivo leído correctamente.");
       this.#archivoLeido = true;
     } catch (err) {
       this.#products = [];
-      this.contadorId = 0;
+      this.#contadorId = 0;
       console.log("No se pudo leer el archivo, creando uno nuevo");
       this.#saveToFile();
     }
   }
 
   #saveToFile() {
-    const dataToSave = [this.#products, this.contadorId, this.#path];
+    const dataToSave = [this.#products, this.#contadorId, this.#path];
     const lenghtProductos = this.#products.length;
     try {
       const jsonData = JSON.stringify(dataToSave, null, "\t");
@@ -54,25 +54,6 @@ class ProductManager {
       );
     }
   }
-
-  // getProducts() {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       if (this.#archivoLeido) {
-  //         resolve(this.#products);
-  //       } else {
-  //         reject(new Error("No se ha leído el archivo aún, ejecute el archivo nuevamente"));
-  //       }
-  //     }, 2000);
-  //   })
-  //   .then(products => {
-  //     return this.#products //console.log("Productos obtenidos correctamente:", products);
-  //   })
-  //   .catch(error => {
-  //     console.error("Error al obtener productos:", error.message);
-  //     throw error;
-  //   });
-  // }
 
   /**
    *
@@ -108,7 +89,7 @@ class ProductManager {
   }
 
   #getNewId() {
-    return ++this.contadorId;
+    return ++this.#contadorId;
   }
 
   getProductById(id) {
@@ -158,7 +139,6 @@ class ProductManager {
     const productIndex = this.#prodIndex(id);
     const product = this.getProductById(id);
 
-    // Verificar que solo se actualicen propiedades permitidas
     for (const key in updatedFields) {
       if (
         Object.hasOwnProperty.call(updatedFields, key) &&
@@ -172,25 +152,23 @@ class ProductManager {
       }
     }
 
-    this.#products[productIndex] = product; // Actualizar el producto en el arreglo de productos
+    this.#products[productIndex] = product;
 
     this.#saveToFile();
     return product;
   }
 }
 
-//Inicializa el Product Manager
+console.log("***************** INICIA TEST *********************");
+console.log("***************** INICIA TEST *********************");
+console.log("***************** INICIA TEST *********************");
+
 const productManager = new ProductManager();
 
-// (( *** TESTING ***))
-
-//// Despliega el contenido inicial, si no existe el archivo, lo crea
-
-console.log("Lista los productos antes de crearlos (arreglo vacío)");
+console.log("Test 01.- Lista los productos antes de crearlos (arreglo vacío)");
 console.log(productManager.getProducts());
 
-//// Crea el primer producto
-console.log("Agrega un producto nuevo");
+console.log("Test 02.- Agrega un producto nuevo");
 productManager.addProduct(
   "producto prueba",
   "Este es un producto prueba",
@@ -200,12 +178,10 @@ productManager.addProduct(
   25
 );
 
-console.log("Lista los productos (aparece el recién ingresado):");
+console.log("Test 03.- Lista los productos (aparece el recién ingresado):");
 console.log(productManager.getProducts());
 
-////intenta volver a crear el mismo producto
-
-console.log("Intenta agregar el mismo producto");
+console.log("Test 04.- Intenta agregar el mismo producto");
 productManager.addProduct(
   "producto prueba",
   "Este es un producto prueba",
@@ -215,12 +191,12 @@ productManager.addProduct(
   25
 );
 
-console.log("Lista los productos (aparece solo el ingresado la primera vez):");
+console.log(
+  "Test 05.- Lista los productos (aparece solo el ingresado la primera vez):"
+);
 console.log(productManager.getProducts());
 
-////Agrega un nuevo producto
-
-console.log("Agrega un producto nuevo");
+console.log("Test 06.- Agrega un segundo producto");
 productManager.addProduct(
   "producto prueba 2",
   "Este es un producto prueba 2",
@@ -230,40 +206,35 @@ productManager.addProduct(
   252
 );
 
-console.log("Lista los productos (aparecen 2):");
+console.log("Test 07.- Lista los productos (aparecen 2):");
 console.log(productManager.getProducts());
 
-////Agrega otro nuevo producto
+console.log("Test 08.- Agrega un tercer producto");
+productManager.addProduct(
+  "producto prueba 3",
+  "Este es un producto prueba 3",
+  2002,
+  "Sin imagen3",
+  "abc1233",
+  252
+);
 
-// console.log("Intenta agregar un producto nuevo3");
-// productManager.addProduct(
-//   "producto prueba 3",
-//   "Este es un producto prueba 3",
-//   2002,
-//   "Sin imagen3",
-//   "abc1233",
-//   252
-// );
+console.log("Test 09.- Lista los productos (aparecen 3):");
+console.log(productManager.getProducts());
 
-// console.log("Lista los productos (aparecen 3):");
-// console.log(productManager.getProducts());
+console.log("Test 10.- Busca 1 producto con id válido:");
+console.log(productManager.getProductById(1));
 
-// console.log("Busca 1 producto con id válido:");
-// console.log(productManager.getProductById(1));
+console.log("Test 11.- Busca 1 producto con id no válido:");
+console.log(productManager.getProductById(0));
 
-// console.log("Busca 1 producto con id no válido:");
-// console.log(productManager.getProductById(0));
+console.log("Test 12.- Intenta eliminar un producto que no existe");
+productManager.deleteProduct(777);
 
-// // intenta eliminar un producto que no existe
-// console.log("Intenta eliminar un producto que no existe");
-// productManager.deleteProduct(777);
+console.log("Test 13.- Intenta eliminar un producto que si existe");
+productManager.deleteProduct(2);
 
-// // intenta eliminar un producto que no existe
-// console.log("Intenta eliminar un producto que si existe");
-// productManager.deleteProduct(3);
-
-/* 
-console.log("Agregar un producto nuevo 4");
+console.log("Test 14.- Agregar un producto nuevo 4");
 productManager.addProduct(
   "producto prueba 4",
   "Este es un producto prueba 4",
@@ -273,22 +244,28 @@ productManager.addProduct(
   44
 );
 
-console.log("despliega el producto 4 antes de modificar");
-
+console.log(
+  "Test 15.- Despliega el producto 4 y luego lo modifica intentando pasar una propiedad que no existe"
+);
 console.log(productManager.getProductById(4));
 
 productManager.updateProduct(4, {
   //se puede editar el campo que se requiera indicandole la propiedad a editar
   title: "producto 4 modificado",
   description:
-    "Este es el producto modificado 4, precio stock y code no se modifican",
+    "Este es el producto modificado 4, precio, thumbinal y code no se modifican",
   // price:4444,
   // thumbinal:"Sin imagen 4",
   // code: "abc4444",
   stock: 4444,
   NuevaPropiedad: "nuevo valor", //se valida que la propiedad exista
 });
+
+console.log("Test 16.- Despliega el producto 4 después de modificar");
 console.log("despliega el producto 4 después de modificar");
 
 console.log(productManager.getProductById(4));
- */
+
+console.log("***************** FINALIZA TEST *********************");
+console.log("***************** FINALIZA TEST *********************");
+console.log("***************** FINALIZA TEST *********************");

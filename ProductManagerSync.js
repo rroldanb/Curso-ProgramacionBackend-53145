@@ -54,34 +54,35 @@ class ProductsManager {
     }
   }
 
-  /**
-   *
-   * @param {string} title
-   * @param {string} description
-   * @param {number} price
-   * @param {string} thumbinal
-   * @param {string} code
-   * @param {number} stock
+/**
+   * @param {object} nuevoProducto - Objeto que contiene la información del nuevo producto.
+   * @param {string} nuevoProducto.title - Título del producto.
+   * @param {string} nuevoProducto.description - Descripción del producto.
+   * @param {number} nuevoProducto.price - Precio del producto.
+   * @param {string} nuevoProducto.thumbinal - Imagen del producto.
+   * @param {string} nuevoProducto.code - Código del producto.
+   * @param {number} nuevoProducto.stock - Stock del producto.
    */
-  addProduct(title, description, price, thumbinal, code, stock) {
-    if (this.#archivoLeido) {
-      if (!this.#validaCode(code)) {
-        const product = {
-          id: this.#getNewId(),
-          title,
-          description,
-          price,
-          thumbinal,
-          code,
-          stock,
-        };
-        this.#products.push(product);
-        this.#saveToFile();
+addProduct(nuevoProducto) {
+  if (this.#archivoLeido) {
+      if (!this.#validaCode(nuevoProducto.code)) {
+          const product = {
+              id: this.#getNewId(),
+              title: nuevoProducto.title,
+              description: nuevoProducto.description,
+              price: nuevoProducto.price,
+              thumbinal: nuevoProducto.thumbinal,
+              code: nuevoProducto.code,
+              stock: nuevoProducto.stock,
+          };
+          this.#products.push(product);
+          this.#saveToFile();
       } else {
-        console.log("Error: El código del producto ya existe");
+          console.log("Error: El código del producto ya existe");
       }
-    }
   }
+}
+
 
   #validaCode(code) {
     return this.#products.some((product) => product.code === code);

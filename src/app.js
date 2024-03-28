@@ -1,6 +1,6 @@
 const express = require('express');
 const { ProductsManager } = require("./ProductManager");
-const path = "./productos.json";
+const path = "./src/productos.json";
 const app = express();
 const productManager = new ProductsManager(path);
 
@@ -18,7 +18,7 @@ app.get('/products', async (req, res) => {
         if (limit !== undefined) {
             productos = productos.slice(0, limit);
         }
-        res.json(productos);
+        res.json({productos});
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los productos' });
     }
@@ -42,3 +42,5 @@ const PORT = 8080;
 app.listen(PORT, () => {
     console.log(`Servidor Express escuchando en el puerto ${PORT}`);
 });
+
+

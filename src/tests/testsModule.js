@@ -1,11 +1,10 @@
 const { testingSync } = require("./testingSync");
 const { testingAsync } = require("./testingAsync");
-const eliminarArchivo = require("./eliminarArchivo");
-const confirmarEliminacion = require("./confirmarEliminacion");
-const confirmarPregunta = require("./confirmarPregunta");
+const eliminarArchivo = require("../utils/eliminarArchivo");
+const confirmarEliminacion = require("../utils/confirmarEliminacion");
+const confirmarPregunta = require("../utils/confirmarPregunta");
 
-    const testsModule = async () => {
-
+const testsModule = async () => {
   try {
     const pregunta = "¿Deseas procesar el testingSync";
     const confirmacion = await confirmarPregunta(pregunta);
@@ -17,7 +16,7 @@ const confirmarPregunta = require("./confirmarPregunta");
   } catch (error) {
     console.error(error);
   }
-  
+
   try {
     const pregunta = "¿Deseas procesar el testingAsync";
     const confirmacion = await confirmarPregunta(pregunta);
@@ -30,14 +29,13 @@ const confirmarPregunta = require("./confirmarPregunta");
     console.error(error);
   }
 
-
   try {
     const archivo = "productosSync.json";
     const confirmacion = await confirmarEliminacion(archivo);
     if (confirmacion) {
       await eliminarArchivo(archivo);
       console.log(`Archivo ${archivo} eliminado correctamente.`);
-    } 
+    }
   } catch (error) {
     console.error(error);
   }
@@ -48,13 +46,10 @@ const confirmarPregunta = require("./confirmarPregunta");
     if (confirmacion) {
       eliminarArchivo(archivo);
       console.log(`Archivo ${archivo} eliminado correctamente.`);
-    } 
+    }
   } catch (error) {
     console.error(error);
   }
 };
 
-module.exports = 
-    testsModule
-  ;
-  
+module.exports = testsModule;

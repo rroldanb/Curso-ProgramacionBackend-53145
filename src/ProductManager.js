@@ -148,8 +148,9 @@ async addProduct(nuevoProducto) {
 
     if (index === -1) {
       console.log("No existe un producto con id:", id);
-      return;
     }
+    // if( index === -1 ) return res.status(404).send({status: 'error', error: 'Product not found'})
+
 
     const product = this.#products[index];
     for (const key in updatedFields) {
@@ -178,8 +179,16 @@ async addProduct(nuevoProducto) {
       );
       return;
     }
+    const index = this.#prodIndex(id);
+
+    if (index === -1) {
+      console.log("Error: No existe un producto con id:", id);
+    }
+    // if( index === -1 ) return res.status(404).send({status: 'error', error: 'Product not found'})
+
     const product = this.#products.find((product) => product.id === id);
-    return product ? product : "Not Found";
+    const errNF= `Producto con ID ${id} no encontrado`
+    return product ? product : errNF;
   }
 }
 

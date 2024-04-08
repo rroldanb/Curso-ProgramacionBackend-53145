@@ -1,46 +1,32 @@
 const express = require('express');
-const { ProductsManager } = require("./ProductManager");
-const path = "./src/productos.json";
 const app = express();
-const productManager = new ProductsManager(path);
+const { router: productsRouter } = require ('./routes/products.router.js')
+const { router: cartsRouter } = require ('./routes/carts.router.js')
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 app.get('/', (_, res) => {
     res.json( 'Servidor activo y funcional' );
 });
-
-app.get('/products', async (req, res) => {
-    try {
-        const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
-        if (limit && (!Number.isInteger(limit) || limit <= 0)) {
-            return res.status(400).json({ error: 'El parámetro "limit" debe ser un número entero positivo' });
-        }
-        let productos = await productManager.getProducts();
-        if (limit !== undefined) {
-            productos = productos.slice(0, limit);
-        }
-        res.json({productos});
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los productos' });
-    }
+app.get('/api', (_, res) => {
+    res.json( 'API activo y funcional' );
 });
 
-app.get('/products/:pid', async (req, res) => {
-    const { pid } = req.params;
-    try {
-        const producto = await productManager.getProductById(parseInt(pid));
-        if (producto) {
-            res.json(producto);
-        } else {
-            res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el producto' });
-    }
+app.use('/api/products', productsRouter)
+app.use('/api/carts', cartsRouter)
+
+
+app.use((req, res, next) => {
+    res.status(404).send(`La ruta ${req.url} no está definida para este método`);
 });
 
-const PORT = 8080;
-app.listen(PORT, () => {
-    console.log(`Servidor Express escuchando en el puerto ${PORT}`);
+app.use((error, req, res, next) => {
+    console.log(error);
+    res.status(500).send('Error 500 en el server');
 });
 
-
+app.listen(8080, error => {
+    if(error) console.log(error)
+    console.log('Server escuchando en el puerto 8080')
+})

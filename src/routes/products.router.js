@@ -21,8 +21,8 @@ router.get("/", async (req, res) => {
     if (limit !== undefined) {
       productos = productos.slice(0, limit);
     }
-    // res.json(productos);
-    res.send({status:"success", payload: productos});
+    res.json(productos);
+    // res.send({status:"success", payload: productos});
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los productos" });
   }
@@ -33,8 +33,8 @@ router.get("/:pid", async (req, res) => {
   try {
     const producto = await productsManager.getProductById(parseInt(pid));
     if (producto) {
-      res.send({status: 'success', payload: producto})
-      //res.json(producto);
+      res.json(producto);
+      // res.send({status: 'success', payload: producto})
 
     } else {
       res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });

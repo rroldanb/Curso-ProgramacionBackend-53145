@@ -61,17 +61,17 @@ class CartsManager {
   }
 
 
-  async getCarts() {
-    await this.#readFile();
-    if (this.#carts) {
-      return this.#carts;
-    } else {
-      console.log(
-        "No se ha leído el archivo aún, ejecute el archivo nuevamente"
-      );
-      return [];
-    }
-  }
+  // async getCarts() {
+  //   await this.#readFile();
+  //   if (this.#carts) {
+  //     return this.#carts;
+  //   } else {
+  //     console.log(
+  //       "No se ha leído el archivo aún, ejecute el archivo nuevamente"
+  //     );
+  //     return [];
+  //   }
+  // }
 
   async getCartById(cid) {
     await this.#readFile();
@@ -89,7 +89,7 @@ class CartsManager {
 
     const cart = this.#carts.find((cart) => cart.id === cid);
     const errNF = `Carrito con ID ${cid} no encontrado`;
-    return cart ? cart : errNF;
+    return cart ? cart.products : errNF;
   }
 
   async createCart () {

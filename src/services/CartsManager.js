@@ -139,13 +139,13 @@ await this.#readFile();
 
 
     const existingProductIndex = this.#carts[cartIndex].products.findIndex(
-        (cartProduct) => cartProduct.product === pid
+        (cartProduct) => cartProduct.pid === pid
     );
 
     if (existingProductIndex !== -1) {
         this.#carts[cartIndex].products[existingProductIndex].quantity++;
     } else {
-        this.#carts[cartIndex].products.push({ product: pid, quantity: 1 });
+        this.#carts[cartIndex].products.push({ pid: pid, quantity: 1 });
     }
 
     await this.#saveToFile();

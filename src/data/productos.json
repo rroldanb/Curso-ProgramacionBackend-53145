@@ -10,7 +10,7 @@
 			"stock": 1,
 			"category": "Categoría impar",
 			"thumbnails": [
-				"/images/producto-prueba_01_imagen_1"
+				"/images/producto-prueba_01_imagen_1.jpg"
 			]
 		},
 		{
@@ -23,7 +23,7 @@
 			"stock": 2,
 			"category": "Categoría Par",
 			"thumbnails": [
-				"/images/producto-prueba_02_imagen_1"
+				"/images/producto-prueba_02_imagen_1.jpg"
 			]
 		},
 		{
@@ -36,9 +36,9 @@
 			"stock": 3,
 			"category": "Categoría impar",
 			"thumbnails": [
-				"/images/producto-prueba_03_imagen_1",
-				"/images/producto-prueba_03_imagen_2",
-				"/images/producto-prueba_03_imagen_3"
+				"/images/producto-prueba_03_imagen_1.jpg",
+				"/images/producto-prueba_03_imagen_2.jpg",
+				"/images/producto-prueba_03_imagen_3.jpg"
 			]
 		},
 		{
@@ -51,9 +51,9 @@
 			"stock": 4,
 			"category": "Categoría Par",
 			"thumbnails": [
-				"/images/producto-prueba_04_imagen_1",
-				"/images/producto-prueba_04_imagen_2",
-				"/images/producto-prueba_04_imagen_3"
+				"/images/producto-prueba_04_imagen_1.jpg",
+				"/images/producto-prueba_04_imagen_2.jpg",
+				"/images/producto-prueba_04_imagen_3.jpg"
 			]
 		},
 		{
@@ -66,9 +66,9 @@
 			"stock": 5,
 			"category": "Categoría impar",
 			"thumbnails": [
-				"/images/producto-prueba_05_imagen_1",
-				"/images/producto-prueba_05_imagen_2",
-				"/images/producto-prueba_05_imagen_3"
+				"/images/producto-prueba_05_imagen_1.jpg",
+				"/images/producto-prueba_05_imagen_2.jpg",
+				"/images/producto-prueba_05_imagen_3.jpg"
 			]
 		},
 		{
@@ -81,8 +81,8 @@
 			"stock": 6,
 			"category": "Categoría Par",
 			"thumbnails": [
-				"/images/producto-prueba_06_imagen_1",
-				"/images/producto-prueba_06_imagen_2"
+				"/images/producto-prueba_06_imagen_1.jpg",
+				"/images/producto-prueba_06_imagen_2.jpg"
 			]
 		},
 		{
@@ -95,7 +95,7 @@
 			"stock": 7,
 			"category": "Categoría impar",
 			"thumbnails": [
-				"/images/producto-prueba_07_imagen_1"
+				"/images/producto-prueba_07_imagen_1.jpg"
 			]
 		},
 		{
@@ -108,8 +108,8 @@
 			"stock": 8,
 			"category": "Categoría Par",
 			"thumbnails": [
-				"/images/producto-prueba_08_imagen_1",
-				"/images/producto-prueba_08_imagen_2"
+				"/images/producto-prueba_08_imagen_1.jpg",
+				"/images/producto-prueba_08_imagen_2.jpg"
 			]
 		},
 		{
@@ -122,8 +122,8 @@
 			"stock": 9,
 			"category": "Categoría impar",
 			"thumbnails": [
-				"/images/producto-prueba_09_imagen_1",
-				"/images/producto-prueba_09_imagen_2"
+				"/images/producto-prueba_09_imagen_1.jpg",
+				"/images/producto-prueba_09_imagen_2.jpg"
 			]
 		},
 		{
@@ -136,8 +136,8 @@
 			"stock": 10,
 			"category": "Categoría par",
 			"thumbnails": [
-				"/images/producto-prueba_10_imagen_1",
-				"/images/producto-prueba_10_imagen_2"
+				"/images/producto-prueba_10_imagen_1.jpg",
+				"/images/producto-prueba_10_imagen_2.jpg"
 			]
 		}
 	],

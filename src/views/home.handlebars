@@ -1,0 +1,41 @@
+<main >
+  <div class="bienvenida">
+
+  <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
+  <h2> {{nombre}} {{apellido}} estos son nuestros productos disponibles</h2>
+  </div>
+  <div>
+
+
+
+
+<div class="container">
+  {{#each products}}
+  {{#if this.status}}
+  
+    <div class="card" id="product-{{@index}}">
+      <div class="thumbnail-display-area">
+        <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+      </div>
+      <div class="thumbnails">
+        {{#each this.thumbnails}}
+          <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
+        {{/each}}
+      </div>
+      <h3>{{this.title}}</h3>
+      <p>Descripción: {{this.description}}</p>
+      <p>Código: {{this.code}}</p>
+      {{!-- <p>Precio: ${{toPesos(this.price)}}</p> --}}
+      <p>Precio: {{ this.price}}</p>
+      <p>Estado: {{#if this.status}} Disponible {{else}} No disponible {{/if}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>Categoría: {{this.category}}</p>
+    </div>
+  {{/if}}
+  {{/each}}
+</div>
+
+
+  </div>
+</main>
+<script src="/js/home.js"></script>

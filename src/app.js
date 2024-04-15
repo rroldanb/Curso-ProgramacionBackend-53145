@@ -1,10 +1,18 @@
 const express = require('express');
-const app = express();
 const { router: productsRouter } = require ('./routes/products.router.js')
 const { router: cartsRouter } = require ('./routes/carts.router.js')
 const { router: viewsRouter } = require ('./routes/views.router.js')
-// import viewsRouter from './routes/views.router.js'
 const handlebars = require ('express-handlebars')
+const {Server} = require ('socket.io')
+
+const app = express();
+const httpServer = app.listen(8080, error => {
+    if(error) console.log(error)
+    console.log('Server escuchando en el puerto 8080')
+})
+
+
+const socketServer = new Server(httpServer)
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -35,7 +43,24 @@ app.use((error, req, res, next) => {
     res.status(500).send('Error 500 en el server');
 });
 
-app.listen(8080, error => {
-    if(error) console.log(error)
-    console.log('Server escuchando en el puerto 8080')
+// socket.on('message', data=>{
+//     console.log(data)
+// })
+
+
+// socket.emit('socket_individual', 'mensaje para el cliente de este socket')
+// socket.broadcast.emit('para_todos_menos_uno', 'mensaje para todos menos el cliente de este socket')
+
+// socketServer.emit('evento_para_todos', 'mensaje para todos')
+const messages = []
+socketServer.on('connection', socket=>{
+    // console.log('cliente conectado', socket.id)
+    socketServer.emit('load_server_messages', messages)
+
+    socket.on('client_message', data =>{
+        const message = {id: socket.id, messge: data}
+        messages.push(message)
+        socketServer.emit('server_message', message)
+    })
+
 })

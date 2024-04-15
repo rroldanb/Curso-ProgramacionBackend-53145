@@ -56,11 +56,13 @@ router.get('/', async (req, res)=>{
       }
 })
 
-// router.get('/realTimeProducts',  (req, res)=>{
-//   console.log('realTimeProducts')
-//   res.json('llegaste a realTimeProducts')
-// })  
 
+router.get ('/chat', (req, res)=>{
+  res.render('chat', {
+    styles: 'homeStyles.css' 
+
+  })
+})
 
 // endpoint para edicion de productos
 router.get('/realTimeProducts', async (req, res)=>{

@@ -1,0 +1,145 @@
+[
+	[
+		{
+			"id": 1,
+			"title": "producto prueba 1",
+			"description": "Este es el producto prueba 1",
+			"code": "abc01",
+			"price": 11,
+			"status": true,
+			"stock": 1,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_01_imagen_1.jpg"
+			]
+		},
+		{
+			"id": 2,
+			"title": "producto prueba 2",
+			"description": "Este es el producto prueba 2",
+			"code": "abc02",
+			"price": 22,
+			"status": true,
+			"stock": 2,
+			"category": "Categoría Par",
+			"thumbnails": [
+				"/images/producto-prueba_02_imagen_1.jpg"
+			]
+		},
+		{
+			"id": 3,
+			"title": "producto prueba 3",
+			"description": "Este es el producto prueba 3",
+			"code": "abc03",
+			"price": 33,
+			"status": true,
+			"stock": 3,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_03_imagen_1.jpg",
+				"/images/producto-prueba_03_imagen_2.jpg",
+				"/images/producto-prueba_03_imagen_3.jpg"
+			]
+		},
+		{
+			"id": 4,
+			"title": "producto prueba 4",
+			"description": "Este es el producto prueba 4",
+			"code": "abc04",
+			"price": 44,
+			"status": true,
+			"stock": 4,
+			"category": "Categoría Par",
+			"thumbnails": [
+				"/images/producto-prueba_04_imagen_1.jpg",
+				"/images/producto-prueba_04_imagen_2.jpg",
+				"/images/producto-prueba_04_imagen_3.jpg"
+			]
+		},
+		{
+			"id": 5,
+			"title": "producto prueba 5",
+			"description": "Este es el producto prueba 5",
+			"code": "abc05",
+			"price": 55,
+			"status": true,
+			"stock": 5,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_05_imagen_1.jpg",
+				"/images/producto-prueba_05_imagen_2.jpg",
+				"/images/producto-prueba_05_imagen_3.jpg"
+			]
+		},
+		{
+			"id": 6,
+			"title": "producto prueba 6",
+			"description": "Este es el producto prueba 6",
+			"code": "abc06",
+			"price": 66,
+			"status": true,
+			"stock": 6,
+			"category": "Categoría Par",
+			"thumbnails": [
+				"/images/producto-prueba_06_imagen_1.jpg",
+				"/images/producto-prueba_06_imagen_2.jpg"
+			]
+		},
+		{
+			"id": 7,
+			"title": "producto prueba 7",
+			"description": "Este es el producto prueba 7",
+			"code": "abc07",
+			"price": 77,
+			"status": true,
+			"stock": 7,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_07_imagen_1.jpg"
+			]
+		},
+		{
+			"id": 8,
+			"title": "producto prueba 8",
+			"description": "Este es el producto prueba 8",
+			"code": "abc08",
+			"price": 88,
+			"status": true,
+			"stock": 8,
+			"category": "Categoría Par",
+			"thumbnails": [
+				"/images/producto-prueba_08_imagen_1.jpg",
+				"/images/producto-prueba_08_imagen_2.jpg"
+			]
+		},
+		{
+			"id": 9,
+			"title": "producto prueba 9",
+			"description": "Este es el producto prueba 9",
+			"code": "abc09",
+			"price": 99,
+			"status": true,
+			"stock": 9,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_09_imagen_1.jpg",
+				"/images/producto-prueba_09_imagen_2.jpg"
+			]
+		},
+		{
+			"id": 10,
+			"title": "producto prueba 10",
+			"description": "Este es el producto prueba 10",
+			"code": "abc10",
+			"price": 1010,
+			"status": true,
+			"stock": 10,
+			"category": "Categoría par",
+			"thumbnails": [
+				"/images/producto-prueba_10_imagen_1.jpg",
+				"/images/producto-prueba_10_imagen_2.jpg"
+			]
+		}
+	],
+	10
+]

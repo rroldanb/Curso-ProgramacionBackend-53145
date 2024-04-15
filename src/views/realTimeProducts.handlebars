@@ -3,79 +3,63 @@
     <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
     <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
   </div>
-  <div>
     {{#if admin}}
-    <div class="wrapper ">
+      <div class="container-fluid h-100 ">
+        <div class="row h-100 ">
 
-
-
-
-      <div class="container productsContainer" id="realTimeProductsArea">
-        {{#each products}}
-
-    <div class="card" id="product-{{@index}}">
-      <div class="thumbnail-display-area">
-        <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
-      </div>
-      <div class="thumbnails">
-        {{#each this.thumbnails}}
-          <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
-        {{/each}}
-      </div>
-      <h3>{{this.title}}</h3>
-      <p>Descripción: {{this.description}}</p>
-      <p>Código: {{this.code}}</p>
-      <p>Precio: {{ this.price}}</p>
-      <p>Estado: {{#if this.status}} Disponible {{else}} No disponible {{/if}}</p>
-      <p>Stock: {{this.stock}}</p>
-      <p>Categoría: {{this.category}}</p>
-      <div class="container-fluid d-flex justify-content-evenly">
-        <button class="btn btn-danger delete" data-id="${this.id}">Eliminar</button>
-        <button class="btn btn-secondary update" data-id="${this.id}">Editar</button>
-      </div>
-  </div>
-
-        {{/each}}
-      </div>
-      <div class="container productsContainer ">
-          <form id="productForm" class=" rounded-0">
-
-              <div class="card" id="newProdDetails">
-                
-                  {{!-- <div class="thumbnail-display-area">
-                      <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
-                      <p class="detail-item">Ruta Imagen:</p>
-                      <input class="main-image-path" type="text" value="{{this.thumbnails.[0]}}">
-                  </div> --}}
-
-                  {{!-- <div class="thumbnails">
-                      {{#each this.thumbnails}}
-                      <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
-                      {{/each}}
-                  </div> --}}
-
-                  <div class="details-area">
-                      <p class="detail-item">Title: <input type="text"></p>
-                      <p class="detail-item">Descripción: <input type="text"></p>
-                      <p class="detail-item">Código: <input type="text"></p>
-                      <p class="detail-item">Precio: <input type="text"></p>
+          <div class="my-3 col-3 d-flex justify-content-center">
+              <form id="productForm" class="rounded-0" >
+                  <div class="card" id="newProdDetails" style="min-width: 380px;">
+                    <h3>Agregar/editar productos</h3>
+                      <p class="detail-item">Title: <input type="text" id="newProdTitle"></p>
+                      <p class="detail-item">Descripción: <input type="text" id="newProdDescription"></p>
+                      <p class="detail-item">Código: <input type="text" id="newProdCode"></p>
+                      <p class="detail-item">Precio: <input type="text" id="newProdPrice"></p>
                       <p class="detail-item chk-boton">Activo: <input type="checkbox" id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
-                      <p class="detail-item">Stock: <input type="text"></p>
-                      <p class="detail-item">Categoría: <input type="text"></p>
-                      <p class="detail-item">Imagen: <input type="file" name="image"></p>
+                      <p class="detail-item">Stock: <input type="text" id="newProdStock"></p>
+                      <p class="detail-item">Categoría: <input type="text" id="newProdCategory"></p>
+                      {{!-- <p class="detail-item">Imagen: <input type="file" name="image" id="newProdImage"></p> --}}
+                      <button class="btn btn-dark rounded-0">Guardar</button>
                   </div>
-                  <button class="btn btn-dark rounded-0">Enviar</button>
-              </div>
-          </form>
-      </div>
-    </div>
+              </form>
+          </div>
 
+          <div class=" px-3 py-3 col-9 d-flex flex-wrap" id="realTimeProductsArea">
+            {{#each products}}
+
+        <div class="card" style="min-width: 250px;" id="product-{{@index}}">
+          <div class="thumbnail-display-area">
+            <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+          </div>
+          <div class="thumbnails">
+            {{#each this.thumbnails}}
+              <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
+            {{/each}}
+          </div>
+          <h3>{{this.title}}</h3>
+          <p> <strong> Descripción: </strong>  {{this.description}}</p>
+          <p> <strong>Código:  </strong>{{this.code}}</p>
+          <p> <strong>Precio: </strong> {{ this.price}}</p>
+          <p> <strong> Estado: </strong>{{#if this.status}} Disponible {{else}} No disponible {{/if}}</p>
+          <p> <strong>Stock: </strong> {{this.stock}}</p>
+          <p> <strong> Categoría:</strong> {{this.category}}</p>
+          <div class="container-fluid d-flex justify-content-evenly">
+            <button class="btn btn-danger delete" data-id="${this.id}">Eliminar</button>
+            <button class="btn btn-secondary update" data-id="${this.id}">Editar</button>
+          </div>
+      </div>
+
+            {{/each}}
+          </div>
+        </div>
+      </div>
     {{else}}
     <div class="container">
-
-      <h2 style="color: rgb(177, 24, 24);">Necesitas permisos de administrador para editar los productos</h2>
+      <h2 style="color: rgb(177, 24, 24);">
+        Necesitas permisos de administrador para editar los productos
+      </h2>
     </div>
     {{/if}}
-  </div>
 </main>
 <script src="/js/editProducts.js"></script>
+<script src="/js/realTimeProducts.js"></script>

@@ -5,33 +5,61 @@
   </div>
   <div>
     {{#if admin}}
-      <div class="container">
-        {{#each products}}
-          <div class="card" id="product-{{@index}}">
-
+<div class="container productsContainer ">
+    <form id="productForm" class="card card-body rounded-0">
+        <div class="card" id="newProdDetails">
             <div class="thumbnail-display-area">
-              <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
-              <p class="detail-item"> Ruta Imagen:</p>
-              <input class="main-image-path" type="text" value="{{this.thumbnails.[0]}}">
+                <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+                <p class="detail-item">Ruta Imagen:</p>
+                <input class="main-image-path" type="text" value="{{this.thumbnails.[0]}}">
             </div>
 
             <div class="thumbnails">
-              {{#each this.thumbnails}}
+                {{#each this.thumbnails}}
                 <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
-              {{/each}}
+                {{/each}}
             </div>
-            <div class="details-area">
 
-            <p class="detail-item">Title: <input type="text" value="{{this.title}}"></p>
-            <p class="detail-item">Descripción: <input type="text" value="{{this.description}}"></p>
-            <p class="detail-item">Código: <input type="text" value="{{this.code}}"></p>
-            <p class="detail-item">Precio: <input type="text" value="{{ this.price}}"></p>
-            {{!-- <p class="detail-item">Estado: <input type="text" value="{{#if this.status}} Disponible {{else}} No disponible {{/if}}"></p> --}}
-            <p class="detail-item chk-boton">Activo: <input type="checkbox" {{#if this.status}} checked {{/if}} id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
-            <p class="detail-item">Stock: <input type="text" value="{{this.stock}}"></p>
-            <p class="detail-item">Categoría: <input type="text" value="{{this.category}}"></p>
+            <div class="details-area">
+                <p class="detail-item">Title: <input type="text"></p>
+                <p class="detail-item">Descripción: <input type="text"></p>
+                <p class="detail-item">Código: <input type="text"></p>
+                <p class="detail-item">Precio: <input type="text"></p>
+                <p class="detail-item chk-boton">Activo: <input type="checkbox" id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
+                <p class="detail-item">Stock: <input type="text"></p>
+                <p class="detail-item">Categoría: <input type="text"></p>
             </div>
-          </div>
+            <button class="btn btn-dark rounded-0">Send</button>
+        </div>
+    </form>
+</div>
+
+
+  <div class="container productsContainer" id="realTimeProductsArea">
+        {{#each products}}
+
+    <div class="card" id="product-{{@index}}">
+      <div class="thumbnail-display-area">
+        <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+      </div>
+      <div class="thumbnails">
+        {{#each this.thumbnails}}
+          <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
+        {{/each}}
+      </div>
+      <h3>{{this.title}}</h3>
+      <p>Descripción: {{this.description}}</p>
+      <p>Código: {{this.code}}</p>
+      <p>Precio: {{ this.price}}</p>
+      <p>Estado: {{#if this.status}} Disponible {{else}} No disponible {{/if}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>Categoría: {{this.category}}</p>
+      <div class="container-fluid d-flex justify-content-evenly">
+        <button class="btn btn-danger delete" data-id="${this.id}">delete</button>
+        <button class="btn btn-secondary update" data-id="${this.id}">update</button>
+      </div>
+  </div>
+
         {{/each}}
       </div>
     {{else}}

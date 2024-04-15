@@ -106,7 +106,7 @@ left: 28px;
 
 #messagesListContainer {
   display: flex;
-  justify-content: center; /* Centrado horizontal */
-  align-items: center; /* Centrado vertical */
-  flex-grow: 1; /* Para que ocupe todo el espacio vertical disponible */
+  justify-content: center; 
+  align-items: center; 
+  flex-grow: 1; 
 }

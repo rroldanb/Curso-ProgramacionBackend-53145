@@ -21,7 +21,6 @@ const userUser = {
     role: 'user'
 }
 
-
  function formatearProductos(products) {
     products.forEach(product => {
       product.price = renderUtils.toPesos(product.price);
@@ -29,9 +28,6 @@ const userUser = {
       product.category = renderUtils.toCapital(product.category);
     });
 }
-
-
-
 
 // endpoint en ruta raíz
 router.get('/', async (req, res)=>{
@@ -51,7 +47,6 @@ router.get('/', async (req, res)=>{
             styles: 'homeStyles.css' 
         })
       } catch (error) {
-
         res.status(500).json({ error: "Error al obtener los productos" });
       }
 })
@@ -59,8 +54,8 @@ router.get('/', async (req, res)=>{
 
 router.get ('/chat', (req, res)=>{
   res.render('chat', {
-    styles: 'homeStyles.css' 
-
+          title: 'Chat mercadito || Gago',
+          styles: 'homeStyles.css' 
   })
 })
 

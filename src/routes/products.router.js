@@ -136,6 +136,9 @@ router.post("/", async (req, res) => {
 
 router.put("/:pid", async (req, res) => {
   // console.log(req.body)
+
+
+  
   const updatedFields = req.body;
   try {
     const pid = parseInt(req.params.pid);

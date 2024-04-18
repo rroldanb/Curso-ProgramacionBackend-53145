@@ -9,6 +9,7 @@ const { Router } = require("express");
 
 const router = Router();
 
+
 router.get("/", async (req, res) => {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
@@ -44,7 +45,30 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
+
+
 router.post("/", async (req, res) => {
+  const io = req.io; // Acceder al objeto io adjuntado a la solicitud
+//io.emit('addProduct', { product: nuevoProducto }); // Emitir evento 'addProduct' a través de Socket.IO
+
+// const io = require('socket.io')(server); // 'server' es tu instancia de servidor de Express
+
+io.on('connection', (socket) => {
+  console.log('Un cliente se ha conectado');
+  io.on('addProduct', data =>{
+    console.log(data)
+  })
+
+socket.emit('serverLoadProducts', products)
+  // socket.on('addProduct', async ({ product }) => {
+  //   try {
+  //     await productsManager.addProduct(product);
+  //     console.log('Producto agregado:', product);
+  //   } catch (error) {
+  //     console.error('Error al agregar el producto:', error);
+  //   }
+  // });
+});
   try {
     const nuevoProducto = req.body;
 
@@ -114,18 +138,9 @@ router.post("/", async (req, res) => {
 
  
 
-    // const validProduct = nuevoProducto
-    // for (const key in nuevoProducto) {
-    //   if (
-    //     Object.hasOwnProperty.call(nuevoProducto, key) &&
-    //     validProduct.hasOwnProperty(key)
-    //   ) {
-    //     validProduct[key] = nuevoProducto[key];
-    //   } }
-
-    //  FIN VALIDACIONES
-
     await productsManager.addProduct(nuevoProducto);
+
+
 
     res.status(201).json({ mensaje: "Producto agregado correctamente" });
   } catch (error) {
@@ -134,11 +149,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+
 router.put("/:pid", async (req, res) => {
   // console.log(req.body)
 
 
-  
+
   const updatedFields = req.body;
   try {
     const pid = parseInt(req.params.pid);

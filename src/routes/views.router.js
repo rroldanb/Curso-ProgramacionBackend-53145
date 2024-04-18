@@ -39,7 +39,6 @@ router.get("/", async (req, res) => {
     if (products.length > 0) {
       formatearProductos(products);
     }
-
     res.render("home", {
       username: user.username,
       nombre: user.nombre,
@@ -63,17 +62,16 @@ router.get("/chat", (req, res) => {
 
 // endpoint para edicion de productos
 router.get("/realtimeroducts", async (req, res) => {
-
-
-
+  
   try {
     const user = userAdmin;
     // const user=userUser
     const products = await productsManager.getProducts();
     if (products.length > 0) {
       formatearProductos(products);
+      
+      res.io.emit('serverLoadProducts', products)
     }
-
     res.render("realTimeProducts", {
       username: user.username,
       nombre: user.nombre,

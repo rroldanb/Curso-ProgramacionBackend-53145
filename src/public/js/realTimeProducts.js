@@ -22,14 +22,22 @@ productForm.addEventListener("submit", (e) => {
     stock: newProdStock.value,
     category: newProdCategory.value
   };
-
-  if (savedId) {
-    updateProduct(savedId, newProduct);
+  
+  if (newProduct.id) {
+    // updateProduct(product.id, newProduct);
+    // socket.emit('updateProduct', { id:product.id, product:newProduct})
   } else {
-    saveProduct(newProduct);
+    console.log(newProduct)
+    // saveProduct(newProduct);
+    socket.emit('addProduct', { newProduct})
   }
 
-  // Limpiamos los campos después de enviar el formulario
+  cleanProductsForm ()
+  newProdTitle.focus(); // Damos foco al primer campo después de enviar el formulario
+});
+
+
+function cleanProductsForm () {
   newProdTitle.value = "";
   newProdDescription.value = "";
   newProdCode.value = "";
@@ -37,10 +45,7 @@ productForm.addEventListener("submit", (e) => {
   newProdActive.checked = false; 
   newProdStock.value = "";
   newProdCategory.value = "";
-
-  newProdTitle.focus(); // Damos foco al primer campo después de enviar el formulario
-});
-
+}
 
 const productsArea = document.getElementById('realTimeProductsArea');
 
@@ -48,7 +53,7 @@ const renderProductUI = (product) => {
     const productCard = document.createElement('div');
     productCard.classList.add('card');
     productCard.style.minWidth = '250px';
-    productCard.id = `product-${product.id}`; // Modificado para usar el ID del producto
+    productCard.id = `product-${product.id}`; 
 
     const thumbnailDisplayArea = document.createElement('div');
     thumbnailDisplayArea.classList.add('thumbnail-display-area');
@@ -90,14 +95,23 @@ const renderProductUI = (product) => {
 }
 
 const renderProducts = (products) => {
-    productsArea.innerHTML = ""; // Limpia el área de productos
+    productsArea.innerHTML = ""; 
     products.forEach((product) => {
-        const productUI = renderProductUI(product); // Crea la interfaz de usuario para cada producto
-        productsArea.appendChild(productUI); // Agrega la interfaz de usuario del producto al área de productos
+        const productUI = renderProductUI(product); 
+        productsArea.appendChild(productUI); 
     });
 };
 
 const appendProduct = (product) => {
-    const productUI = renderProductUI(product); // Crea la interfaz de usuario para el nuevo producto
-    productsArea.appendChild(productUI); // Agrega la interfaz de usuario del nuevo producto al área de productos
+    const productUI = renderProductUI(product); 
+    productsArea.appendChild(productUI); 
 };
+
+socket.on('serverLoadProducts', data => {
+  console.log(data)
+renderProducts(data)
+})
+socket.on('serverLoadProduct', data=>{
+  appendProduct(data)
+})
+

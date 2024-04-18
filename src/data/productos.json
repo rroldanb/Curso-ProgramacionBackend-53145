@@ -139,7 +139,48 @@
 				"/images/producto-prueba_10_imagen_1.jpg",
 				"/images/producto-prueba_10_imagen_2.jpg"
 			]
+		},
+		{
+			"id": 16,
+			"title": "producto prueba 13",
+			"description": "Este es el producto prueba 13",
+			"code": "abc13",
+			"price": 1111,
+			"status": true,
+			"stock": 11,
+			"category": "Categoría impar",
+			"thumbnails": [
+				"/images/producto-prueba_01_imagen_1.jpg"
+			]
+		},
+		{
+			"id": 17,
+			"title": "hdgf",
+			"description": "sfgh",
+			"code": "sfgh",
+			"price": "657",
+			"status": true,
+			"stock": "45",
+			"category": "darg",
+			"thumbnails": [
+				"blob:http://localhost:8080/1ba081ac-ef6e-4878-9f79-b03c4338837c",
+				"blob:http://localhost:8080/cf55b020-4db8-434c-b639-2d45f59e938e",
+				"blob:http://localhost:8080/c3931334-4991-47f6-919e-0a5f57baca02"
+			]
+		},
+		{
+			"id": 18,
+			"title": "hdgf",
+			"description": "desc2",
+			"code": "cod2",
+			"price": "22",
+			"status": true,
+			"stock": "45",
+			"category": "darg",
+			"thumbnails": [
+				"blob:http://localhost:8080/15aada21-cefc-46f0-a877-a7c8532152a7"
+			]
 		}
 	],
-	10
+	18
 ]

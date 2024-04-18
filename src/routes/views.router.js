@@ -70,7 +70,19 @@ router.get("/realtimeroducts", async (req, res) => {
     if (products.length > 0) {
       formatearProductos(products);
       
-      res.io.emit('serverLoadProducts', products)
+
+      req.io.on('connection', (socket)=>{
+        req.io.emit('load_server_products', products)  
+        socket.on('addProduct', data =>{
+          console.log('tenemos nuevo prod',data)
+          req.io.emit('server_product', {...data, id:9999})  
+        })
+      })
+
+      //"/images/producto-prueba_01_imagen_1.jpg"
+      //"/images/producto-prueba_01_imagen_1"
+   
+
     }
     res.render("realTimeProducts", {
       username: user.username,

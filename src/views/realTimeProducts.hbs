@@ -19,6 +19,11 @@
                       <p class="detail-item">Stock: <input type="text" id="newProdStock"></p>
                       <p class="detail-item">Categoría: <input type="text" id="newProdCategory"></p>
                       {{!-- <p class="detail-item">Imagen: <input type="file" name="image" id="newProdImage"></p> --}}
+                      {{!-- <p class="detail-item">Imágenes: <input type="file" name="image" id="newProdImage" multiple></p>  --}}
+                       <p class="detail-item">Imágenes: <input type="file" name="image" id="newProdImage" onchange="updateFileName(this)" multiple></p> <!-- Añadimos el atributo 'multiple' -->
+                      <p class="detail-item">Rutas Imagenes:  <input type="text" id="newProdFileNames" readonly></p>   
+ 
+
                       <button class="btn btn-dark rounded-0">Guardar</button>
                   </div>
               </form>
@@ -42,3 +47,28 @@
 <script src="/js/realTimeProducts.js"></script>
 
 <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
+
+<script>
+//  Swal.fire({
+//    title: "Vista rentringida",
+//    input: "text",
+//    inputLabel: "Solo el usuario admin tiene acceso",
+//    allowOutsideClick: false,
+//    inputValidator: (value) => {
+//      if (!value) {
+//        return "Debes indicar un nombre!";
+//      }
+//      return new Promise((resolve) => {
+//        if (value === "admin") {
+//          resolve();
+//        } else {
+//          resolve("solo el usuario admin tiene acceso :)");
+//        }
+//      });
+//    }
+//  });
+    function updateFileName(input) {
+        const fileNames = Array.from(input.files).map(file => file.name).join(', ');
+        document.getElementById('newProdFileNames').value = fileNames;
+    }
+</script>

@@ -9,9 +9,23 @@ const newProdPrice = document.getElementById("newProdPrice");
 const newProdActive = document.getElementById("btn-switch");
 const newProdStock = document.getElementById("newProdStock");
 const newProdCategory = document.getElementById("newProdCategory");
+const newProdImage = document.getElementById("newProdImage");
+const newProdFileNames = document.getElementById("newProdFileNames");
+const productsArea = document.getElementById('realTimeProductsArea');
 
 productForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+
+  const files = newProdImage.files;
+
+  const imageUrls = [];
+
+  for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const imageUrl = URL.createObjectURL(file);
+      imageUrls.push(imageUrl);
+  }
 
   const newProduct = {
     title: newProdTitle.value,
@@ -20,20 +34,45 @@ productForm.addEventListener("submit", (e) => {
     price: newProdPrice.value,
     active: newProdActive.checked,
     stock: newProdStock.value,
-    category: newProdCategory.value
+    category: newProdCategory.value,
+    thumbnails: imageUrls
   };
   
   if (newProduct.id) {
     // updateProduct(product.id, newProduct);
     // socket.emit('updateProduct', { id:product.id, product:newProduct})
   } else {
-    console.log(newProduct)
-    // saveProduct(newProduct);
-    socket.emit('addProduct', { newProduct})
-  }
+    console.log('enviando producto ',newProduct)
 
-  cleanProductsForm ()
-  newProdTitle.focus(); // Damos foco al primer campo después de enviar el formulario
+
+
+
+fetch('/api/products',{
+  method:'POST',
+  headers:{
+    "Content-Type":"application/json"
+  },
+  body: JSON.stringify(newProduct)
+})
+.then(response =>{
+  if (!response.ok) {
+    throw new Error('Error agregando el producto');
+  }
+  socket.emit('addProduct',  newProduct)
+  return response.json()
+})
+.then(data =>{
+  console.log(data)
+})
+.catch(error=>{
+  console.error("Error:", error)
+})
+}
+
+
+
+cleanProductsForm ()
+newProdTitle.focus(); 
 });
 
 
@@ -45,9 +84,19 @@ function cleanProductsForm () {
   newProdActive.checked = false; 
   newProdStock.value = "";
   newProdCategory.value = "";
+  newProdImage.value="";
+  newProdFileNames.value=""
 }
 
-const productsArea = document.getElementById('realTimeProductsArea');
+
+
+socket.on('server_product', data => {
+  appendProduct(data)
+})
+socket.on('load_server_products', data=>{
+renderProducts(data)
+})
+
 
 const renderProductUI = (product) => {
     const productCard = document.createElement('div');
@@ -102,16 +151,10 @@ const renderProducts = (products) => {
     });
 };
 
+let rrcont=0
 const appendProduct = (product) => {
     const productUI = renderProductUI(product); 
     productsArea.appendChild(productUI); 
 };
 
-socket.on('serverLoadProducts', data => {
-  console.log(data)
-renderProducts(data)
-})
-socket.on('serverLoadProduct', data=>{
-  appendProduct(data)
-})
 

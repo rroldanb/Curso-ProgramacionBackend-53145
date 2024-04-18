@@ -11,6 +11,9 @@ const router = Router();
 
 
 router.get("/", async (req, res) => {
+
+
+
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
     if (limit && (!Number.isInteger(limit) || limit <= 0)) {
@@ -48,29 +51,14 @@ router.get("/:pid", async (req, res) => {
 
 
 router.post("/", async (req, res) => {
-  const io = req.io; // Acceder al objeto io adjuntado a la solicitud
-//io.emit('addProduct', { product: nuevoProducto }); // Emitir evento 'addProduct' a través de Socket.IO
 
-// const io = require('socket.io')(server); // 'server' es tu instancia de servidor de Express
 
-io.on('connection', (socket) => {
-  console.log('Un cliente se ha conectado');
-  io.on('addProduct', data =>{
-    console.log(data)
-  })
 
-socket.emit('serverLoadProducts', products)
-  // socket.on('addProduct', async ({ product }) => {
-  //   try {
-  //     await productsManager.addProduct(product);
-  //     console.log('Producto agregado:', product);
-  //   } catch (error) {
-  //     console.error('Error al agregar el producto:', error);
-  //   }
-  // });
-});
+
   try {
     const nuevoProducto = req.body;
+
+
 
     //  VALIDACIONES
     // CAMPOS
@@ -120,7 +108,7 @@ socket.emit('serverLoadProducts', products)
         error: "El campo 'thumbnails' debe ser un string o un array de strings",
       });
     } else {
-      const invalidThumbnails = thumbnailsArray.filter(
+      const invalidThumbnails = nuevoProducto.thumbnails.filter(
         (thumbnail) => typeof thumbnail !== "string"
       );
       if (invalidThumbnails.length > 0) {
@@ -138,9 +126,8 @@ socket.emit('serverLoadProducts', products)
 
  
 
-    await productsManager.addProduct(nuevoProducto);
 
-
+ 
 
     res.status(201).json({ mensaje: "Producto agregado correctamente" });
   } catch (error) {

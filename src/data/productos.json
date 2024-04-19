@@ -5,9 +5,9 @@
 			"title": "producto prueba 1",
 			"description": "Este es el producto prueba 1",
 			"code": "abc01",
-			"price": "11",
+			"price": 11,
 			"status": true,
-			"stock": "1",
+			"stock": 1,
 			"category": "Categoría impar",
 			"thumbnails": [
 				"/images/producto-prueba_01_imagen_1.jpg"
@@ -18,9 +18,9 @@
 			"title": "producto prueba 2",
 			"description": "Este es el producto prueba 2",
 			"code": "abc02",
-			"price": "22",
+			"price": 22,
 			"status": true,
-			"stock": "2",
+			"stock": 2,
 			"category": "Categoría Par",
 			"thumbnails": [
 				"/images/producto-prueba_02_imagen_1.jpg"

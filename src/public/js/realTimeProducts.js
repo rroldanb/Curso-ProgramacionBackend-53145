@@ -58,9 +58,9 @@ productForm.addEventListener("submit", (e) => {
     title: newProdTitle.value,
     description: newProdDescription.value,
     code: newProdCode.value,
-    price: newProdPrice.value,
+    price: parseInt(newProdPrice.value) ,
     status: newProdStatus.checked,
-    stock: newProdStock.value,
+    stock: parseInt(newProdStock.value),
     category: newProdCategory.value,
     thumbnails: imageUrls,
   };
@@ -142,6 +142,7 @@ function formateaProducto(product) {
 function getProductCardById(productId) {
   return document.getElementById(`product-${productId}`);
 }
+
 function updateProductCard(productId, updatedProduct) {
   formateaProducto(updatedProduct);
   const productCard = getProductCardById(productId);
@@ -182,6 +183,9 @@ function updateProductCard(productId, updatedProduct) {
       thumbnailImg.src = thumbnailUrl;
       thumbnailImg.alt = "Thumbnail del producto";
       thumbnailsDiv.appendChild(thumbnailImg);
+
+
+
     });
   }
 }

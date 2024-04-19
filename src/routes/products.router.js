@@ -2,18 +2,12 @@
 const path = require("path");
 const ProductsManager = require("../services/ProductsManager.js");
 const productsPath = path.join(__dirname, "..", "data", "productos.json");
-
 const productsManager = new ProductsManager(productsPath);
 
 const { Router } = require("express");
-
 const router = Router();
 
-
 router.get("/", async (req, res) => {
-
-
-
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
     if (limit && (!Number.isInteger(limit) || limit <= 0)) {
@@ -39,7 +33,6 @@ router.get("/:pid", async (req, res) => {
     if (producto) {
       res.json(producto);
       // res.send({status: 'success', payload: producto})
-
     } else {
       res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });
     }
@@ -48,18 +41,9 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
-
-
 router.post("/", async (req, res) => {
-
-
-
-
   try {
     const nuevoProducto = req.body;
-
-
-
     //  VALIDACIONES
     // CAMPOS
     const camposObligatorios = [
@@ -124,10 +108,17 @@ router.post("/", async (req, res) => {
       nuevoProducto.status = true;
     }
 
- 
+    //  FIN VALIDACIONES
 
+    let products = await productsManager.getProducts();
 
- 
+    if (products.length > 0) {
+      const lastIndex = products.length - 1;
+      const lastProduct = products[lastIndex];
+      const lastProductId = lastProduct.id;
+      console.log("ID del último producto agregado:", lastProductId);
+      req.io.emit("Server:addProduct", { ...nuevoProducto, id: lastProductId });
+    }
 
     res.status(201).json({ mensaje: "Producto agregado correctamente" });
   } catch (error) {
@@ -136,12 +127,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-
 router.put("/:pid", async (req, res) => {
-  // console.log(req.body)
-
-
 
   const updatedFields = req.body;
   try {
@@ -226,7 +212,7 @@ router.put("/:pid", async (req, res) => {
 
     await productsManager.updateProduct(pid, product);
 
-    console.log("Se actualizó el producto con id:", pid);
+    req.io.emit("Server:productUpdate", (product));
     res
       .status(200)
       .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
@@ -248,6 +234,9 @@ router.delete("/:pid", async (req, res) => {
     }
 
     console.log("Se eliminó el producto con id:", pid);
+
+    let products = await productsManager.getProducts();
+    req.io.emit("Server:loadProducts", products);
     res
       .status(200)
       .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });

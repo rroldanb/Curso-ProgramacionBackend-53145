@@ -3,16 +3,15 @@
 
   <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
   <h2> {{nombre}} {{apellido}} estos son nuestros productos disponibles</h2>
+  <a href="/realtimeproducts" class="btn btn-dark">Ir a Real Time Products</a>
   </div>
   <div>
-
 
 
 
 <div class="container">
   {{#each products}}
   {{#if this.status}}
-  
     <div class="card" id="product-{{@index}}">
       <div class="thumbnail-display-area">
         <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
@@ -23,14 +22,21 @@
         {{/each}}
       </div>
       <h3>{{this.title}}</h3>
-      <p>Descripción: {{this.description}}</p>
-      <p>Código: {{this.code}}</p>
-      <p>Precio: {{ this.price}}</p>
-      <p>Estado: {{#if this.status}} Disponible {{else}} No disponible {{/if}}</p>
-      <p>Stock: {{this.stock}}</p>
-      <p>Categoría: {{this.category}}</p>
+      <p><strong>Descripción:</strong> {{this.description}}</p>
+      <p><strong>Código:</strong> {{this.code}}</p>
+      <p><strong>Precio:</strong> {{ this.price}}</p>
+      <p>
+        <strong>Estado:</strong> 
+        <span class="status-span"> 
+        
+        
+          {{#if this.status}} Disponible {{else}} No disponible {{/if}}
+        </span>
+      </p>
+      <p><strong>Stock:</strong> {{this.stock}}</p>
+      <p><strong>Categoría:</strong> {{this.category}}</p>
     </div>
-  {{/if}}
+    {{/if}}
   {{/each}}
 </div>
 
@@ -38,3 +44,4 @@
   </div>
 </main>
 <script src="/js/home.js"></script>
+

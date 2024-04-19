@@ -16,6 +16,19 @@ p{
     justify-content: space-between;
 }
 
+#newProdDetails{
+  background-color: rgb(143, 167, 191);
+}
+#editBoxTitle{
+  margin-bottom: 1rem;
+}
+
+.detail-item{
+  font-weight: bolder;
+}
+#newProdFileNames{
+  margin-bottom: 1rem;
+}
 .bienvenida {
     display: flex;
     flex-direction: column;
@@ -98,8 +111,8 @@ left: 28px;
   .main-image-path{
     width: 300px;
   }
-  input{
-    width: 200px;
+  input, #newProdDescription{
+    width: 250px;
   }
 
 

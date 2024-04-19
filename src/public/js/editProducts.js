@@ -1,17 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const thumbnails = document.querySelectorAll(".thumbnail");
-    thumbnails.forEach(thumbnail => {
-      thumbnail.addEventListener("click", function() {
-        const productId = thumbnail.closest(".card").id;
-        const mainImage = document.querySelector(`#${productId} .main-image`);
-        // const imagePath = document.querySelector(`#${productId} .main-image-path`);
-        
-        const url = new URL(thumbnail.src);
-        const relativePath = url.pathname;
-  
-        mainImage.src = thumbnail.src;
-        // imagePath.value = relativePath; 
-      });
-    });
-  });
-  
+
+  function toCapital(str) {
+    return str.split(' ').map(word => {
+        const lowerCaseWord = word.toLowerCase();
+        return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+      }).join(' ');
+}
+
+ function toPesos(precio) {
+  precio = parseFloat(precio) 
+  if (typeof precio !== 'number') {
+    throw new Error('El precio debe ser un número');
+  }
+
+  const formattedPrecio = new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP' 
+  }).format(precio);
+
+  return formattedPrecio;
+}

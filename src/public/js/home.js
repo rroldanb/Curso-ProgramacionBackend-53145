@@ -7,5 +7,16 @@ document.addEventListener("DOMContentLoaded", function() {
         mainImage.src = thumbnail.src;
       });
     });
+
+    const statusSpans = document.querySelectorAll(".status-span");
+    statusSpans.forEach(span => {
+      const status = span.textContent.trim();
+      if (status === "Disponible") {
+        span.style.color = "green";
+      } else {
+        span.style.color = "red";
+      }
+    });
+
   });
   

@@ -11,7 +11,7 @@ const httpServer = app.listen(8080, error => {
     console.log('Server escuchando en el puerto 8080')
 })
 
-const io = new Server(httpServer); // Crear servidor de Socket.IO
+const io = new Server(httpServer); 
 app.use((req, res, next) => {
     req.io = io; 
     next();
@@ -53,11 +53,11 @@ app.use((error, req, res, next) => {
 //     console.log(data)
 // })
 
-
 // socket.emit('socket_individual', 'mensaje para el cliente de este socket')
 // socket.broadcast.emit('para_todos_menos_uno', 'mensaje para todos menos el cliente de este socket')
 
 // socketServer.emit('evento_para_todos', 'mensaje para todos')
+
 const messages = []
 io.on('connection', socket=>{
     io.emit('load_server_messages', messages)

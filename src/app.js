@@ -60,6 +60,7 @@ app.use((error, req, res, next) => {
 
 const messages = []
 io.on('connection', socket=>{
+    console.log('Cliente Conectado')
     io.emit('load_server_messages', messages)
 
     socket.on('client_message', data =>{

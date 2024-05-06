@@ -1,12 +1,15 @@
-const path = require("path");
-const ProductsManager = require("../services/ProductsManager.js");
-const productsPath = path.join(__dirname, "..", "data", "productos.json");
-const productsManager = new ProductsManager(productsPath);
+
+const ProductsManager = require("../dao/ProductsMongo.manager.js");
+const productsManager = new ProductsManager();
+
+// const path = require("path");
+// const ProductsManager = require("../dao/ProductsFSManager.js");
+// const productsPath = path.join(__dirname, "..", "data", "productos.json");
+// const productsManager = new ProductsManager(productsPath);
+
+const renderUtils = require("../public/js/renderUtils.js");
 
 const { Router } = require("express");
-const renderUtils = require("../public/js/renderUtils.js");
-const Swal = require("sweetalert2");
-
 const router = Router();
 
 const userAdmin = {
@@ -23,7 +26,8 @@ const userUser = {
 };
 
 function formatearProductos(products) {
-  products.forEach((product) => {
+
+  products.forEach((product) => {  
     product.price = renderUtils.toPesos(product.price);
     product.title = renderUtils.toCapital(product.title);
     product.category = renderUtils.toCapital(product.category);
@@ -53,18 +57,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/chat", (req, res) => {
-  res.render("chat", {
-    title: "Chat mercadito || Gago",
-    styles: "homeStyles.css",
-  });
-});
-
 router.get("/realtimeproducts", async (req, res) => {
   try {
     const user = userAdmin;
     // const user=userUser
     const products = await productsManager.getProducts();
+    
     if (products.length > 0) {
       formatearProductos(products);
 
@@ -83,8 +81,16 @@ router.get("/realtimeproducts", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Error al obtener los productos" });
   }
+});
+
+router.get("/chat", async (req, res) => {
+  res.render("chat", {
+    title: "Chat mercadito || Gago",
+    styles: "chat.css",
+  });
 });
 
 module.exports = {

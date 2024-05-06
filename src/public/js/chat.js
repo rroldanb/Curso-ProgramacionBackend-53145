@@ -1,73 +1,89 @@
-const socket = io()
 
-const input = document.getElementById('message')
-const messagesList = document.getElementById('messagesList')
 
-input.addEventListener('keyup', evt => {
-    if (evt.key ==='Enter'){
-        socket.emit('client_message', input.value)
-        input.value='';
-        input.focus();
+const getUsername = async () => {
+    const username = localStorage.getItem('username')
+    if (username) {
+      console.log(`User existed ${username}`)
+      return username
     }
-})
-socket.on('server_message', data=>{
-    appendMessage(data)
-})
 
-socket.on('load_server_messages', data=>{
-    renderMessages(data)
-})
+   
+        const { value: inputUsername } = await Swal.fire({
+          title: "Se requiere un nombre de usuario",
+          input: "email",
+          inputLabel: "Indique su correo",
+          inputPlaceholder: "tu correo aquí"
+        });
+        if (!inputUsername) {
+          return "Debes indicar un correo!";
+        }
 
-const messageRend = (data) => {
-    const div = document.createElement("div");
-    const getTime = () => {
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const seconds = now.getSeconds().toString().padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
-    };
-    div.innerHTML = `
-    <div class=" card card-body 
-    autoscrollrounded-0 animate__animated animate__fadeInLeft
-    mb-2">
-        <div class=" mensage">
-        <p class="fw-bold mt-2 mb-0 pb-0"> ${getTime()}  </p>
-        <p class="fw-bold mt-0 mb-0 pb-0"> From ${data.id}</p>
-        </div>
-        <p class="mb-0">${data.messge}</p>
-    </div>
-  `;
 
-  return div;
+
+    localStorage.setItem('username', inputUsername)
+    return inputUsername
+  }
+
+
+  (async () => {
+    const socket = io({
+        auth: {
+            username: await getUsername(),
+            serverOffset: 0
+        }
+    });
+
+
+const form = document.getElementById('form')
+const input = document.getElementById('input')
+const messages = document.getElementById('messages')
+
+document.getElementById("chat-btn-logout").addEventListener("click", () => {
+  localStorage.removeItem("username");
+  window.location.reload();
+});
+
+const getTime = (msgTimeStr) => {
+    const msgTime = new Date(msgTimeStr); 
+    const hours = msgTime.getHours().toString().padStart(2, '0');
+    const minutes = msgTime.getMinutes().toString().padStart(2, '0');
+    const seconds = msgTime.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+};
+
+function escapeHtml(html) {
+    return html.replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/"/g, "&quot;")
+               .replace(/'/g, "&#39;");
 }
 
-const renderMessages = (messages) => {
-    messagesList.innerHTML = "";
-    messages.forEach((message) => {
-        let newMessageDiv=messageRend(message)
-        messagesList.append(newMessageDiv);
-        newMessageDiv.scrollIntoView
-});
-  };
-  
+
+socket.on('server_message', (msg) => {
+    // console.log(msg)
+    const item = `<li>
+    
+    <div class="message_head">
+    <small>${msg.username}</small>
+    <small>${getTime(msg.dateTime)}</small>
+    
+    </div>
+      <p>${escapeHtml(msg.message)}</p>
+    </li>`
+    messages.insertAdjacentHTML('beforeend', item)
+    socket.auth.serverOffset = msg.lastRow
+    messages.scrollTop = messages.scrollHeight
+  })
 
 
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
 
-  const appendMessage = (message) => {
-    const newMessageDiv = messageRend(message);
-    messagesList.appendChild(newMessageDiv);
-    newMessageDiv.scrollIntoView();
-  };
-
-// socket.emit('message', 'esta es mi data')
-
-// socket.on('socket_individual', data =>{
-//     console.log(data)
-// })
-// socket.on('para_todos_menos_uno', data =>{
-//     console.log(data)
-// })
-// socket.on('evento_para_todos', data =>{
-//     console.log(data)
-// })
+    if (input.value.trim().length > 0) {
+      socket.emit('client_message', input.value.trim())
+      input.value = ''
+      input.focus();
+    }
+  })
+  })()

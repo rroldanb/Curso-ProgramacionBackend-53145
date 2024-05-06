@@ -139,7 +139,21 @@
 				"/images/producto-prueba_10_imagen_1.jpg",
 				"/images/producto-prueba_10_imagen_2.jpg"
 			]
+		},
+		{
+			"id": 11,
+			"title": "mario",
+			"description": "mario",
+			"code": "mario",
+			"price": 123,
+			"status": false,
+			"stock": 23456,
+			"category": "mario",
+			"thumbnails": [
+				"https://i.ebayimg.com/images/g/QZwAAOSwIFtc2rng/s-l1600.jpg",
+				"https://i.ebayimg.com/images/g/vL8AAOSw~Ndc2rnf/s-l1600.jpg"
+			]
 		}
 	],
-	10
+	11
 ]

@@ -166,9 +166,6 @@ function updateProductCard(productId, updatedProduct) {
     `;
     
 
-   
-  
-
     const stockLine = productCard.querySelector("p:nth-of-type(5)");
     stockLine.innerHTML = `<strong>Stock:</strong> ${updatedProduct.stock}`;
 
@@ -184,8 +181,6 @@ function updateProductCard(productId, updatedProduct) {
       thumbnailImg.alt = "Thumbnail del producto";
       thumbnailsDiv.appendChild(thumbnailImg);
 
-
-
     });
   }
 }
@@ -194,7 +189,7 @@ const renderProductUI = (product) => {
   const productCard = document.createElement("div");
   productCard.classList.add("card");
   productCard.style.minWidth = "250px";
-  productCard.id = `product-${product.id}`;
+  productCard.id = `product-${product._id}`;
 
   const thumbnailDisplayArea = document.createElement("div");
   thumbnailDisplayArea.classList.add("thumbnail-display-area");
@@ -241,10 +236,10 @@ const renderProductUI = (product) => {
       <p><strong>Categoría:</strong> ${product.category}</p>
       <div class="container-fluid d-flex justify-content-evenly">
         <button class="btn btn-danger delete" data-id="${
-          product.id
+          product._id
         }">Eliminar</button>
         <button class="btn btn-secondary update" data-id="${
-          product.id
+          product._id
         }">Editar</button>
       </div>
     `;
@@ -263,7 +258,7 @@ const renderProductUI = (product) => {
 };
 
 function deleteProduct(pid) {
-  console.log("product id para borrar", pid);
+  // console.log("product id para borrar", pid);
   fetch(`/api/products/${pid}`, {
     method: "DELETE",
   })
@@ -282,6 +277,7 @@ function deleteProduct(pid) {
 }
 
 function getProductToEdit(pid) {
+  // console.log('getProducttoEdit', pid)
   obtenerProductoPorId(pid).then((productoObtenido) => {
     renderProductsForm(productoObtenido);
   });
@@ -297,7 +293,7 @@ function renderProductsForm(product) {
   newProdCategory.value = product.category;
   const fileNamesString = product.thumbnails.join(", ");
   newProdFileNames.value = fileNamesString;
-  savedId = product.id;
+  savedId = product._id;
   h3.textContent = "Editar producto";
   prodDetails.style.backgroundColor = "bisque";
   newProdTitle.focus();
@@ -305,6 +301,7 @@ function renderProductsForm(product) {
 }
 
 let obtenerProductoPorId = (pid) => {
+  // console.log('obtener por pid', pid)
   return fetch(`/api/products/${pid}`)
     .then((response) => {
       if (!response.ok) {
@@ -342,5 +339,5 @@ socket.on("Server:loadProducts", (data) => {
 });
 
 socket.on("Server:productUpdate", (data) => {
-  updateProductCard(data.id, data);
+  updateProductCard(data._id, data);
 });

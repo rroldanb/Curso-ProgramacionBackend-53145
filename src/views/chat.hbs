@@ -1,16 +1,17 @@
-<div class="chatDiv container h-100 d-flex flex-column justify-content-center align-items-center">
-    <div class="row h-100"></div>
 
-    <div class="py-1 mt-5" id="messagesListContainer">
-        <div id="messagesList" style="max-height: 500px; overflow-y: auto;">
-        </div>
-    </div>
+  <section id="chat">
+    <div class="d-grid gap-2">
 
-    <div class="mt-5 chatBox">
-        <label for="message">Chat Socket</label>
-        <input type="text" name="message" id="message" />
+  <button class="btn btn-danger  btn-sm" id="chat-btn-logout" >Desconectarse</button>
     </div>
-</div>
+    <ul id="messages"></ul>
+    <form id="form">
+      <input type="text" name="message" id="input" placeholder="Type a message" autocomplete="off" />
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+  <img src="" alt="">
 
 <script src="/socket.io/socket.io.js"></script>
+<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
 <script src="/js/chat.js"></script>

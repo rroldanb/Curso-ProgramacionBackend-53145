@@ -1,5 +1,4 @@
 const fs = require("fs");
-// import * as fs from 'fs';
 
 class ProductsManager {
   #products;
@@ -62,7 +61,7 @@ class ProductsManager {
       this.#archivoLeido = false;
     }
   }
-
+// FIND ALL ******
   async getProducts() {
     await this.#readFile();
     if (this.#products) {

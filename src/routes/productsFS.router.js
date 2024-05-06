@@ -1,11 +1,13 @@
-const ProductsManager = require("../dao/ProductsMongo.manager.js");
-const productsManager = new ProductsManager();
+// import { ProductsManager } from "../ProductsManager.js";
+const path = require("path");
+const ProductsManager = require("../services/ProductsManager.js");
+const productsPath = path.join(__dirname, "..", "data", "productos.json");
+const productsManager = new ProductsManager(productsPath);
 
 const { Router } = require("express");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  let products;
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
     if (limit && (!Number.isInteger(limit) || limit <= 0)) {
@@ -13,16 +15,13 @@ router.get("/", async (req, res) => {
         error: 'El parámetro "limit" debe ser un número entero positivo',
       });
     }
-
+    let productos = await productsManager.getProducts();
     if (limit !== undefined) {
-      products = await productsManager.getProducts(limit);
-    } else {
-      products = await productsManager.getProducts();
+      productos = productos.slice(0, limit);
     }
-    res.json(products);
+    res.json(productos);
     // res.send({status:"success", payload: productos});
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Error al obtener los productos" });
   }
 });
@@ -30,7 +29,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
   const { pid } = req.params;
   try {
-    const producto = await productsManager.getProductById(pid);
+    const producto = await productsManager.getProductById(parseInt(pid));
     if (producto) {
       res.json(producto);
       // res.send({status: 'success', payload: producto})
@@ -38,10 +37,7 @@ router.get("/:pid", async (req, res) => {
       res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });
     }
   } catch (error) {
-    console.log(error);
-    res
-      .status(400)
-      .json({ error: "Error al obtener el producto, pid no válido" });
+    res.status(500).json({ error: "Error al obtener el producto" });
   }
 });
 
@@ -79,15 +75,11 @@ router.post("/", async (req, res) => {
     }
 
     // PRODUCT CODE
-    if (await productsManager.validaCode(nuevoProducto.code)) {
-      console.log(
-        `Error: El código del producto ${nuevoProducto.code} ya existe`
-      );
+    if (await productsManager.addProduct(nuevoProducto)) {
+      console.log("Error: El código del producto ya existe");
       return res
         .status(400)
-        .json({
-          error: `El código del producto ${nuevoProducto.code} ya existe`,
-        });
+        .json({ error: "El código del producto ya existe" });
     }
 
     // THUMBNAILS
@@ -118,25 +110,30 @@ router.post("/", async (req, res) => {
 
     //  FIN VALIDACIONES
 
-    const lastProductId = await productsManager.addProduct(nuevoProducto);
-    const stringLastID = lastProductId._id.toString()
-      console.log("Se agregó el producto con id: ",stringLastID );
-      req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID });
+    let products = await productsManager.getProducts();
 
+    if (products.length > 0) {
+      const lastIndex = products.length - 1;
+      const lastProduct = products[lastIndex];
+      const lastProductId = lastProduct.id;
+      console.log("ID del último producto agregado:", lastProductId);
+      req.io.emit("Server:addProduct", { ...nuevoProducto, id: lastProductId });
+    }
 
     res.status(201).json({ mensaje: "Producto agregado correctamente" });
   } catch (error) {
-    let mensaje = error.errmsg;
-    console.error("Error al agregar el producto:", mensaje);
-    res.status(400).json({ error: "Error al agregar el producto", mensaje });
+    console.error("Error al agregar el producto:", error);
+    res.status(500).json({ error: "Error al agregar el producto" });
   }
 });
 
 router.put("/:pid", async (req, res) => {
-  const pid = req.params.pid;
+
   const updatedFields = req.body;
   try {
-    const updateable = await productsManager.validaId(pid);
+    const pid = parseInt(req.params.pid);
+    const updateable = await productsManager.updateProduct(pid);
+
     //  VALIDACIONES
     //  PID EXISTE
     if (!updateable) {
@@ -147,72 +144,65 @@ router.put("/:pid", async (req, res) => {
     }
 
     // EXISTE CODE
-    if (!!updatedFields.code){
-      existeCode = await productsManager.validaCode(updatedFields.code);
-      if (existeCode) {
-        console.log(
-          `El código '${updatedFields.code}' ya existe y no se actualizará.`
-        );
-        delete updatedFields.code;
-      }
+    existeCode = await productsManager.validaCode(updatedFields.code);
+    if (existeCode) {
+      console.log(
+        `El código '${updatedFields.code}' ya existe y no se actualizará.`
+      );
+      delete updatedFields.code;
     }
 
     // THUMBNAILS
-
-    if (!!updatedFields.thumbnails){
-
-      if (typeof updatedFields.thumbnails === "string") {
-        updatedFields.thumbnails = [updatedFields.thumbnails];
-      } else if (!Array.isArray(updatedFields.thumbnails)) {
+    //   let thumbnailsArray = [];
+    if (typeof updatedFields.thumbnails === "string") {
+      updatedFields.thumbnails = [updatedFields.thumbnails];
+    } else if (!Array.isArray(updatedFields.thumbnails)) {
+      console.log(
+        "El campo 'thumbnails' debe ser un string o un array de strings"
+      );
+      console.log("El campo 'thumbnails' no se actualizará");
+      delete updatedFields.thumbnails;
+    } else {
+      const invalidThumbnails = updatedFields.thumbnails.filter(
+        (thumbnail) => typeof thumbnail !== "string"
+      );
+      if (invalidThumbnails.length > 0) {
         console.log(
-          "El campo 'thumbnails' debe ser un string o un array de strings"
+          "Algunos elementos de 'thumbnails' no son cadenas de texto válidas."
         );
         console.log("El campo 'thumbnails' no se actualizará");
         delete updatedFields.thumbnails;
-      } else {
-        const invalidThumbnails = updatedFields.thumbnails.filter(
-          (thumbnail) => typeof thumbnail !== "string"
-        );
-        if (invalidThumbnails.length > 0) {
-          console.log(
-            "Algunos elementos de 'thumbnails' no son cadenas de texto válidas."
-          );
-          console.log("El campo 'thumbnails' no se actualizará");
-          delete updatedFields.thumbnails;
-        }
       }
     }
 
     // DEFAULT STATUS
-    if (!!updatedFields.status && typeof updatedFields.status !== "boolean") {
+    if (typeof updatedFields.status !== "boolean") {
       updatedFields.status = true;
     }
 
     // VALORES NUMERICOS
-    if (!!updatedFields.price && isNaN(updatedFields.price)) {
+    if (isNaN(updatedFields.price)) {
       console.log("El valor del campo price debe ser numérico");
       console.log("El campo 'price' no se actualizará");
       delete updatedFields.price;
     }
 
-    if (!!updatedFields.stock && isNaN(updatedFields.stock)) {
+    if (isNaN(updatedFields.stock)) {
       console.log("El valor del campo stock debe ser numérico");
       console.log("El campo 'stock' no se actualizará");
       delete updatedFields.stock;
     }
 
     // FILTRA CAMPOS VALIDOS
-    let product = await productsManager.getProductById(pid);
-    const docKeys = Object.keys(product._doc);
-    let updatedProduct = {}
+    const product = await productsManager.getProductById(pid);
     for (const key in updatedFields) {
       if (
         Object.hasOwnProperty.call(updatedFields, key) &&
-        key != "_id" &&
+        key != "id" &&
         // && (key != "code")
-        docKeys.includes(key)
+        product.hasOwnProperty(key)
       ) {
-        updatedProduct[key] = updatedFields[key];
+        product[key] = updatedFields[key];
       } else {
         console.log(
           `La propiedad '${key}' no es una propiedad válida y no se actualizará.`
@@ -220,9 +210,9 @@ router.put("/:pid", async (req, res) => {
       }
     }
 
-    await productsManager.updateProduct(pid, updatedProduct);
-    product = await productsManager.getProductById(pid)
-    req.io.emit("Server:productUpdate", product);
+    await productsManager.updateProduct(pid, product);
+
+    req.io.emit("Server:productUpdate", (product));
     res
       .status(200)
       .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
@@ -234,16 +224,14 @@ router.put("/:pid", async (req, res) => {
 
 router.delete("/:pid", async (req, res) => {
   try {
-    const pid = req.params.pid;
-    const existeId = await productsManager.validaId(pid);
-    if (!existeId) {
+    const pid = parseInt(req.params.pid);
+    const deleted = await productsManager.deleteProduct(pid);
+    if (!deleted) {
       console.log("No existe un producto con id:", pid);
       return res
         .status(400)
         .json({ error: `No existe un producto con id: ${pid}` });
     }
-
-    await productsManager.deleteProduct(pid);
 
     console.log("Se eliminó el producto con id:", pid);
 

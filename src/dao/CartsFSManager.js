@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const ProductsManager = require("./ProductsManager.js");
+const ProductsManager = require("./ProductsFSManager.js");
 const productsPath = path.join(__dirname, "..", "data", "productos.json");
 
 class CartsManager {
@@ -60,7 +60,6 @@ class CartsManager {
     }
   }
 
-
   // async getCarts() {
   //   await this.#readFile();
   //   if (this.#carts) {
@@ -92,7 +91,7 @@ class CartsManager {
     return cart ? cart.products : errNF;
   }
 
-  async createCart () {
+  async createCart() {
     await this.#readFile();
     if (!this.#archivoLeido) {
       console.log(
@@ -104,57 +103,51 @@ class CartsManager {
     this.#contadorId++;
 
     const cart = {
-    id: this.#contadorId,
-    products:[]
-    }
+      id: this.#contadorId,
+      products: [],
+    };
     this.#carts.push(cart);
     await this.#saveToFile();
     return this.#contadorId;
   }
 
-
   async addProductToCart(cid, pid) {
-const productsManager = new ProductsManager(productsPath);
-await this.#readFile();
+    const productsManager = new ProductsManager(productsPath);
+    await this.#readFile();
     if (!this.#archivoLeido) {
-        console.log(
-            "No se ha leído el archivo aún, ejecute el archivo nuevamente"
-        );
-        return;
+      console.log(
+        "No se ha leído el archivo aún, ejecute el archivo nuevamente"
+      );
+      return;
     }
 
     const product = await productsManager.getProductById(parseInt(pid));
 
     if (!product?.id) {
-        return `Producto con ID ${pid} no encontrado`;
+      return `Producto con ID ${pid} no encontrado`;
     }
 
     const cartIndex = this.#carts.findIndex((cart) => cart.id === cid);
 
     if (cartIndex === -1) {
-        console.log("Error: No existe un carrito con id:", cid);
-        return `Carrito con ID ${cid} no encontrado`;
+      console.log("Error: No existe un carrito con id:", cid);
+      return `Carrito con ID ${cid} no encontrado`;
     }
 
-
-
     const existingProductIndex = this.#carts[cartIndex].products.findIndex(
-        (cartProduct) => cartProduct.pid === pid
+      (cartProduct) => cartProduct.pid === pid
     );
 
     if (existingProductIndex !== -1) {
-        this.#carts[cartIndex].products[existingProductIndex].quantity++;
+      this.#carts[cartIndex].products[existingProductIndex].quantity++;
     } else {
-        this.#carts[cartIndex].products.push({ pid: pid, quantity: 1 });
+      this.#carts[cartIndex].products.push({ pid: pid, quantity: 1 });
     }
 
     await this.#saveToFile();
     console.log("Producto agregado al carrito correctamente.");
     return true;
+  }
 }
 
-  
-
-}
-
-module.exports = CartsManager
+module.exports = CartsManager;

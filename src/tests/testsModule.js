@@ -1,8 +1,8 @@
 const { testingSync } = require("./testingSync");
 const { testingAsync } = require("./testingAsync");
-const eliminarArchivo = require("../utils/eliminarArchivo");
-const confirmarEliminacion = require("../utils/confirmarEliminacion");
-const confirmarPregunta = require("../utils/confirmarPregunta");
+const eliminarArchivo = require("../utils/devUtils/eliminarArchivo");
+const confirmarEliminacion = require("../utils/devUtils/confirmarEliminacion");
+const confirmarPregunta = require("../utils/devUtils/confirmarPregunta");
 
 const testsModule = async () => {
   try {

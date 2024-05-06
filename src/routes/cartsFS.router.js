@@ -1,7 +1,7 @@
 const path = require("path");
+const CartsManager = require("../dao/CartsFSManager.js");
 const cartsPath = path.join(__dirname, "..", "data", "carrito.json");
-const CartsManager = require("../dao/CartsMongo.manager.js");
-const cartsManager = new CartsManager();
+const cartsManager = new CartsManager(cartsPath);
 
 const { Router } = require("express");
 
@@ -28,7 +28,7 @@ const router = Router();
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;
   try {
-    const carrito = await cartsManager.getCartById(cid);
+    const carrito = await cartsManager.getCartById(parseInt(cid));
     if (carrito) {
       // res.send({status: 'success', payload: carrito})
       res.json(carrito);
@@ -55,17 +55,17 @@ router.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
 
   // VALIDA VALORES NUMERICOS
-  // if (isNaN(cid)) {
-  //   return res.status(400).json({ error: `El cid debe ser numérico` });
-  // }
-  // if (isNaN(pid)) {
-  //   return res.status(400).json({ error: `El pid debe ser numérico` });
-  // }
+  if (isNaN(cid)) {
+    return res.status(400).json({ error: `El cid debe ser numérico` });
+  }
+  if (isNaN(pid)) {
+    return res.status(400).json({ error: `El pid debe ser numérico` });
+  }
 
   try {
     const result = await cartsManager.addProductToCart(
-      (cid),
-      (pid)
+      parseInt(cid),
+      parseInt(pid)
     );
     if (typeof result === "string") {
       return res.status(404).json({ error: result });

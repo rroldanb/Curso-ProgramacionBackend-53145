@@ -1,0 +1,15 @@
+# Products
+### test
+
+GET http://localhost:8080/api/products
+
+
+### otro
+
+GET http://localhost:8080/api/products/?limit=5
+### otro
+
+GET http://localhost:8080/api/products/6635cd45977807bdf20d0b8a
+
+
+

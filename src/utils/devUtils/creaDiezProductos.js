@@ -1,4 +1,4 @@
-const { ProductsManager } = require("../services/ProductsManager").default;
+const { ProductsManager } = require("../../dao/ProductsFSManager").default;
 const path = require("path");
 const destPath = "../data/productos.json";
 

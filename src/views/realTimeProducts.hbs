@@ -53,8 +53,9 @@
  Swal.fire({
    title: "Vista rentringida",
    input: "text",
-   inputLabel: "Solo el usuario 'admin' tiene acceso",
    allowOutsideClick: false,
+   allowEscapeKey : false,
+   inputLabel: "Solo el usuario 'admin' tiene acceso",
    inputValidator: (value) => {
      if (!value) {
        return "Debes indicar un nombre!";
@@ -68,5 +69,6 @@
      });
    }
  });
+
 
 </script>

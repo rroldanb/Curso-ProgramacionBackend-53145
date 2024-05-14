@@ -2,31 +2,72 @@ const {productsModel} = require ('./models/products.model.js')
 
 class ProductsManager {
 
+  constructor () {
+    this.productsModel = productsModel
+  }
+
   async validaCode(code) {
-        const product = await productsModel.findOne({ code: code });
+        const product = await this.productsModel.findOne({ code: code });
         return !!product;
   }
   async validaId(pid) {
-        const product = await productsModel.findById( pid );
+        const product = await this.productsModel.findById( pid );
         return !!product;
   }
 
+  async getCategories(){
+    const categories = await this.productsModel.distinct("category");
+    const categoryArray = Array.from(categories);
+    return categoryArray
+  }
 
 // FIND ALL ******
 
-  async getProducts(limit) {
-    let products
-    if (limit !== undefined) {
-      products = await productsModel.find({}).limit(limit);
-   }else{
-      products = await productsModel.find({}).lean();
-   }
-    return( products)
+  async getProducts(
+    findParams = {}) {
+
+      const categoryParam=findParams.categoryParam?findParams.categoryParam:null
+      const availableOnly=findParams.availableOnly?findParams.availableOnly:null
+      const limitParam=findParams.limitParam?findParams.limitParam:10
+      const numPage=findParams.numPage?findParams.numPage:1
+      const orderBy=findParams.orderBy?findParams.orderBy:null
+
+    // numPage = parseInt(numPage);
+    // limitParam = parseInt(limitParam);
+
+  // console.log("numPage aca", numPage)
+  // console.log("limit aca", limitParam)
+
+
+  const filter = {};
+  if (categoryParam !== null) {
+      filter.category = categoryParam;
+  }
+
+  if (typeof availableOnly === 'boolean') {
+      filter.status = availableOnly;
+  }
+
+  let sortOptions = {};
+  if (orderBy) {
+      sortOptions = { price: orderBy === 'asc' ? 1 : -1 };
+  }
+
+  const result = await this.productsModel.paginate(filter, {
+      limit: limitParam,
+      page: numPage,
+      lean: true,
+      sort: sortOptions
+  });
+    // console.log("products aca", result);
+    const categories = await this.productsModel.distinct("category", filter);
+// console.log(categories)
+    return result ;
   }
 
   // FIND ONE
   async getProductById(pid) {
-    const product = await productsModel.findOne({_id: pid})
+    const product = await this.productsModel.findOne({_id: pid})
     const errNF = `Producto con ID ${pid} no encontrado`;
     return product ? product : errNF;
   }
@@ -98,18 +139,18 @@ class ProductsManager {
       thumbnails: thumbnailsArray,
     };
 
-    const result = await productsModel.create(product)
+    const result = await this.productsModel.create(product)
     return result
   }
 
   async updateProduct(pid, updatedFields) {
-    let result= await productsModel.updateOne({_id:pid}, updatedFields)
+    let result= await this.productsModel.updateOne({_id:pid}, updatedFields)
     // console.log(result)
     return result;
   }
 
   async deleteProduct(pid) {
-    const result = await productsModel.deleteOne({_id:pid})
+    const result = await this.productsModel.deleteOne({_id:pid})
     return (result)
   }
 

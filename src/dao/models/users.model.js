@@ -8,7 +8,8 @@ const userSchema = new Schema ({
         type:String,
         required:true,
         unique:true
-    }
+    },
+    gender: String
 })
 
 module.exports ( userModel(userCollection, userSchema))

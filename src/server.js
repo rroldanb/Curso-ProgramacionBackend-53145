@@ -36,14 +36,17 @@ app.use(express.static(__dirname + "/public"));
 
 connectDB()
 
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-  })
-);
 app.set("views", __dirname + "/views");
-app.set("view engine", "hbs");
+
+const hbs = handlebars.create({
+  defaultLayout: "main",
+  layoutsDir: (app.get("views")+ "/layouts"),
+  partialsDir: (app.get("views")+ "/partials"),
+  extname: ".hbs",
+});
+
+app.engine(".hbs", hbs.engine );
+app.set("view engine", ".hbs");
 
 app.use("/", viewsRouter);
 

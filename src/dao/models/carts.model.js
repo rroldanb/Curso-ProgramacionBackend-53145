@@ -7,10 +7,18 @@ const cartItemSchema = new Schema({
     quantity: { type: Number, required: false }
 });
 
-const cartSchema = new Schema({
-//    userId: { type: Schema.Types.ObjectId, ref: 'user', required: true },
+const CartSchema = new Schema({
+    userId: { type: Schema.Types.ObjectId, ref: 'user', required: false },
     products: [cartItemSchema],
 });
 
-
-exports.cartsModel = model(cartCollection, cartSchema);
+CartSchema.pre('find', function() {
+    this.populate('products.pid')
+})
+CartSchema.pre('findOne', function() {
+    this.populate('products.pid')
+})
+CartSchema.pre('findById', function() {
+    this.populate('products.pid')
+})
+exports.cartsModel = model(cartCollection, CartSchema);

@@ -2,7 +2,7 @@
   <div class="bienvenida">
 
   <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
-  <h2> {{nombre}} {{apellido}} estos son nuestros productos disponibles</h2>
+  <h2> Contenido del Carrito <strong>{{cid}}</strong></h2>
   {{!-- <h3> estos los productos {{products}}</h3> --}}
   <a href="/realtimeproducts" class="btn btn-dark">Ir a Real Time Products</a>
   </div>
@@ -11,39 +11,35 @@
 
 
 <div class="container">
-  {{>filters}}
-
   {{#each products}}
-  {{!-- {{#if this.status}} --}}
+  {{!-- {{#if this.pid.status}} --}}
     <div class="card" id="product-{{@index}}">
       <div class="thumbnail-display-area">
-        <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+        <img class="main-image" src="{{this.pid.thumbnails.[0]}}" alt="Imagen principal del producto">
       </div>
       <div class="thumbnails">
-        {{#each this.thumbnails}}
+        {{#each this.pid.thumbnails}}
           <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
         {{/each}}
       </div>
-      <h3 class="text-center">{{this.title}}</h3>
-      <p><strong>Descripción:</strong> {{this.description}}</p>
-      <p><strong>Código:</strong> {{this.code}}</p>
-      <p><strong>Precio:</strong> {{ this.price}}</p>
+      <h3 class="text-center">{{this.pid.title}}</h3>
+      <p><strong>Descripción:</strong> {{this.pid.description}}</p>
+      <p><strong>Código:</strong> {{this.pid.code}}</p>
+      <p><strong>Precio:</strong> {{ this.pid.price}}</p>
       <p>
         <strong>Estado:</strong> 
         <span class="status-span"> 
         
         
-          {{#if this.status}} Disponible {{else}} No disponible {{/if}}
+          {{#if this.pid.status}} Disponible {{else}} No disponible {{/if}}
         </span>
       </p>
-      <p><strong>Stock:</strong> {{this.stock}}</p>
-      <p><strong>Categoría:</strong> {{this.category}}</p>
+      <p><strong>Stock:</strong> {{this.pid.stock}}</p>
+      <p><strong>Categoría:</strong> {{this.pid.category}}</p>
+      <p><strong>Cantidad en el Carrito:</strong> {{this.quantity}}</p>
     </div>
     {{!-- {{/if}} --}}
   {{/each}}
-
-
-  {{>paginator}}
 </div>
 
 

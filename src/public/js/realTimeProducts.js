@@ -220,7 +220,7 @@ const renderProductUI = (product) => {
 
   const details = document.createElement("div");
   details.innerHTML = `
-      <h3>${product.title}</h3>
+      <h3 class="text-center">${product.title}</h3>
       <span><strong>Descripción:</strong> </span>
       <p> ${product.description}</p>
       <p><strong>Código:</strong> ${product.code}</p>

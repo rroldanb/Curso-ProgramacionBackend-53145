@@ -3,9 +3,13 @@
     <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
     <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
   <a href="/" class="btn btn-dark">Ir a la vista de inicio</a>
+  <button class="btn btn-danger  btn-sm" id="rtp-btn-logout" >Desconectarse</button>
+
   </div>
     {{#if admin}}
       <div class="container-fluid h-100 ">
+  {{>filters}}
+
         <div class="row h-100 ">
 
           <div class="my-3 col-3 d-flex justify-content-center">
@@ -52,25 +56,54 @@
 <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
 
 <script>
- Swal.fire({
-   title: "Vista rentringida",
-   input: "text",
-   allowOutsideClick: false,
-   allowEscapeKey : false,
-   inputLabel: "Solo el usuario 'admin' tiene acceso",
-   inputValidator: (value) => {
-     if (!value) {
-       return "Debes indicar un nombre!";
-     }
-     return new Promise((resolve) => {
-       if (value === "admin") {
-         resolve();
-       } else {
-         resolve("solo el usuario admin tiene acceso :)");
-       }
-     });
-   }
- });
 
+const getUsername = async () => {
+  const username = localStorage.getItem("username");
+  if (username) {
+    console.log(`User existed ${username}`);
+    return username;
+  }
+
+  const { value: inputUsername } = await Swal.fire({
+    title: "Vista restringida",
+    input: "text",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    inputLabel: "Solo el usuario 'admin' tiene acceso",
+    inputValidator: (value) => {
+      if (!value) {
+        return "Debes indicar un nombre!";
+      }
+      return new Promise((resolve) => {
+        if (value === "admin") {
+          resolve();
+        } else {
+          resolve("Solo el usuario admin tiene acceso :)");
+        }
+      });
+    }
+  });
+
+  if (inputUsername === "admin") {
+    localStorage.setItem("username", inputUsername);
+    return inputUsername;
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Acceso denegado',
+      text: 'Solo el usuario admin tiene acceso :)',
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    }).then(() => {
+      return getUsername();
+    });
+  }
+};
+
+(async () => {
+  await getUsername();
+})();
+
+     
 
 </script>

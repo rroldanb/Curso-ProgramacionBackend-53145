@@ -41,6 +41,67 @@ function formatearProductos(products) {
 }
 
 
+function generatePaginationLinks(url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage) {
+  let currentUrl = url;
+  let prevLink, nextLink, firstLink, lastLink;
+  let urlBase = currentUrl;
+  
+  if (currentUrl.includes("?")) {
+      const partesUrl = currentUrl.split("?");
+      urlBase = partesUrl[0];
+      const parametros = partesUrl[1];
+      const paresParametros = parametros.split("&");
+
+      if (nextPage !== null) {
+          const nuevosParametros = paresParametros.map(par => {
+              const [clave, valor] = par.split("="); 
+              if (clave === "numPage") {
+                  return `${clave}=${nextPage}`;
+              }
+              return par;
+          });
+          nextLink = urlBase + "?" + nuevosParametros.join("&");
+      } else {
+          nextLink = null;
+      }
+
+      if (prevPage !== null) {
+          const nuevosParametros = paresParametros.map(par => {
+              const [clave, valor] = par.split("="); 
+              if (clave === "numPage") {
+                  return `${clave}=${prevPage}`;
+              }
+              return par;
+          });
+          prevLink = urlBase + "?" + nuevosParametros.join("&");
+      } else {
+          prevLink = null;
+      }
+
+      const primerosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
+      firstLink = urlBase + "?numPage=1&" + primerosParametros.join("&");
+
+      const ultimosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
+      lastLink = urlBase + "?numPage=" + totalPages + "&" + ultimosParametros.join("&");
+  }
+
+  if (
+      nextLink === undefined ||
+      prevLink === undefined ||
+      firstLink === undefined ||
+      lastLink === undefined
+  ) {
+      nextLink = hasNextPage ? urlBase + "?numPage=" + nextPage : null;
+      prevLink = hasPrevPage ? urlBase + "?numPage=" + prevPage : null;
+      firstLink = urlBase + "?numPage=1";
+      lastLink = urlBase + "?numPage=" + totalPages;
+  }
+
+  return { nextLink, prevLink, firstLink, lastLink };
+}
+
+
+
 router.post("/", async (req,res) =>{
   
 })
@@ -54,13 +115,11 @@ if (!numPage) {
 }
 let { limitParam = 4, categoryParam = null, availableOnly = null, orderBy = null } = req.query;
 
-
 const findParams = {
   categoryParam,availableOnly, 
       limitParam, numPage, orderBy
 }
-  // console.log("numPage aqui", numPage)
-  // console.log("limit aqui", limit)
+
 try {
   // const user=userAdmin
     const user = userUser;
@@ -69,58 +128,14 @@ try {
 
 const categoryArray = await productsManager.getCategories()
 
-
-
-let currentUrl = req.url;
-let prevLink, nextLink, firstLink, lastLink;
-
-if (currentUrl.includes("?")) {
-    const partesUrl = currentUrl.split("?");
-    const urlBase = partesUrl[0];
-    const parametros = partesUrl[1];
-    const paresParametros = parametros.split("&");
-
-    if (nextPage !== null) {
-        const nuevosParametros = paresParametros.map(par => {
-            const [clave, valor] = par.split("="); 
-            if (clave === "numPage") {
-                return `${clave}=${nextPage}`;
-            }
-            return par;
-        });
-        nextLink = urlBase + "?" + nuevosParametros.join("&");
-    } else{nextLink=null}
-
-    if (prevPage !== null) {
-        const nuevosParametros = paresParametros.map(par => {
-            const [clave, valor] = par.split("="); 
-            if (clave === "numPage") {
-                return `${clave}=${prevPage}`;
-            }
-            return par;
-        });
-        prevLink = urlBase + "?" + nuevosParametros.join("&");
-    } else{prevLink=null}
-
-    const primerosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
-    firstLink = urlBase + "?numPage=1&" + primerosParametros.join("&");
-
-    const ultimosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
-    lastLink = urlBase + "?numPage=" + totalPages + "&" + ultimosParametros.join("&");
-}
-
-console.log("nextLink:", nextLink);
-console.log("prevLink:", prevLink);
-console.log("firstLink:", firstLink);
-console.log("lastLink:", lastLink);
-
+const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage);
 
 
     if (docs.length > 0) {
       formatearProductos(docs);
     }
     res.render("home", {
-      renderPage:"/",
+      
       username: user.username,
       nombre: user.nombre,
       apellido: user.apellido,
@@ -146,10 +161,8 @@ router.get("/realtimeproducts", async (req, res) => {
     numPage=1
   }
   
-  const limitParam = 40
-  const categoryParam = null
-  const availableOnly = null
-  const orderBy = null
+  let { limitParam = 4, categoryParam = null, availableOnly = null, orderBy = null } = req.query;
+
   
   const findParams = {
     categoryParam,availableOnly, 
@@ -158,9 +171,15 @@ router.get("/realtimeproducts", async (req, res) => {
 try {
     const user = userAdmin;
     // const user=userUser
-    const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages} = 
+    const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,totalDocs, pagingCounter, limit } = 
     await productsManager.getProducts(findParams);
     
+
+    const categoryArray = await productsManager.getCategories()
+
+    const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage);
+    
+
     if (docs.length > 0) {
       formatearProductos(docs);
 
@@ -175,7 +194,11 @@ try {
         admin: user.role === "admin",
         title: "Edit mercadito || Gago",
         products:docs,
-      page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,
+      page, hasPrevPage, hasNextPage, 
+      prevPage, nextPage, totalPages, 
+      totalDocs, pagingCounter, limit,
+      categoryArray,nextLink, prevLink,
+      firstLink, lastLink,
       styles: "homeStyles.css",
       });
     }

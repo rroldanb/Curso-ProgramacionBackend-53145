@@ -14,6 +14,11 @@ const productsArea = document.getElementById("realTimeProductsArea");
 const h3 = document.querySelector("#newProdDetails h3");
 const prodDetails = document.querySelector("#newProdDetails");
 
+document.getElementById("rtp-btn-logout").addEventListener("click", () => {
+  localStorage.removeItem("username");
+  window.location.reload();
+});
+
 const saveButton = document.querySelector(".btn-save");
 saveButton.disabled = true;
 const cancelButton = document.querySelector(".btn-cancel");

@@ -41,11 +41,11 @@ function formatearProductos(products) {
 }
 
 
-function generatePaginationLinks(url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage) {
-  let currentUrl = url;
+function generatePaginationLinks(pagLinksParams) {
+  let {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}=pagLinksParams
+  let currentUrl = urlParam;
   let prevLink, nextLink, firstLink, lastLink;
   let urlBase = currentUrl;
-  
   if (currentUrl.includes("?")) {
       const partesUrl = currentUrl.split("?");
       urlBase = partesUrl[0];
@@ -95,25 +95,68 @@ function generatePaginationLinks(url, totalPages, nextPage, prevPage, hasNextPag
       prevLink = hasPrevPage ? urlBase + "?numPage=" + prevPage : null;
       firstLink = urlBase + "?numPage=1";
       lastLink = urlBase + "?numPage=" + totalPages;
+      // urlBase=urlBase
   }
 
-  return { nextLink, prevLink, firstLink, lastLink };
+  return { nextLink, prevLink, firstLink, lastLink, urlBase };
 }
 
-
-
-router.post("/", async (req,res) =>{
-  
-})
-
-// endpoint en ruta raíz
 router.get("/", async (req, res) => {
 
-let  {numPage} = req.query
-if (!numPage) {
-  numPage=1
-}
-let { limitParam = 4, categoryParam = null, availableOnly = null, orderBy = null } = req.query;
+  let {numPage=1, limitParam = 4, categoryParam = null, 
+    availableOnly = null, orderBy = null } = req.query;
+  
+  const findParams = {
+    categoryParam,availableOnly, 
+        limitParam, numPage, orderBy
+  }
+  
+  try {
+    // const user=userAdmin
+      const user = userUser;
+  
+      const {docs, page, hasPrevPage, hasNextPage, prevPage, 
+        nextPage, totalPages,totalDocs, pagingCounter, limit } = 
+      await productsManager.getProducts(findParams);
+  
+  const categoryArray = await productsManager.getCategories()
+  
+  const urlParam=req.url
+  const pagLinksParams = {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}
+  
+  const { nextLink, prevLink, firstLink, lastLink, urlBase } = 
+  generatePaginationLinks(pagLinksParams);
+  
+  
+      if (docs.length > 0) {
+        formatearProductos(docs);
+      }
+      res.render("home", {
+        
+        username: user.username,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        admin: user.role === "admin",
+        title: "mercadito || Gago",
+        products:docs, 
+        page, hasPrevPage, hasNextPage, 
+        prevPage, nextPage, totalPages, 
+        totalDocs, pagingCounter, limit,
+        categoryArray,nextLink, prevLink,
+        firstLink, lastLink, urlBase,
+        styles: "homeStyles.css"
+      });
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: "Error al obtener los productos" });
+    }
+  });
+
+// endpoint productos
+router.get("/products", async (req, res) => {
+
+let {numPage=1, limitParam = 4, categoryParam = null, 
+  availableOnly = null, orderBy = null } = req.query;
 
 const findParams = {
   categoryParam,availableOnly, 
@@ -123,12 +166,18 @@ const findParams = {
 try {
   // const user=userAdmin
     const user = userUser;
-    const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,totalDocs, pagingCounter, limit } = 
+
+    const {docs, page, hasPrevPage, hasNextPage, prevPage, 
+      nextPage, totalPages,totalDocs, pagingCounter, limit } = 
     await productsManager.getProducts(findParams);
 
 const categoryArray = await productsManager.getCategories()
 
-const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage);
+const urlParam=req.url
+const pagLinksParams = {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}
+
+const { nextLink, prevLink, firstLink, lastLink, urlBase } = 
+generatePaginationLinks(pagLinksParams);
 
 
     if (docs.length > 0) {
@@ -146,7 +195,7 @@ const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.
       prevPage, nextPage, totalPages, 
       totalDocs, pagingCounter, limit,
       categoryArray,nextLink, prevLink,
-      firstLink, lastLink,
+      firstLink, lastLink, urlBase,
       styles: "homeStyles.css"
     });
   } catch (error) {
@@ -156,18 +205,15 @@ const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.
 });
 
 router.get("/realtimeproducts", async (req, res) => {
-  let  {numPage} = req.query
-  if (!numPage) {
-    numPage=1
-  }
-  
-  let { limitParam = 4, categoryParam = null, availableOnly = null, orderBy = null } = req.query;
-
+  let {numPage=1, limitParam = 4, categoryParam = null, 
+    availableOnly = null, orderBy = null } = req.query;
   
   const findParams = {
     categoryParam,availableOnly, 
         limitParam, numPage, orderBy
   }
+  
+
 try {
     const user = userAdmin;
     // const user=userUser
@@ -177,7 +223,11 @@ try {
 
     const categoryArray = await productsManager.getCategories()
 
-    const { nextLink, prevLink, firstLink, lastLink } = generatePaginationLinks(req.url, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage);
+    const urlParam=req.url
+    const pagLinksParams = {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}
+
+    const { nextLink, prevLink, firstLink, lastLink, urlBase } = 
+    generatePaginationLinks(pagLinksParams);
     
 
     if (docs.length > 0) {
@@ -198,7 +248,7 @@ try {
       prevPage, nextPage, totalPages, 
       totalDocs, pagingCounter, limit,
       categoryArray,nextLink, prevLink,
-      firstLink, lastLink,
+      firstLink, lastLink, urlBase,
       styles: "homeStyles.css",
       });
     }

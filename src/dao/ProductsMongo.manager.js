@@ -27,17 +27,22 @@ class ProductsManager {
     findParams = {}) {
 
       const categoryParam=findParams.categoryParam?findParams.categoryParam:null
-      const availableOnly=findParams.availableOnly?findParams.availableOnly:null
-      const limitParam=findParams.limitParam?findParams.limitParam:10
-      const numPage=findParams.numPage?findParams.numPage:1
-      const orderBy=findParams.orderBy?findParams.orderBy:null
+      const availableOnly=findParams.availableOnly?findParams.availableOnly === 'true':null
+      let limitParam=findParams.limitParam?findParams.limitParam:10
+      let numPage=findParams.numPage?findParams.numPage:1
+      let orderBy=findParams.orderBy?findParams.orderBy:null
 
-    // numPage = parseInt(numPage);
-    // limitParam = parseInt(limitParam);
+    numPage = parseInt(numPage);
+    limitParam = parseInt(limitParam);
+    orderBy = parseInt(orderBy)
 
   // console.log("numPage aca", numPage)
   // console.log("limit aca", limitParam)
-
+  // console.log('categoryParam:', categoryParam);
+  // console.log('availableOnly:', typeof(availableOnly));
+  // console.log('limitParam:', limitParam);
+  // console.log('numPage:', numPage);
+  // console.log('orderBy:', orderBy);
 
   const filter = {};
   if (categoryParam !== null) {
@@ -50,7 +55,7 @@ class ProductsManager {
 
   let sortOptions = {};
   if (orderBy) {
-      sortOptions = { price: orderBy === 'asc' ? 1 : -1 };
+      sortOptions = { price: orderBy  };
   }
 
   const result = await this.productsModel.paginate(filter, {

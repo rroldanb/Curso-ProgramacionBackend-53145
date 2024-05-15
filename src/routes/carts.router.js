@@ -75,6 +75,7 @@ router.post("/:cid/product/:pid", async (req, res) => {
   }
 });
 
+//vaciar el carrito
 router.delete("/:cid", async (req,res) =>{
   const { cid } = req.params;
   try {
@@ -90,7 +91,7 @@ router.delete("/:cid", async (req,res) =>{
     res.status(500).json({ error: "Error al vaciar el carrito" });
   }
 })
-
+//quitar del carrito
 router.delete("/:cid/product/:pid", async (req,res) => {
   const { cid, pid } = req.params;
 

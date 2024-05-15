@@ -4,7 +4,67 @@ const productsManager = new ProductsManager();
 const { Router } = require("express");
 const router = Router();
 
-router.get("/", async (req, res) => {
+function generatePaginationLinks(pagLinksParams) {
+  let {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}=pagLinksParams
+  let currentUrl = urlParam;
+  let prevLink, nextLink, firstLink, lastLink;
+  let urlBase = currentUrl;
+  if (currentUrl.includes("?")) {
+      const partesUrl = currentUrl.split("?");
+      urlBase = partesUrl[0];
+      const parametros = partesUrl[1];
+      const paresParametros = parametros.split("&");
+
+      if (nextPage !== null) {
+          const nuevosParametros = paresParametros.map(par => {
+              const [clave, valor] = par.split("="); 
+              if (clave === "numPage") {
+                  return `${clave}=${nextPage}`;
+              }
+              return par;
+          });
+          nextLink = urlBase + "?" + nuevosParametros.join("&");
+      } else {
+          nextLink = null;
+      }
+
+      if (prevPage !== null) {
+          const nuevosParametros = paresParametros.map(par => {
+              const [clave, valor] = par.split("="); 
+              if (clave === "numPage") {
+                  return `${clave}=${prevPage}`;
+              }
+              return par;
+          });
+          prevLink = urlBase + "?" + nuevosParametros.join("&");
+      } else {
+          prevLink = null;
+      }
+
+      const primerosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
+      firstLink = urlBase + "?numPage=1&" + primerosParametros.join("&");
+
+      const ultimosParametros = paresParametros.filter(par => !par.startsWith("numPage="));
+      lastLink = urlBase + "?numPage=" + totalPages + "&" + ultimosParametros.join("&");
+  }
+
+  if (
+      nextLink === undefined ||
+      prevLink === undefined ||
+      firstLink === undefined ||
+      lastLink === undefined
+  ) {
+      nextLink = hasNextPage ? urlBase + "?numPage=" + nextPage : null;
+      prevLink = hasPrevPage ? urlBase + "?numPage=" + prevPage : null;
+      firstLink = urlBase + "?numPage=1";
+      lastLink = urlBase + "?numPage=" + totalPages;
+      // urlBase=urlBase
+  }
+
+  return { nextLink, prevLink, firstLink, lastLink, urlBase };
+}
+
+router.get("/oldget", async (req, res) => {
   let products;
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
@@ -19,13 +79,71 @@ router.get("/", async (req, res) => {
     } else {
       products = await productsManager.getProducts();
     }
-    res.json(products);
-    // res.send({status:"success", payload: productos});
+    // res.json(products);
+    res.send({status:"success", payload: products});
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error al obtener los productos" });
   }
 });
+
+router.get("/", async (req, res) => {
+
+  let {numPage=1, limit = 10, category = null, 
+    availableOnly = null, orderByPrice = null } = req.query;
+  
+    availableOnly = availableOnly?availableOnly === 'true':null
+    numPage = parseInt(numPage);
+    limitParam = parseInt(limit);
+    let categoryParam = category
+    orderByPrice
+    let orderBy = null
+    if (orderByPrice === "asc"){orderBy=1}else{if (orderByPrice==="desc"){orderBy=-1}}
+
+ console.log("numPage aca", numPage)
+  console.log("limit aca", limit)
+  console.log("limitParam aca", limitParam)
+  console.log('categoryParam:', categoryParam);
+  console.log('availableOnly:', typeof(availableOnly));
+  console.log('orderBy:', orderBy);
+
+
+  const findParams = {
+    categoryParam,availableOnly, 
+        limitParam, numPage, orderBy
+  }
+  
+
+
+  try {
+  
+      const {docs, page, hasPrevPage, hasNextPage, prevPage, 
+        nextPage, totalPages, totalDocs} = 
+      await productsManager.getProducts(findParams);
+  
+
+  const urlParam="http://localhost:8080/api/products"
+
+  const pagLinksParams = {urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage}
+  
+  const { nextLink, prevLink } = 
+  generatePaginationLinks(pagLinksParams);
+  
+res.send  ({status:"success", payload:docs, totalPages, prevPage, 
+nextPage, page, hasPrevPage, hasNextPage, nextLink, prevLink, totalDocs })
+
+
+
+  // res.send({response});
+  
+      
+     
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: "Error al obtener los productos" });
+    }
+  });
+
 
 router.get("/:pid", async (req, res) => {
   const { pid } = req.params;

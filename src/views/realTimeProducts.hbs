@@ -2,8 +2,11 @@
   <div class="bienvenida">
     <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
     <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
-  <a href="/" class="btn btn-dark">Ir a la vista de inicio</a>
-  <button class="btn btn-danger  btn-sm" id="rtp-btn-logout" >Desconectarse</button>
+    <div class="flex">
+
+  <a href="/products" class="btn btn-dark">Ir a la vista de productos</a>
+  <button class="btn btn-danger " id="rtp-btn-logout" >Desconectarse</button>
+    </div>
 
   </div>
     {{#if admin}}

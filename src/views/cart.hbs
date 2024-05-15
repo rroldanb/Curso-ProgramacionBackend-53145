@@ -3,8 +3,11 @@
 
   <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
   <h2> Contenido del Carrito <strong>{{cid}}</strong></h2>
-  {{!-- <h3> estos los productos {{products}}</h3> --}}
-  <a href="/realtimeproducts" class="btn btn-dark">Ir a Real Time Products</a>
+  <div class="flex">
+
+  <a href="/products" class="btn btn-dark">Ir a la vista de productos</a>
+    <button class="btn btn-danger empty-cart-btn" data-cart-id="{{cid}}">Vaciar carrito</button>
+  </div>
   </div>
   <div>
 
@@ -23,8 +26,6 @@
         {{/each}}
       </div>
       <h3 class="text-center">{{this.pid.title}}</h3>
-      <p><strong>Descripción:</strong> {{this.pid.description}}</p>
-      <p><strong>Código:</strong> {{this.pid.code}}</p>
       <p><strong>Precio:</strong> {{ this.pid.price}}</p>
       <p>
         <strong>Estado:</strong> 
@@ -37,6 +38,7 @@
       <p><strong>Stock:</strong> {{this.pid.stock}}</p>
       <p><strong>Categoría:</strong> {{this.pid.category}}</p>
       <p><strong>Cantidad en el Carrito:</strong> {{this.quantity}}</p>
+      <button class="btn btn-danger remove-from-cart-btn" data-cart-id="{{../cid}}" data-product-id="{{this.pid._id}}">Quitar del carrito</button>
     </div>
     {{!-- {{/if}} --}}
   {{/each}}
@@ -46,4 +48,5 @@
   </div>
 </main>
 <script src="/js/home.js"></script>
+<script src="/js/cart.js"></script>
 

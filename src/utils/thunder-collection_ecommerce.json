@@ -1,8 +1,9 @@
 {
-    "client": "Thunder Client",
+    "clientName": "Thunder Client",
     "collectionName": "ecommerce",
-    "dateExported": "2024-04-09T02:43:32.400Z",
-    "version": "1.1",
+    "collectionId": "69d28776-2113-4999-a267-280bcdf591f9",
+    "dateExported": "2024-05-15T23:18:46.512Z",
+    "version": "1.2",
     "folders": [
         {
             "_id": "27971ca2-0a02-49be-a958-3beb881673db",
@@ -25,21 +26,34 @@
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "7bad936a-c8e1-4463-b121-7ace924eb27d",
             "name": "Todos los productos",
-            "url": "http://localhost:8080/api/products",
+            "url": "http://localhost:8080/api/products?limit=25&orderByPrice=desc&numPage=1&category=Categoría Par",
             "method": "GET",
             "sortNum": 10000,
             "created": "2024-04-08T05:39:47.525Z",
-            "modified": "2024-04-08T05:53:08.020Z",
+            "modified": "2024-05-15T03:43:44.230Z",
             "headers": [],
             "params": [
                 {
                     "name": "limit",
-                    "value": "5",
-                    "isDisabled": true,
+                    "value": "25",
+                    "isPath": false
+                },
+                {
+                    "name": "orderByPrice",
+                    "value": "desc",
+                    "isPath": false
+                },
+                {
+                    "name": "numPage",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "category",
+                    "value": "Categoría Par",
                     "isPath": false
                 }
-            ],
-            "tests": []
+            ]
         },
         {
             "_id": "4bc08fa0-8985-402d-8ad5-c7aa074d14c7",
@@ -76,13 +90,37 @@
             "tests": []
         },
         {
+            "_id": "417d40b4-991a-430a-b3a8-066f8eaf4a5d",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
+            "name": "Lista Todos los Carritos",
+            "url": "http://localhost:8080/api/carts/",
+            "method": "GET",
+            "sortNum": 32500,
+            "created": "2024-05-12T00:34:55.496Z",
+            "modified": "2024-05-12T00:35:23.736Z",
+            "headers": []
+        },
+        {
+            "_id": "e61cd7c2-5df7-4840-954c-74a0fc1cb1c4",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
+            "name": "Lista Carrito",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4",
+            "method": "GET",
+            "sortNum": 33125,
+            "created": "2024-04-09T02:30:51.664Z",
+            "modified": "2024-05-12T00:55:23.730Z",
+            "headers": []
+        },
+        {
             "_id": "563bffc1-66b8-42ae-a851-468f60883eaf",
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
             "name": "Nuevo Carrito",
             "url": "http://localhost:8080/api/carts",
             "method": "POST",
-            "sortNum": 30000,
+            "sortNum": 33750,
             "created": "2024-04-09T01:37:45.689Z",
             "modified": "2024-04-09T01:38:18.096Z",
             "headers": [],
@@ -94,14 +132,24 @@
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
             "name": "Agrega producto al carro",
-            "url": "http://localhost:8080/api/carts/5/product/10",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4/product/663836fe95f9e8c1519dcef8",
             "method": "POST",
             "sortNum": 35000,
             "created": "2024-04-09T02:42:25.813Z",
-            "modified": "2024-04-09T02:43:11.947Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-05-12T00:03:34.380Z",
+            "headers": []
+        },
+        {
+            "_id": "2dfbdf5c-1037-4e14-b73b-dc85de4fd365",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
+            "name": "Elimina producto del carrito",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4/product/663836fe95f9e8c1519dcef8",
+            "method": "DELETE",
+            "sortNum": 37500,
+            "created": "2024-05-12T00:47:57.744Z",
+            "modified": "2024-05-12T00:48:49.675Z",
+            "headers": []
         },
         {
             "_id": "9c2e29a3-c8b9-40fa-8dcf-9da32b41136c",
@@ -112,62 +160,89 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-04-08T05:40:25.336Z",
-            "modified": "2024-04-08T05:43:15.335Z",
+            "modified": "2024-05-04T07:47:57.067Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "\t\t{\n\t\t\t\"title\": \"producto prueba 11\",\n\t\t\t\"description\": \"Este es el producto prueba 11\",\n\t\t\t\"code\": \"abc11\",\n\t\t\t\"price\": 1111,\n\t\t\t\"status\": true,\n\t\t\t\"stock\": 11,\n\t\t\t\"category\": \"Categoría impar\",\n\t\t\t\"thumbnails\": \"/images/producto-prueba_11_imagen_1\"\n\n\t\t}",
+                "raw": "\t\t{\n\t\t\t\"title\": \"producto prueba 1102\",\n\t\t\t\"description\": \"Este es el producto prueba 1102\",\n\t\t\t\"code\": \"abc1102\",\n\t\t\t\"price\": 111102,\n\t\t\t\"status\": true,\n\t\t\t\"stock\": 1102,\n\t\t\t\"category\": \"Categoría par\",\n\t\t\t\"thumbnails\": \"/images/producto-prueba_02_imagen_1.jpg\"\n\n\t\t}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
-            "_id": "e61cd7c2-5df7-4840-954c-74a0fc1cb1c4",
+            "_id": "f0d32c3a-9e5c-4c26-9684-4ca3a3fffafd",
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
-            "name": "Lista Carrito",
-            "url": "http://localhost:8080/api/carts/5",
-            "method": "GET",
-            "sortNum": 40000,
-            "created": "2024-04-09T02:30:51.664Z",
-            "modified": "2024-04-09T02:31:11.279Z",
+            "name": "Actualiza Qtty producto",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4/product/663836fe95f9e8c1519dcef8",
+            "method": "PUT",
+            "sortNum": 45000,
+            "created": "2024-05-12T01:13:53.342Z",
+            "modified": "2024-05-12T01:29:46.236Z",
             "headers": [],
-            "params": [],
-            "tests": []
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"newQuantity\": 55\n}",
+                "form": []
+            }
         },
         {
             "_id": "8e5bb6b4-731c-41cc-ab21-fbdce3e609f7",
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "7bad936a-c8e1-4463-b121-7ace924eb27d",
             "name": "Editar un Producto",
-            "url": "http://localhost:8080/api/products/11",
+            "url": "http://localhost:8080/api/products/6635cd45977807bdf20d0b8a",
             "method": "PUT",
             "sortNum": 50000,
             "created": "2024-04-08T05:44:23.477Z",
-            "modified": "2024-04-08T05:45:14.431Z",
+            "modified": "2024-05-04T07:43:41.288Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "\t\t{\n\t\t\t\"thumbnails\": [\"/images/producto-prueba_11_imagen_1\",\n\t\t\t\"/images/producto-prueba_11_imagen_2\"]\n\n\t\t}",
+                "raw": "\t\t{\n\t\t  \"code\":\"nuevoCode\",\n\t\t  \"title\":\"producto editado otra vez por mi\",\n\t\t\t\"thumbnails\": [\"/images/producto-prueba_01_imagen_1\",\n\t\t\t\"/images/producto-prueba_01_imagen_2\"],\n\t\t\t\"nuevoCampo\":\"con algo\"\n\n\t\t}",
                 "form": []
-            },
-            "tests": []
+            }
+        },
+        {
+            "_id": "22024f62-147d-48b6-ad29-b2cb3792daef",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
+            "name": "Vaciar Carrito",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-12T00:32:26.585Z",
+            "modified": "2024-05-12T00:33:22.128Z",
+            "headers": []
+        },
+        {
+            "_id": "25264f3a-cb90-479e-bc61-841ae967ed7e",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
+            "name": "Actualiza Contenido Carrito ",
+            "url": "http://localhost:8080/api/carts/664006dadff1d46a8cdb49c4",
+            "method": "PUT",
+            "sortNum": 55000,
+            "created": "2024-05-12T01:40:36.856Z",
+            "modified": "2024-05-12T01:52:56.474Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "[\n{  \"pid\": \"6635f2bd344022dd21bb5228\",\n  \"quantity\":8},\n  { \"pid\": \"6635f709a43085326b51a1a0\",\n  \"quantity\":4},\n  {\"pid\":\"663836fe95f9e8c1519dcef6\",\n  \"quantity\":33}\n]\n",
+                "form": []
+            }
         },
         {
             "_id": "4269c9b5-8737-4500-95d3-2025728747f3",
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "7bad936a-c8e1-4463-b121-7ace924eb27d",
             "name": "Borrar un producto",
-            "url": "http://localhost:8080/api/products/11",
+            "url": "http://localhost:8080/api/products/6635ccff977807bdf20d0b80",
             "method": "DELETE",
             "sortNum": 60000,
             "created": "2024-04-08T05:45:48.974Z",
-            "modified": "2024-04-08T05:46:14.751Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-05-04T06:15:47.240Z",
+            "headers": []
         }
-    ]
+    ],
+    "ref": "wojSGZ008mY3Fr4B963yXh66iu1BmojqqRCS0nSF8bXVeLw-3SXVR3SxaleVByuNXy1ZEwsMFxroeid6BaFbJA"
 }

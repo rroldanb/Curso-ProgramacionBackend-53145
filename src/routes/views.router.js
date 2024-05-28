@@ -1,7 +1,7 @@
 
 const ProductsManager = require("../dao/ProductsMongo.manager.js");
 const CartsManager = require("../dao/CartsMongo.manager.js");
-
+const { isLoggedIn } = require("../middlewares/auth.middleware.js");
 const productsManager = new ProductsManager();
 const cartsManager = new CartsManager();
 
@@ -10,18 +10,18 @@ const renderUtils = require("../public/js/renderUtils.js");
 const { Router } = require("express");
 const router = Router();
 
-const userAdmin = {
-  username: "Gago_Admin",
-  nombre: "Ruben",
-  apellido: "Roldan",
-  role: "admin",
-};
-const userUser = {
-  username: "Gago_User",
-  nombre: "Ruben",
-  apellido: "Roldan",
-  role: "user",
-};
+// const userAdmin = {
+//   username: "Gago_Admin",
+//   nombre: "Ruben",
+//   apellido: "Roldan",
+//   role: "admin",
+// };
+// const userUser = {
+//   username: "Gago_User",
+//   nombre: "Ruben",
+//   apellido: "Roldan",
+//   role: "user",
+// };
 
 function formatearProductosAnidados(products) {
 
@@ -101,7 +101,7 @@ function generatePaginationLinks(pagLinksParams) {
   return { nextLink, prevLink, firstLink, lastLink, urlBase };
 }
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
 
   let {numPage=1, limitParam = 4, categoryParam = null, 
     availableOnly = null, orderBy = null } = req.query;
@@ -112,8 +112,8 @@ router.get("/", async (req, res) => {
   }
   
   try {
-    // const user=userAdmin
-      const user = userUser;
+
+    const user = req.user; 
   
       const {docs, page, hasPrevPage, hasNextPage, prevPage, 
         nextPage, totalPages,totalDocs, pagingCounter, limit } = 
@@ -131,12 +131,14 @@ router.get("/", async (req, res) => {
       if (docs.length > 0) {
         formatearProductos(docs);
       }
+
+      if (user){
       res.render("home", {
         
-        username: user.username,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        admin: user.role === "admin",
+        username: user.email,
+        nombre: user.first_name,
+        apellido: user.last_name,
+        admin: user.admin,
         title: "mercadito || Gago",
         products:docs, 
         page, hasPrevPage, hasNextPage, 
@@ -145,7 +147,21 @@ router.get("/", async (req, res) => {
         categoryArray,nextLink, prevLink,
         firstLink, lastLink, urlBase,
         styles: "homeStyles.css"
-      });
+      });}
+      else {
+        res.render("home", {
+          title: "mercadito || Gago",
+          products:docs, 
+          page, hasPrevPage, hasNextPage, 
+          prevPage, nextPage, totalPages, 
+          totalDocs, pagingCounter, limit,
+          categoryArray,nextLink, prevLink,
+          firstLink, lastLink, urlBase,
+          styles: "homeStyles.css"
+        });
+      }
+
+      
     } catch (error) {
       console.log(error)
       res.status(500).json({ error: "Error al obtener los productos" });
@@ -153,7 +169,7 @@ router.get("/", async (req, res) => {
   });
 
 // endpoint productos
-router.get("/products", async (req, res) => {
+router.get("/products", isLoggedIn, async (req, res) => {
 
 let {numPage=1, limitParam = 4, categoryParam = null, 
   availableOnly = null, orderBy = null } = req.query;
@@ -164,8 +180,8 @@ const findParams = {
 }
 
 try {
-  // const user=userAdmin
-    const user = userUser;
+
+    const user = req.user; 
 
     const {docs, page, hasPrevPage, hasNextPage, prevPage, 
       nextPage, totalPages,totalDocs, pagingCounter, limit } = 
@@ -183,21 +199,34 @@ generatePaginationLinks(pagLinksParams);
     if (docs.length > 0) {
       formatearProductos(docs);
     }
-    res.render("home", {
-      
-      username: user.username,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      admin: user.role === "admin",
-      title: "mercadito || Gago",
-      products:docs, 
-      page, hasPrevPage, hasNextPage, 
-      prevPage, nextPage, totalPages, 
-      totalDocs, pagingCounter, limit,
-      categoryArray,nextLink, prevLink,
-      firstLink, lastLink, urlBase,
-      styles: "homeStyles.css"
-    });
+    if (user){
+      res.render("home", {
+        
+        username: user.email,
+        nombre: user.first_name,
+        apellido: user.last_name,
+        admin: user.admin,
+        title: "mercadito || Gago",
+        products:docs, 
+        page, hasPrevPage, hasNextPage, 
+        prevPage, nextPage, totalPages, 
+        totalDocs, pagingCounter, limit,
+        categoryArray,nextLink, prevLink,
+        firstLink, lastLink, urlBase,
+        styles: "homeStyles.css"
+      });}
+      else {
+        res.render("home", {
+          title: "mercadito || Gago",
+          products:docs, 
+          page, hasPrevPage, hasNextPage, 
+          prevPage, nextPage, totalPages, 
+          totalDocs, pagingCounter, limit,
+          categoryArray,nextLink, prevLink,
+          firstLink, lastLink, urlBase,
+          styles: "homeStyles.css"
+        });
+      }
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: "Error al obtener los productos" });
@@ -265,26 +294,68 @@ router.get("/chat", async (req, res) => {
   });
 });
 
-router.get("/carts/:cid", async (req, res) =>{
+
+router.get("/carts", isLoggedIn, async (req, res) => {
+  try {
+    const user = req.user; 
+
+    const existingCart = await cartsManager.getCartByEmail(user.email);
+
+    if (!existingCart) {
+      const newCart = await cartsManager.createCartForUser(user.email);
+      if (!newCart) {
+        throw new Error("Error al crear el carrito para el usuario");
+      }
+      return res.status(200).json({ cartId: newCart._id }); 
+    }
+
+    return res.status(200).json({ cartId: existingCart._id }); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error interno del servidor");
+  }
+});
+
+
+router.get("/carts/:cid", isLoggedIn, async (req, res) =>{
   const cid = req.params.cid
+
   try {
     // const user=userAdmin
-    const user = userUser;
+    // const user = userUser;
+    const user = req.user; 
     const cart = await cartsManager.getCartById(cid);
     const products = cart.products
     if (products.length > 0) {
       formatearProductosAnidados(products);
     }
-    res.render("cart", {
-      cid,
-      username: user.username,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      admin: user.role === "admin",
-      title: "carrito || Gago",
-      products,
-      styles: "homeStyles.css",
-    });
+
+
+    if (user){
+      res.render("cart", {
+        
+        username: user.email,
+        nombre: user.first_name,
+        apellido: user.last_name,
+        admin: user.admin,
+        cid,
+        title: "carrito || Gago",
+        products,
+        styles: "homeStyles.css"
+      });}
+      else {
+        res.render("cart", {
+
+          cid,
+          title: "carrito || Gago",
+          products,
+          styles: "homeStyles.css"
+        });
+      }
+
+
+
+
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: "Error al obtener los productos" });

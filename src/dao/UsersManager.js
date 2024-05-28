@@ -25,4 +25,5 @@ const { userModel } = require ("./models/users.model.js")
     }  
   
   }
+
   module.exports = {UsersManagerMongo};

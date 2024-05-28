@@ -1,11 +1,51 @@
 const ProductsManager = require("../dao/ProductsMongo.manager.js");
 const { cartsModel } = require("./models/carts.model.js");
 
+const { UsersManagerMongo } = require ('../dao/UsersManager.js')
+
 class CartsManager {
 
   constructor() {
     this.model = cartsModel
   }
+
+
+  async getCartByEmail(email) {
+    const usersManager = new UsersManagerMongo();
+
+    try {
+        const user = await usersManager.getUserBy({ email });
+        if (!user) {
+            throw new Error("Usuario no encontrado");
+        }
+
+        const cart = await this.model.findOne({ userId: user._id });
+        return cart; 
+    } catch (error) {
+        console.error("Error al obtener el carrito por email:", error);
+        throw new Error("Error al obtener el carrito por email");
+    }
+}
+
+
+async createCartForUser(email) {
+  const usersManager = new UsersManagerMongo();
+
+  try {
+      const user = await usersManager.getUserBy({ email });
+      
+      if (!user) {
+          throw new Error("Usuario no encontrado");
+      }
+
+      const newCart = await this.model.create({ userId: user._id });
+      
+      return newCart; 
+  } catch (error) {
+      console.error("Error al crear el carrito para el usuario:", error);
+      throw new Error("Error al crear el carrito para el usuario");
+  }
+}
 
 
   getCarts = async () => await this.model.find()

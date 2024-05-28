@@ -8,13 +8,8 @@ const userService = new UsersManagerMongo()
 
 
 const { auth } = require ('../middlewares/auth.middleware.js')
-// const { crateHash, isValidPAssword } = require ('../utils/bcrypt.js')
-// const passport = require ('passport')
 
 
-// sessionsRouter.post('/register', passport.authenticate('register', {failureRedirect: '/failregister'}), async (req, res) => {
-//     res.send({status: 'success', message: 'User Registrado'})
-// })
 
 sessionsRouter.post('/register', async (req, res) => {
     try {
@@ -34,12 +29,11 @@ sessionsRouter.post('/register', async (req, res) => {
         
         const result = await userService.createUser(newUser)
         console.log(result)
-        res.send ('usuario registrado')
+        res.send({status: 'success', payload: result})
     } catch (error) {
         console.log(error)
     }
 })
-
 
 
 sessionsRouter.post('/login', async (req, res) => {
@@ -57,14 +51,42 @@ sessionsRouter.post('/login', async (req, res) => {
                     email: userExist.email,
                     admin: userExist.role === 'admin'
                 }
-                console.log(req.session.user)
-                res.send({status: 'succes', payload: req.user})
+                // console.log(req.session.user)
+                res.send({status: 'success', payload: req.user})
     } catch (error) {
         console.log(error)
     }
 })
 
+sessionsRouter.get('/current', auth, (req, res) => {
+    res.send('datos sensibles')
+})
 
+
+sessionsRouter.get('/logout', (req, res) => {
+    req.session.destroy( err => {
+        if(err) return res.send({status: 'error', error: err})
+        else return res.redirect('/login')
+    })
+})
+
+sessionsRouter.get('/status', (req, res) => {
+    if (req.session.user) {
+        res.json({
+            isAuthenticated: true,
+            isAdmin: req.session.user.admin
+        });
+    } else {
+        res.json({
+            isAuthenticated: false,
+            isAdmin: false
+        });
+    }
+});
+
+
+
+module.exports = { sessionsRouter, }
 
 
 // sessionsRouter.post('/failregister', async (req, res) => {
@@ -87,18 +109,4 @@ sessionsRouter.post('/login', async (req, res) => {
 //     res.send({error: 'falló el login'})
 // })
 
-sessionsRouter.get('/current', auth, (req, res) => {
-    res.send('datos sensibles')
-})
 
-
-sessionsRouter.get('/logout', (req, res) => {
-    req.session.destroy( err => {
-        if(err) return res.send({status: 'error', error: err})
-        else return res.redirect('/login')
-    })
-})
-
-
-
-module.exports = { sessionsRouter, }

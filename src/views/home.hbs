@@ -2,15 +2,17 @@
   <div class="bienvenida">
     <h1>Bienvenido a nuestro e-commerce</h1>
     <h2> Estos son nuestros productos</h2>
-    <div class="flex">
-      <a href="/realtimeproducts" class="btn btn-dark">Ir a Real Time Products</a>
-      <a href="/chat" class="btn btn-primary">Ir al chat</a>
-      <a href="/carts/664006dadff1d46a8cdb49c4" class="btn btn-secondary">Ir al carrito</a>
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Acceder</a>
+    <div class="container d-flex justify-content-between">
+      <div class="flex">
+      <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat</a>
+      <a href="/realtimeproducts" class="btn btn-dark d-none" id="btn-rtp">Ir a Real Time Products</a>
+      </div>
+      <div class="flex">
+        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Ir al carrito</button>
 
-
-
-
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login">Login</a>
+      <button class="btn btn-danger d-none" onclick="logout()" id="btn-logout">LogOut</button>
+      </div>
     </div>
   </div>
   <div class="container">
@@ -46,34 +48,74 @@
     {{>paginator}}
   </div>
 
+  <!-- Modal Login-->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content bg-primary-subtle">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm" class="form-group" onsubmit="login(event)">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-outline-primary w-100 mt-3">Enviar</button>
+            <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse</a>
 
-
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/sessions/login" method="POST" class="form-group">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-outline-dark w-100">Enviar</button>
-        </form>
+            {{!-- <button type="button" class="btn btn-secondary w-100" onclick="register()">Registrarse</button> --}}
+            <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Modal Register-->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content bg-primary-subtle">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">Nuevo usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="registerForm" class="form-group" onsubmit="register(event)">
+            <div class="mb-3">
+              <label for="first_name">Nombre</label>
+              <input type="text" name="first_name" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="last_name">Apellido</label>
+              <input type="text" name="last_name" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control" />
+            </div>
+            <button class="btn btn-outline-primary w-100 mt-3">Enviar</button>
+      <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login</a>
+            <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
-
-
 <script src="/js/home.js"></script>
-{{!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> --}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    checkAuthStatus();
+  });
+</script>

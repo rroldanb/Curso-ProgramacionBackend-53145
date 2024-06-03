@@ -18,14 +18,17 @@ const Sockets =require ("./sockets");
 
 
 //cookie - session
-const cookieParser = require ("cookie-parser")
+// const cookieParser = require ("cookie-parser")
 const session = require ("express-session")
 
 //session db storage
-const MongoStore = require ("connect-mongo")
+const MongoStore = require ("connect-mongo");
+
+//passport
+const passport = require("passport");
+const { initializePassport } = require("./config/passport.config.js");
 
 const app = express();
-
 const PORT = process.env.PORT || 8080;
 
 const httpServer = app.listen(PORT, (error) => {
@@ -33,6 +36,11 @@ const httpServer = app.listen(PORT, (error) => {
   console.log(`Server escuchando en el puerto ${PORT}`);
 });
 
+//mongo DB
+connectDB()
+
+
+//socket
 const io = new Server(httpServer);
 Sockets(io);
 
@@ -41,11 +49,10 @@ app.use((req, res, next) => {
   next();
 });
 
+//json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
-
-
 
 // sessions con mongo - db
 app.use(session({
@@ -53,8 +60,8 @@ app.use(session({
       mongoUrl: "mongodb+srv://gago:Larrucita2@cluster0.8ltmgp5.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"
       ,
       mongoOptions: {
-          // useNewUrlParser: true,
-          // useUnifiedTopology: true 
+          useNewUrlParser: true,
+          useUnifiedTopology: true 
       },
       ttl: 60 * 60 * 1000 * 24
   }),
@@ -63,8 +70,15 @@ app.use(session({
   saveUninitialized: true
 }))
 
-connectDB()
 
+//passsport
+initializePassport()
+
+app.use(passport.initialize())
+app.use(session())
+
+
+//views
 app.set("views", __dirname + "/views");
 
 const hbs = handlebars.create({

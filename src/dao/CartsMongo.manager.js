@@ -19,7 +19,7 @@ class CartsManager {
             throw new Error("Usuario no encontrado");
         }
 
-        const cart = await this.model.findOne({ userId: user._id });
+        const cart = await this.model.findOne({ userId: user._id }).lean();
         return cart; 
     } catch (error) {
         console.error("Error al obtener el carrito por email:", error);

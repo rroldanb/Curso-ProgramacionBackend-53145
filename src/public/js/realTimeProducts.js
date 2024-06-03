@@ -14,10 +14,7 @@ const productsArea = document.getElementById("realTimeProductsArea");
 const h3 = document.querySelector("#newProdDetails h3");
 const prodDetails = document.querySelector("#newProdDetails");
 
-document.getElementById("rtp-btn-logout").addEventListener("click", () => {
-  localStorage.removeItem("username");
-  window.location.reload();
-});
+
 
 const saveButton = document.querySelector(".btn-save");
 saveButton.disabled = true;
@@ -346,3 +343,23 @@ socket.on("Server:loadProducts", (data) => {
 socket.on("Server:productUpdate", (data) => {
   updateProductCard(data._id, data);
 });
+
+function logout() {
+  fetch('/sessions/logout', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = '/'; 
+    } else {
+      throw new Error('Error logging out');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert(error.message);
+  });
+}

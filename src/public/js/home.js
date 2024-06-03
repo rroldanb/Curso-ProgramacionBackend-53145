@@ -25,9 +25,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', async (event) => {
-            const cartId = event.target.getAttribute('data-cart-id');
+            // const cartId = document.getElementById('cart_id');
+            const cartIdElement = document.getElementById('cart_id');
+            const cartId = cartIdElement ? cartIdElement.textContent.split(' ')[2] : null; // Assuming 'cart id {cart_id}'
+
+
             const productId = event.target.getAttribute('data-product-id');
-            
+
+
             try {
                 const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
                     method: 'POST',
@@ -52,31 +57,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// home.js
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   const loginForm = document.getElementById('loginForm');
-//   if (loginForm) {
-//     loginForm.addEventListener('submit', login);
-//   }
-
-//   const registerButton = document.querySelector('.btn-secondary');
-//   if (registerButton) {
-//     registerButton.addEventListener('click', showRegister);
-//   }
-
-//   const registerModal = document.getElementById('registerModal');
-//   if (registerModal) {
-//     registerModal.addEventListener('hidden.bs.modal', showLogin);
-//   }
-
-//   checkAuthStatus();
-// });
 
 function login(event) {
   event.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  const email = document.getElementById('emailLogin').value;
+  const password = document.getElementById('passwordLogin').value;
+
+  if (!email || !password) {
+    alert("Email y contraseña son necesarios");
+    return;
+  }
 
   fetch('/sessions/login', {
     method: 'POST',
@@ -85,17 +76,26 @@ function login(event) {
     },
     body: JSON.stringify({ email, password })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
     if (data.status === 'success') {
-      console.log("login exitoso")
+      console.log("Login exitoso");
       window.location.reload();
     } else {
-      alert(data.error);
+      alert(data.error || 'Error desconocido');
     }
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => {
+    console.error('Error:', error);
+    alert(`Error: ${error.message}`);
+  });
 }
+
 
 function logout() {
   fetch('/sessions/logout', {
@@ -114,21 +114,11 @@ function logout() {
   .catch(error => console.error('Error:', error));
 }
 
-// function showRegister() {
-//   const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-//   const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
 
-//   loginModal.hide();
-//   registerModal.show();
-// }
-
-// function showLogin() {
-//   const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-//   loginModal.show();
-// }
 
 function register(event) {
   event.preventDefault();
+  const form = event.target;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData.entries());
 
@@ -141,14 +131,10 @@ function register(event) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('data status', data.status)
     if (data.status === 'success') {
 
-      console.log('Usuario agregado correctamente:', result);
       Swal.fire('Éxito', 'Usuario agregado correctamente', 'success');
-      // const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
-      // registerModal.hide();
-      // registerModal.hidden = true;
+      form.reset();
     } else {
       alert(data.error);
     }
@@ -213,3 +199,19 @@ function redirectToCart() {
 
 
 
+document.querySelectorAll('.toggle-password-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const input = this.previousElementSibling;
+    const icon = this.querySelector('i');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('bi-eye');
+      icon.classList.add('bi-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('bi-eye-slash');
+      icon.classList.add('bi-eye');
+    }
+  });
+});

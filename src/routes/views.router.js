@@ -1,7 +1,7 @@
 
 const ProductsManager = require("../dao/ProductsMongo.manager.js");
 const CartsManager = require("../dao/CartsMongo.manager.js");
-const { isLoggedIn } = require("../middlewares/auth.middleware.js");
+const { isLoggedIn, auth } = require("../middlewares/auth.middleware.js");
 const productsManager = new ProductsManager();
 const cartsManager = new CartsManager();
 
@@ -113,7 +113,7 @@ router.get("/", isLoggedIn, async (req, res) => {
   
   try {
 
-    const user = req.user; 
+    let user = req.user; 
   
       const {docs, page, hasPrevPage, hasNextPage, prevPage, 
         nextPage, totalPages,totalDocs, pagingCounter, limit } = 
@@ -133,9 +133,17 @@ router.get("/", isLoggedIn, async (req, res) => {
       }
 
       if (user){
+        if (user.user){
+          user = user.user
+        }
+        const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
+        const cart_id = await cartsManager.getCartByEmail(user.email)
+
+
       res.render("home", {
-        
+        cart_id: cart_id._id,
         username: user.email,
+        nombre_completo,
         nombre: user.first_name,
         apellido: user.last_name,
         admin: user.admin,
@@ -181,7 +189,7 @@ const findParams = {
 
 try {
 
-    const user = req.user; 
+    let user = req.user; 
 
     const {docs, page, hasPrevPage, hasNextPage, prevPage, 
       nextPage, totalPages,totalDocs, pagingCounter, limit } = 
@@ -200,9 +208,18 @@ generatePaginationLinks(pagLinksParams);
       formatearProductos(docs);
     }
     if (user){
+
+    if (user.user){
+      user = user.user
+    }
+    const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
+    const cart_id = await cartsManager.getCartByEmail(user.email)
+
+
       res.render("home", {
-        
+        cart_id:cart_id._id,
         username: user.email,
+        nombre_completo,
         nombre: user.first_name,
         apellido: user.last_name,
         admin: user.admin,
@@ -233,7 +250,8 @@ generatePaginationLinks(pagLinksParams);
   }
 });
 
-router.get("/realtimeproducts", async (req, res) => {
+router.get("/realtimeproducts", isLoggedIn, auth, async (req, res) => {
+
   let {numPage=1, limitParam = 4, categoryParam = null, 
     availableOnly = null, orderBy = null } = req.query;
   
@@ -244,7 +262,7 @@ router.get("/realtimeproducts", async (req, res) => {
   
 
 try {
-    const user = userAdmin;
+    const user = req.user;
     // const user=userUser
     const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,totalDocs, pagingCounter, limit } = 
     await productsManager.getProducts(findParams);
@@ -267,10 +285,11 @@ try {
       });
 
       res.render("realTimeProducts", {
-        username: user.username,renderPage:"/realTimeProducts/",
-        nombre: user.nombre,
-        apellido: user.apellido,
-        admin: user.role === "admin",
+        username: user.mail,
+        renderPage:"/realTimeProducts/",
+        nombre: user.first_name,
+        apellido: user.last_name,
+        admin: user.admin,
         title: "Edit mercadito || Gago",
         products:docs,
       page, hasPrevPage, hasNextPage, 

@@ -1,17 +1,18 @@
 <main>
   <div class="bienvenida">
-    <h1>Bienvenido a nuestro e-commerce</h1>
+    <h1>{{nombre_completo}} Bienvenido a nuestro e-commerce</h1>
     <h2> Estos son nuestros productos</h2>
+    <h3 class="cart_id  d-none " id="cart_id" >cart id {{cart_id}} </h3>
     <div class="container d-flex justify-content-between">
       <div class="flex">
-      <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat</a>
+      <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat <i class="bi bi-chat-text"></i></a>
       <a href="/realtimeproducts" class="btn btn-dark d-none" id="btn-rtp">Ir a Real Time Products</a>
       </div>
       <div class="flex">
-        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Ir al carrito</button>
+        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Ir al carrito <i class="bi bi-cart"></i></button>
 
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login">Login</a>
-      <button class="btn btn-danger d-none" onclick="logout()" id="btn-logout">LogOut</button>
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login">Login <i class="bi bi-person"></i></a>
+      <button class="btn btn-danger d-none" onclick="logout()" id="btn-logout">LogOut <i class="bi bi-person-lock"></i></button>
       </div>
     </div>
   </div>
@@ -38,9 +39,13 @@
         </p>
         <p><strong>Categoría:</strong> {{this.category}}</p>
         {{#if this.status}}
-        <button class="btn btn-warning add-to-cart-btn" data-cart-id="664006dadff1d46a8cdb49c4" data-product-id="{{_id}}">Agregar al carrito</button>
+
+        <button class="btn btn-warning add-to-cart-btn" data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
+  Agregar al carrito <i class="bi bi-cart-plus"></i>
+</button>
+
         {{else}}
-        <button class="btn btn-warning add-to-cart-btn" disabled data-cart-id="664006dadff1d46a8cdb49c4" data-product-id="{{_id}}">Agregar al carrito</button>
+        <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}">Agregar al carrito </button>
         {{/if}}
       </div>
     {{/each}}
@@ -48,69 +53,79 @@
     {{>paginator}}
   </div>
 
-  <!-- Modal Login-->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-      <div class="modal-content bg-primary-subtle">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel">Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="loginForm" class="form-group" onsubmit="login(event)">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" name="email" id="email" class="form-control" required>
+<!-- Modal Login-->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content bg-primary-subtle">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm" class="form-group" onsubmit="login(event)">
+          <div class="mb-3">
+            <label for="emailLogin" class="form-label">Email</label>
+            <input type="email" placeholder="correo" name="emailLogin" id="emailLogin" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="passwordLogin" class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" placeholder="Contraseña" name="passwordLogin" id="passwordLogin" class="form-control toggle-password" required>
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button">
+                <i class="bi bi-eye"></i>
+              </button>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" name="password" id="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-outline-primary w-100 mt-3">Enviar</button>
-            <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse</a>
-
-            {{!-- <button type="button" class="btn btn-secondary w-100" onclick="register()">Registrarse</button> --}}
-            <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar</button>
-          </form>
-        </div>
+          </div>
+          <button type="submit" class="btn btn-outline-primary w-100 mt-3">Ingresar <i class="bi bi-person-check"></i></button>
+          <a href="/sessions/github" class="btn btn-outline-dark w-100 mt-3">Github <i class="bi bi-github"></i></a>
+          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse <i class="bi bi-person-plus"></i></i></a>
+          <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal Register-->
-  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-      <div class="modal-content bg-primary-subtle">
-        <div class="modal-header">
-          <h5 class="modal-title" id="registerModalLabel">Nuevo usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="registerForm" class="form-group" onsubmit="register(event)">
-            <div class="mb-3">
-              <label for="first_name">Nombre</label>
-              <input type="text" name="first_name" class="form-control" />
+<!-- Modal Register-->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content bg-primary-subtle">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Nuevo usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm" class="form-group" onsubmit="register(event)">
+          <div class="mb-3">
+            <label for="first_name">Nombre</label>
+            <input type="text" placeholder="Nombre" name="first_name" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="last_name">Apellido</label>
+            <input type="text" placeholder="Apellido" name="last_name" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" placeholder="correo" name="email" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control toggle-password" id="password" name="password" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="mostrar-ocultar-password">
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button">
+                <i class="bi bi-eye"></i>
+              </button>
             </div>
-            <div class="mb-3">
-              <label for="last_name">Apellido</label>
-              <input type="text" name="last_name" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label for="email">Email</label>
-              <input type="email" name="email" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label for="password">Password</label>
-              <input type="password" name="password" class="form-control" />
-            </div>
-            <button class="btn btn-outline-primary w-100 mt-3">Enviar</button>
-      <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login</a>
-            <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar</button>
-          </form>
-        </div>
+          </div>
+          <button class="btn btn-outline-primary w-100 mt-3">Guardar <i class="bi bi-person-plus"></i></button>
+          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a>
+          <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+        </form>
       </div>
     </div>
   </div>
+</div>
+
 
 </main>
 <script src="/js/home.js"></script>

@@ -15,7 +15,11 @@ const userSchema = new Schema ({
     role: {
         type: String,
         default: 'user'
-    }
+    },
+    cartId: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'carts', 
+        required: true }, 
 })
 
 // userSchema.plugin(mongoosePaginate)

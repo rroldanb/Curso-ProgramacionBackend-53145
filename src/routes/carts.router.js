@@ -7,24 +7,24 @@ const { Router } = require("express");
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-    try {
-      const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
-      if (limit && (!Number.isInteger(limit) || limit <= 0)) {
-        return res.status(400).json({
-          error: 'El parámetro "limit" debe ser un número entero positivo',
-        });
-      }
-      let carts = await cartsManager.getCarts();
-      if (limit !== undefined) {
-        carts = carts.slice(0, limit);
-      }
-      res.json(carts);
-    } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: "Error al obtener los carritos" });
-    }
-  });
+// router.get("/", async (req, res) => {
+//     try {
+//       const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+//       if (limit && (!Number.isInteger(limit) || limit <= 0)) {
+//         return res.status(400).json({
+//           error: 'El parámetro "limit" debe ser un número entero positivo',
+//         });
+//       }
+//       let carts = await cartsManager.getCarts();
+//       if (limit !== undefined) {
+//         carts = carts.slice(0, limit);
+//       }
+//       res.json(carts);
+//     } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ error: "Error al obtener los carritos" });
+//     }
+//   });
 
 router.get("/:cid", async (req, res) => {
   const { cid } = req.params;

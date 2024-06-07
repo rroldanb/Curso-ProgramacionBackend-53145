@@ -10,18 +10,7 @@ const renderUtils = require("../public/js/renderUtils.js");
 const { Router } = require("express");
 const router = Router();
 
-// const userAdmin = {
-//   username: "Gago_Admin",
-//   nombre: "Ruben",
-//   apellido: "Roldan",
-//   role: "admin",
-// };
-// const userUser = {
-//   username: "Gago_User",
-//   nombre: "Ruben",
-//   apellido: "Roldan",
-//   role: "user",
-// };
+
 
 function formatearProductosAnidados(products) {
 
@@ -137,7 +126,11 @@ router.get("/", isLoggedIn, async (req, res) => {
           user = user.user
         }
         const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
-        const cart_id = await cartsManager.getCartByEmail(user.email)
+        let cart_id = await cartsManager.getCartByEmail(user.email)
+        if (!cart_id) {
+    await cartsManager.createCartForUser(user.email)
+    cart_id = await cartsManager.getCartByEmail(user.email)
+        }
 
 
       res.render("home", {
@@ -213,8 +206,11 @@ generatePaginationLinks(pagLinksParams);
       user = user.user
     }
     const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
-    const cart_id = await cartsManager.getCartByEmail(user.email)
-
+    let cart_id = await cartsManager.getCartByEmail(user.email)
+    if (!cart_id) {
+await cartsManager.createCartForUser(user.email)
+cart_id = await cartsManager.getCartByEmail(user.email)
+    }
 
       res.render("home", {
         cart_id:cart_id._id,
@@ -316,7 +312,13 @@ router.get("/chat", async (req, res) => {
 
 router.get("/carts", isLoggedIn, async (req, res) => {
   try {
-    const user = req.user; 
+    let user = req.user; 
+
+    if (user.user){
+      user = user.user
+    }
+    // const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
+
 
     const existingCart = await cartsManager.getCartByEmail(user.email);
 

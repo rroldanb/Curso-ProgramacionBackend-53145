@@ -162,7 +162,7 @@ function checkAuthStatus() {
       btnLogout.classList.remove('d-none');
       btnCart.classList.remove('d-none');
       btnChat.classList.remove('d-none');
-      console.log(data)
+      // console.log(data)
       if (data.isAdmin) {
         btnRTP.classList.remove('d-none');
       } else {

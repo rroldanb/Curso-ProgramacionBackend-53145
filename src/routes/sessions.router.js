@@ -15,12 +15,14 @@ const MongoStore = require("connect-mongo");
 
 
 sessionsRouter.get ('/github', passport.authenticate('github', {scope:'user:email'}), async (req, res)=>{
-    // console.log('first')
 })
 sessionsRouter.get ('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), (req, res)=>{
     const user = req.user
     const admin = req.user.role === 'admin'
-    req.session.user = {user, admin }
+    
+    req.session.user = {user}
+    req.session.user.admin = {admin}
+    
     // console.log('req.session.user ', req.session.user )
     res.redirect('/')
 })

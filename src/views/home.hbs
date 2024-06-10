@@ -29,7 +29,7 @@
             <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
           {{/each}}
         </div>
-        <h3 class="text-center">{{this.title}}</h3>
+        <h3 class="text-center prodName">{{this.title}}</h3>
         <p><strong>Precio:</strong> {{ this.price}}</p>
         <p>
           <strong>Estado:</strong>
@@ -103,6 +103,10 @@
           <div class="mb-3">
             <label for="last_name">Apellido</label>
             <input type="text" placeholder="Apellido" name="last_name" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="age">Edad</label>
+            <input type="text" placeholder="Edad" name="age" class="form-control" />
           </div>
           <div class="mb-3">
             <label for="email">Email</label>

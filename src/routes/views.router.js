@@ -126,15 +126,16 @@ router.get("/", isLoggedIn, async (req, res) => {
           user = user.user
         }
         const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
-        let cart_id = await cartsManager.getCartByEmail(user.email)
-        if (!cart_id) {
-    await cartsManager.createCartForUser(user.email)
-    cart_id = await cartsManager.getCartByEmail(user.email)
-        }
+    //     let cart_id = await cartsManager.getCartByEmail(user.email)
+    //     if (!cart_id) {
+    // await cartsManager.createCartForUser(user.email)
+    // cart_id = await cartsManager.getCartByEmail(user.email)
+    //     }
+
 
 
       res.render("home", {
-        cart_id: cart_id._id,
+        cart_id: user.cart_id,
         username: user.email,
         nombre_completo,
         nombre: user.first_name,
@@ -206,14 +207,16 @@ generatePaginationLinks(pagLinksParams);
       user = user.user
     }
     const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
-    let cart_id = await cartsManager.getCartByEmail(user.email)
-    if (!cart_id) {
-await cartsManager.createCartForUser(user.email)
-cart_id = await cartsManager.getCartByEmail(user.email)
-    }
+//     let cart_id = await cartsManager.getCartByEmail(user.email)
+//     if (!cart_id) {
+// await cartsManager.createCartForUser(user.email)
+// cart_id = await cartsManager.getCartByEmail(user.email)
+//     }
+
+
 
       res.render("home", {
-        cart_id:cart_id._id,
+        cart_id:user.cart_id,
         username: user.email,
         nombre_completo,
         nombre: user.first_name,

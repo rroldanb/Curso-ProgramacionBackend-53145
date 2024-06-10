@@ -11,12 +11,13 @@ const userSchema = new Schema ({
         required:true,
         unique:true
     },
+    age: Number,
     password: String,
     role: {
         type: String,
         default: 'user'
     },
-    cartId: { 
+    cart_id: { 
         type: Schema.Types.ObjectId, 
         ref: 'carts', 
         required: true }, 

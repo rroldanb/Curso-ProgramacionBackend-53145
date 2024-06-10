@@ -68,6 +68,20 @@ async createCartForUser(email) {
     return cartId;
   }
 
+
+  async updateCartWithUserId(cartId, userId) {
+    try {
+        const updatedCart = await this.model.findByIdAndUpdate(cartId, { userId }, { new: true });
+        if (!updatedCart) {
+            throw new Error('Cart not found');
+        }
+        return updatedCart;
+    } catch (error) {
+        throw new Error(`Error updating cart with user ID: ${error.message}`);
+    }
+}
+
+
   async addProductToCart(cid, pid) {
     const productsManager = new ProductsManager();
 

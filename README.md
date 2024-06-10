@@ -1,17 +1,26 @@
-# Rubén Roldán - Desafio entregable #6
+# Rubén Roldán - Desafio complementario #2
 Curso CoderHouse Programación Backend, Comisión 53145
 
 ## Descripción de la entrega
 
 ### Consigna
-- Con base en el login de nuestro entregable anterior, refactorizar para incluir los nuevos conceptos.
+- Continuar sobre el proyecto que has trabajado para tu ecommerce y configurar los siguientes elementos:
 
 
 ### Aspectos a incluir
 
-- Se deberá contar con un hasheo de contraseña utilizando bcrypt
-- Se deberá contar con una implementación de passport, tanto para register como para login.
-- Implementar el método de autenticación de GitHub a la vista de login.
+- Crear un modelo User el cual contará con los campos:
+    - first_name:String,
+    - last_name:String,
+    - email:String (único)
+    - age:Number,
+    - password:String(Hash)
+    - cart:Id con referencia a Carts
+    - role:String(default:’user’)
+- Desarrollar las estrategias de Passport para que funcionen con este modelo de usuarios
+- Modificar el sistema de login del usuario para poder trabajar con session o con jwt (a tu elección).
+- (Sólo para jwt) desarrollar una estrategia “current” para extraer la cookie que contiene el token para obtener el usuario asociado a dicho token, en caso de tener el token, devolver al usuario asociado al token, caso contrario devolver un error de passport, utilizar un extractor de cookie. 
+- Agregar al router /api/sessions/ la ruta /current, la cual utilizará el modelo de sesión que estés utilizando, para poder devolver en una respuesta el usuario actual.
 
 ## Instalación y ejecución
 - Para descargar el código se recomienda clonar el repositorio desde una linea de comandos ejecutando: `git clone https://github.com/rroldanb/Curso-ProgramacionBakend-53145.git `

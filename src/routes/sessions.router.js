@@ -97,6 +97,7 @@ async (req, res) => {
     req.session.user = {
         first_name: req.user.first_name,
         last_name: req.user.last_name,
+        cart_id: req.user.cart_id,
         admin: req.user.role === 'admin',
         email: req.user.email
     }
@@ -113,8 +114,9 @@ sessionsRouter.get('/faillogin', (req, res) => {
 
 
 
-sessionsRouter.get('/current', auth, (req, res) => {
-    res.send('datos sensibles')
+sessionsRouter.get('/current',  (req, res) => {
+    const user =  req.session.user
+    res.send({status: 'success', payload: user})
 })
 
 

@@ -5,9 +5,6 @@ const productsPPageSelect = document.getElementById('productsPPage');
 
 
 
-
-const applyFiltersBtn = document.getElementById('applyFiltersBtn');
-
 // Función para obtener el valor de un parámetro de la URL
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -41,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlBase = window.urlBase;
 });
 
-applyFiltersBtn.addEventListener('click', function() {
+function applyFilters() {
     const category = (categorySelect.value === "todas") ? null : categorySelect.value;
     const disponibilidad = (disponibilidadSelect.value === "todas") ? null : disponibilidadSelect.value;
     const orden = (ordenSelect.value === "todas") ? null : ordenSelect.value;
     const productsPPage = productsPPageSelect.value;
 
-    let url = urlBase+'?';
+    let url = window.urlBase + '?';
     url += 'numPage=1'; 
     url += '&limitParam=' + productsPPage;
     if (category) {
@@ -61,4 +58,10 @@ applyFiltersBtn.addEventListener('click', function() {
     }
 
     window.location.href = url;
-});
+}
+
+// Agregar el event listener a cada select
+categorySelect.addEventListener('change', applyFilters);
+disponibilidadSelect.addEventListener('change', applyFilters);
+ordenSelect.addEventListener('change', applyFilters);
+productsPPageSelect.addEventListener('change', applyFilters);

@@ -150,16 +150,18 @@ router.put("/:cid/product/:pid", async (req,res) =>{
 
   // console.log("cid", cid)
   // console.log("pid", pid)
+  // console.log("newQuantity", newQuantity)
 
   try {
     const result = await cartsManager.updateProductQuantity(
       cid, pid, newQuantity
     );
+
       if (result && result.modifiedCount >0 ) {
         // res.send({status: 'success', payload: result})
         res
       .status(200)
-      .json({ message: `Cantidad del producto con pid ${pid} actualizado a ${newQuantity}.` });
+      .json({status: 200, productName: result.productName , message: `Cantidad del producto con pid ${pid} actualizado a ${newQuantity}.` });
       } else {
         res.status(404).json({ error: `Carrito con ID ${cid} no existe o Producto ${pid} no encontrado en el carrito` });
       }

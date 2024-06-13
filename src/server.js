@@ -116,6 +116,7 @@ app.set("view engine", ".hbs");
 
 app.use("/", viewsRouter);
 app.use("/sessions", sessionsRouter);
+app.use("/api/sessions", sessionsRouter);
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);

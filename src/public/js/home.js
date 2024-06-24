@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
             const productId = event.target.getAttribute('data-product-id');
 
-
             try {
                 const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
                     method: 'POST',

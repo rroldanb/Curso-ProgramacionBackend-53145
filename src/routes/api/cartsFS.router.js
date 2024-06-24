@@ -1,5 +1,5 @@
 const path = require("path");
-const CartsManager = require("../dao/CartsFSManager.js");
+const CartsManager = require("../../dao/CartsFSManager.js");
 const cartsPath = path.join(__dirname, "..", "data", "carrito.json");
 const cartsManager = new CartsManager(cartsPath);
 

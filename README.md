@@ -1,26 +1,15 @@
-# Rubén Roldán - Desafio complementario #2
+# Rubén Roldán - Desafio entregable #7 Reestructura de nuestro servidor
 Curso CoderHouse Programación Backend, Comisión 53145
 
 ## Descripción de la entrega
 
 ### Consigna
-- Continuar sobre el proyecto que has trabajado para tu ecommerce y configurar los siguientes elementos:
-
+- Con base en las clases previamente vistas, realizar los cambios necesarios en tu proyecto para que se base en un modelo de capas.
 
 ### Aspectos a incluir
 
-- Crear un modelo User el cual contará con los campos:
-    - first_name:String,
-    - last_name:String,
-    - email:String (único)
-    - age:Number,
-    - password:String(Hash)
-    - cart:Id con referencia a Carts
-    - role:String(default:’user’)
-- Desarrollar las estrategias de Passport para que funcionen con este modelo de usuarios
-- Modificar el sistema de login del usuario para poder trabajar con session o con jwt (a tu elección).
-- (Sólo para jwt) desarrollar una estrategia “current” para extraer la cookie que contiene el token para obtener el usuario asociado a dicho token, en caso de tener el token, devolver al usuario asociado al token, caso contrario devolver un error de passport, utilizar un extractor de cookie. 
-- Agregar al router /api/sessions/ la ruta /current, la cual utilizará el modelo de sesión que estés utilizando, para poder devolver en una respuesta el usuario actual.
+- El proyecto debe contar con capas de routing, controlador, dao, con nuestras vistas bien separadas y con las responsabilidades correctamente delegadas.
+- Además, mover del proyecto todas las partes importantes y comprometedoras en un archivo .env para poder leerlo bajo variables de entorno en un archivo config.js
 
 ## Instalación y ejecución
 - Para descargar el código se recomienda clonar el repositorio desde una linea de comandos ejecutando: `git clone https://github.com/rroldanb/Curso-ProgramacionBakend-53145.git `
@@ -28,9 +17,9 @@ Curso CoderHouse Programación Backend, Comisión 53145
 - Instalar la dependencias mediante `npm i`
 - Verificar que el puerto 8080 no esté en uso con el comando `lsof -i :8080`
 - Ejecutar el código mediante el uso de alguno de los scripts:
-    - `npm start` Este script inicia la aplicación ejecutando el archivo src/app.js con Node.js. Es útil para iniciar la aplicación en un entorno de producción.
-    - `npm run dev` Este script utiliza Nodemon para iniciar la aplicación con la capacidad de reiniciarse automáticamente cada vez que detecta cambios en los archivos.
-    - `npm run start:dev` Este script inicia la aplicación en un entorno de desarrollo, similar al script "dev", pero utilizando directamente Node.js con la opción --watch para observar cambios en el archivo src/app.js. Aunque proporciona funcionalidad similar a la anterior, algunos desarrolladores pueden preferir esta opción si no quieren depender de Nodemon.
+    - `npm start` Este script inicia la aplicación ejecutando el archivo src/app.js con Node.js. Es útil para iniciar la aplicación en un entorno de producción, en el puero 3000.
+    - `npm run dev` Este script utiliza Nodemon para iniciar la aplicación en el puerto 8080, con la capacidad de reiniciarse automáticamente cada vez que detecta cambios en los archivos.
+    - `npm run start:dev` Este script inicia la aplicación en el puerto 8080, en un entorno de desarrollo, similar al script "dev", pero utilizando directamente Node.js con la opción --watch para observar cambios en el archivo src/app.js. Aunque proporciona funcionalidad similar a la anterior, algunos desarrolladores pueden preferir esta opción si no quieren depender de Nodemon.
 - Para detener la ejecución de la aplicacion presinonar juntas las teclas: Ctrl + C
 
 

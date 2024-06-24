@@ -1,3 +1,4 @@
+// const { productsService } = require('../service/index.js');
 const {productsModel} = require ('./models/products.model.js')
 
 class ProductsManager {
@@ -36,13 +37,6 @@ class ProductsManager {
     limitParam = parseInt(limitParam);
     orderBy = parseInt(orderBy)
 
-  // console.log("numPage aca", numPage)
-  // console.log("limit aca", limitParam)
-  // console.log('categoryParam:', categoryParam);
-  // console.log('availableOnly:', typeof(availableOnly));
-  // console.log('limitParam:', limitParam);
-  // console.log('numPage:', numPage);
-  // console.log('orderBy:', orderBy);
 
   const filter = {};
   if (categoryParam !== null) {
@@ -92,46 +86,46 @@ class ProductsManager {
    */
   async addProduct(nuevoProducto) {
     
-    const camposObligatorios = [
-      "title",
-      "description",
-      "code",
-      "price",
-      "stock",
-      "category",
-    ];
-    for (const campo of camposObligatorios) {
-      if (!nuevoProducto[campo]) {
-        console.log(`Error: El campo '${campo}' es obligatorio.`);
-        return;
-      }
-    }
+    // const camposObligatorios = [
+    //   "title",
+    //   "description",
+    //   "code",
+    //   "price",
+    //   "stock",
+    //   "category",
+    // ];
+    // for (const campo of camposObligatorios) {
+    //   if (!nuevoProducto[campo]) {
+    //     console.log(`Error: El campo '${campo}' es obligatorio.`);
+    //     return;
+    //   }
+    // }
 
-    if (typeof nuevoProducto.status !== "boolean") {
-      nuevoProducto.status = true;
-    }
+    // if (typeof nuevoProducto.status !== "boolean") {
+    //   nuevoProducto.status = true;
+    // }
 
-    let thumbnailsArray = [];
-    if (typeof nuevoProducto.thumbnails === "string") {
-      thumbnailsArray = [nuevoProducto.thumbnails];
-    } else if (Array.isArray(nuevoProducto.thumbnails)) {
-      thumbnailsArray = nuevoProducto.thumbnails;
-    } else {
-      console.log(
-        "Error: El campo 'thumbnails' debe ser un string o un array de strings."
-      );
-      return;
-    }
+    // let thumbnailsArray = [];
+    // if (typeof nuevoProducto.thumbnails === "string") {
+    //   thumbnailsArray = [nuevoProducto.thumbnails];
+    // } else if (Array.isArray(nuevoProducto.thumbnails)) {
+    //   thumbnailsArray = nuevoProducto.thumbnails;
+    // } else {
+    //   console.log(
+    //     "Error: El campo 'thumbnails' debe ser un string o un array de strings."
+    //   );
+    //   return;
+    // }
 
-    const invalidThumbnails = thumbnailsArray.filter(
-      (thumbnail) => typeof thumbnail !== "string"
-    );
-    if (invalidThumbnails.length > 0) {
-      console.log(
-        "Error: Algunos elementos de 'thumbnails' no son cadenas de texto válidas."
-      );
-      return;
-    }
+    // const invalidThumbnails = thumbnailsArray.filter(
+    //   (thumbnail) => typeof thumbnail !== "string"
+    // );
+    // if (invalidThumbnails.length > 0) {
+    //   console.log(
+    //     "Error: Algunos elementos de 'thumbnails' no son cadenas de texto válidas."
+    //   );
+    //   return;
+    // }
 
     const product = {
       title: nuevoProducto.title,
@@ -164,4 +158,3 @@ class ProductsManager {
 
 module.exports = ProductsManager;
 
-// export default { ProductsManager };

@@ -14,6 +14,4 @@ function isLoggedIn(req, res, next) {
     return next();
 }
 
-
-
 module.exports = {auth, isLoggedIn}

@@ -27,7 +27,6 @@ class CartsManager {
       this.#carts = carts;
       this.#contadorId = Number(contadorId);
       this.#archivoLeido = true;
-      // console.log("Archivo leído correctamente.");
     } catch (err) {
       if (!this.#archivoLeido) {
         console.log("No se pudo leer el archivo, creando uno nuevo.");

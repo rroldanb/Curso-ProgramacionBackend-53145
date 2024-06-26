@@ -1,72 +1,61 @@
 const express = require("express");
-const dotenv = require('dotenv')
-const app = express();
-dotenv.config()
-
-
-const {router: routerApp} = require ("./routes/index.js")
-const { connectDB, objectConfig } = require("./config/index.js");
-
-// socket io
+const dotenv = require('dotenv');
+const path = require('path');
 const { Server } = require("socket.io");
-const Sockets = require ("./sockets");
-
-//cookie - session
-const session = require ("express-session")
-
-
-//passport
 const passport = require("passport");
-const { initializePassport } = require("./config/passport.config.js");
+const { connectDB, objectConfig } = require("./config/index");
+const configureHandlebars = require('./config/handlebarsConfig');
+const configureSession = require('./config/sessionConfig');
+const initializePassport = require("./config/passport.config").initializePassport;
+const { router: routerApp } = require("./routes/index");
+const Sockets = require("./sockets");
+const cors = require('cors');
 
-const port = objectConfig.port
+// Configuración de entorno
+dotenv.config();
 
+// Inicialización de la aplicación Express
+const app = express();
+const port = objectConfig.port;
+// Configura CORS
+app.use(cors());
+// Conexión a la base de datos
+connectDB();
+
+// Configuración del servidor HTTP y Socket.IO
 const httpServer = app.listen(port, (error) => {
   if (error) console.log(error);
   console.log(`Server escuchando en el puerto ${port}`);
 });
-
-//mongo DB
-connectDB()
-
-//socket
 const io = new Server(httpServer);
 Sockets(io);
 
+// Middleware para compartir io con las rutas
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-
-//json
+// Configuración de middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
-// sessions con mongo - db
-const configureSession = require('./config/sessionConfig.js');
+// Configuración de sesiones
 configureSession(app);
 
-//passsport
-initializePassport()
+// Inicialización de Passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session()); // Uso de sesiones de Passport
 
-app.use(passport.initialize())
-app.use(session())
-
-
-//views
-app.set("views", __dirname + "/views");
-
-
-// motor de plantilla
-const hbs = require('./config/handlebarsConfig.js')(app);
-
-
-app.engine(".hbs", hbs.engine );
+// Configuración de vistas y motor de plantillas
+app.set("views", path.join(__dirname, "views"));
+const hbs = configureHandlebars(app);
+app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
-app.use(routerApp)
-
+// Rutas
+app.use(routerApp);
 
 module.exports = app;

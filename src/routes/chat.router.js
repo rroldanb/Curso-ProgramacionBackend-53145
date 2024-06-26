@@ -2,9 +2,10 @@
 const { chatModel } = require("../dao/models/chat.model");
 
 const { Router } = require("express");
+const { isLoggedIn } = require("../middlewares/auth.middleware");
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
   req.io.on("connection", async (socket) => {
     try {
       const messages = await chatModel.find({});
@@ -51,3 +52,4 @@ router.post("/", async (req, res) => {
 module.exports = {
   router,
 };
+

@@ -116,15 +116,11 @@ class CartsController {
     const { cid } = req.params;
     const newProducts = req.body;
   
-    // console.log("cid", cid)
-    // console.log("newProducts", newProducts)
-  
     try {
       const result = await this.cartsService.addProductsToCart(
         cid,  newProducts
       );
   
-  // console.log("result", result)
   
         if (result && result.modifiedCount >0 ) {
           // res.send({status: 'success', payload: result})
@@ -145,9 +141,6 @@ class CartsController {
     const { cid, pid } = req.params;
     const newQuantity = req.body.newQuantity;
   
-    // console.log("cid", cid)
-    // console.log("pid", pid)
-    // console.log("newQuantity", newQuantity)
   
     try {
       const result = await this.cartsService.updateProductQuantity(

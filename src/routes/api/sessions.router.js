@@ -26,56 +26,10 @@ sessionsRouter.get(
     req.session.user = { user };
     req.session.user.admin = { admin };
 
-    // console.log('req.session.user ', req.session.user )
     res.redirect("/");
   }
 );
 
-// sessionsRouter.post('/register', async (req, res) => {
-//     try {
-//     const {first_name, last_name, email, password} = req.body
-
-//     if (!email || !password) return res.status(401).send({status: 'error', error: 'se necesitan todos los datos'})
-
-//     const userExist = await userService.getUserBy({email})
-//     if (userExist ) return res.status(401).send({status: 'error', error: 'el usuario ya existe'})
-
-//     const newUser = {
-//         first_name : toCapital(first_name),
-//         last_name : toCapital(last_name) ,
-//         email : email.toLowerCase() ,
-//         password : createHash(password)
-//     }
-
-//         const result = await userService.createUser(newUser)
-//         // console.log(result)
-//         res.send({status: 'success', payload: result})
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
-
-// sessionsRouter.post('/login', async (req, res) => {
-//     try {
-//     let { email, password} = req.body
-
-//     if (!email || !password) return res.status(400).send({status: 'error', error: 'se necesitan todos los datos'})
-//     email = email.toLowerCase()
-//     const userExist = await userService.getUserBy({email})
-//     if (!userExist ) return res.status(400).send({status: 'error', error: 'usuario no registrado'})
-
-//     if (!isValidPassword(password, {password: userExist.password}) ) return res.status(401).send({status: 'error', error: 'contraseña no válida'})
-//         req.session.user = {
-//                     first_name: userExist.first_name,
-//                     last_name: userExist.last_name,
-//                     email: userExist.email,
-//                     admin: userExist.role === 'admin'
-//                 }
-//                 res.send({status: 'success', payload: req.user})
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
 
 sessionsRouter.post(
   "/register",

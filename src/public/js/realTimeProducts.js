@@ -1,5 +1,3 @@
-const socket = io();
-
 let savedId = "";
 const productForm = document.getElementById("productForm");
 const newProdTitle = document.getElementById("newProdTitle");
@@ -13,8 +11,7 @@ const newProdFileNames = document.getElementById("newProdFileNames");
 const productsArea = document.getElementById("realTimeProductsArea");
 const h3 = document.querySelector("#newProdDetails h3");
 const prodDetails = document.querySelector("#newProdDetails");
-
-
+const username = document.getElementById("username").innerText
 
 const saveButton = document.querySelector(".btn-save");
 saveButton.disabled = true;
@@ -260,7 +257,6 @@ const renderProductUI = (product) => {
 };
 
 function deleteProduct(pid) {
-  // console.log("product id para borrar", pid);
   fetch(`/api/products/${pid}`, {
     method: "DELETE",
   })
@@ -279,7 +275,6 @@ function deleteProduct(pid) {
 }
 
 function getProductToEdit(pid) {
-  // console.log('getProducttoEdit', pid)
   obtenerProductoPorId(pid).then((productoObtenido) => {
     renderProductsForm(productoObtenido);
   });
@@ -303,7 +298,6 @@ function renderProductsForm(product) {
 }
 
 let obtenerProductoPorId = (pid) => {
-  // console.log('obtener por pid', pid)
   return fetch(`/api/products/${pid}`)
     .then((response) => {
       if (!response.ok) {
@@ -331,6 +325,16 @@ const appendProduct = (product) => {
   const productUI = renderProductUI(product);
   productsArea.appendChild(productUI);
 };
+
+
+///Socket
+const socket = io({
+  auth: {
+    username,
+    serverOffset: 0,
+  },
+});
+
 
 socket.on("Server:addProduct", (data) => {
   console.log("recibiendo datos del nuevo producto", data);

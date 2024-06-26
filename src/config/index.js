@@ -15,7 +15,7 @@ exports.objectConfig = {
 };
 
 exports.connectDB = () => {
-  connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  connect(process.env.MONGO_URL)
     .then(() => console.log("Base de datos conectada"))
     .catch((err) => console.error("Error conectando a la base de datos", err));
 };

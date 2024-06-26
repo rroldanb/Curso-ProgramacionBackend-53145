@@ -154,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(response => response.json())
     .then(data => {
-      // console.log('data', data)
       if (data.status === 200) {
         // Actualizar el subtotal en el frontend
         const precioElement = productContainer.querySelector('.carrito-producto-precio h4');

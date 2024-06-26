@@ -2,7 +2,7 @@ const { chatModel } = require("./dao/models/chat.model.js");
 
 module.exports = (io) => {
   io.on("connection", async (socket) => {
-    // console.log("Cliente Conectado");
+    
     console.log(`${socket.handshake.auth.username} se ha conectado`);
 
     socket.on("disconnect", () => {

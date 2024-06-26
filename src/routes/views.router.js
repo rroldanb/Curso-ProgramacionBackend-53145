@@ -7,6 +7,7 @@ const cartsManager = new CartsManager();
 const renderUtils = require("../public/js/renderUtils.js");
 
 const { Router } = require("express");
+const { default: Swal } = require("sweetalert2");
 const router = Router();
 
 function formatearProductosAnidados(products) {
@@ -99,41 +100,35 @@ router.get("/", isLoggedIn, async (req, res) => {
     orderBy = null,
   } = req.query;
 
-  const findParams = {
-    categoryParam,
-    availableOnly,
-    limitParam,
-    numPage,
-    orderBy,
+
+  availableOnly = availableOnly ? availableOnly === "true" : null;
+  numPage = parseInt(numPage);
+  limit = parseInt(limitParam);
+  orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
+
+  const filter = {};
+  if (categoryParam) filter.category = categoryParam;
+  if (typeof availableOnly === "boolean") filter.status = availableOnly;
+
+  const options = {
+    limit,
+    page: numPage,
+    lean: true,
+    sort: orderBy ? { price: orderBy } : {},
   };
 
   try {
     let user = req.user;
 
+    const result = await productsManager.getProducts(filter, options);
     const {
-      docs,
-      page,
-      hasPrevPage,
-      hasNextPage,
-      prevPage,
-      nextPage,
-      totalPages,
-      totalDocs,
-      pagingCounter,
-      limit,
-    } = await productsManager.getProducts(findParams);
-
+      docs, page,  hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,
+      totalDocs, pagingCounter, limit, } = result;
     const categoryArray = await productsManager.getCategories();
 
     const urlParam = req.url;
     const pagLinksParams = {
-      urlParam,
-      totalPages,
-      nextPage,
-      prevPage,
-      hasNextPage,
-      hasPrevPage,
-    };
+      urlParam, totalPages, nextPage, prevPage, hasNextPage,  hasPrevPage, };
 
     const { nextLink, prevLink, firstLink, lastLink, urlBase } =
       generatePaginationLinks(pagLinksParams);
@@ -150,11 +145,6 @@ router.get("/", isLoggedIn, async (req, res) => {
         user.first_name === user.last_name
           ? user.first_name
           : user.first_name + " " + user.last_name;
-      //     let cart_id = await cartsManager.getCartByEmail(user.email)
-      //     if (!cart_id) {
-      // await cartsManager.createCartForUser(user.email)
-      // cart_id = await cartsManager.getCartByEmail(user.email)
-      //     }
 
       res.render("home", {
         cart_id: user.cart_id,
@@ -220,29 +210,30 @@ router.get("/products", isLoggedIn, async (req, res) => {
     orderBy = null,
   } = req.query;
 
-  const findParams = {
-    categoryParam,
-    availableOnly,
-    limitParam,
-    numPage,
-    orderBy,
+
+  availableOnly = availableOnly ? availableOnly === "true" : null;
+  numPage = parseInt(numPage);
+  limit = parseInt(limitParam);
+  orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
+
+  const filter = {};
+  if (categoryParam) filter.category = categoryParam;
+  if (typeof availableOnly === "boolean") filter.status = availableOnly;
+
+  const options = {
+    limit,
+    page: numPage,
+    lean: true,
+    sort: orderBy ? { price: orderBy } : {},
   };
 
   try {
     let user = req.user;
 
+    const result = await productsManager.getProducts(filter, options);
     const {
-      docs,
-      page,
-      hasPrevPage,
-      hasNextPage,
-      prevPage,
-      nextPage,
-      totalPages,
-      totalDocs,
-      pagingCounter,
-      limit,
-    } = await productsManager.getProducts(findParams);
+      docs, page,  hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,
+      totalDocs, pagingCounter, limit, } = result;
 
     const categoryArray = await productsManager.getCategories();
 
@@ -270,11 +261,6 @@ router.get("/products", isLoggedIn, async (req, res) => {
         user.first_name === user.last_name
           ? user.first_name
           : user.first_name + " " + user.last_name;
-      //     let cart_id = await cartsManager.getCartByEmail(user.email)
-      //     if (!cart_id) {
-      // await cartsManager.createCartForUser(user.email)
-      // cart_id = await cartsManager.getCartByEmail(user.email)
-      //     }
 
 
       res.render("home", {
@@ -302,6 +288,7 @@ router.get("/products", isLoggedIn, async (req, res) => {
         lastLink,
         urlBase,
         styles: "homeStyles.css",
+        user:JSON.stringify(user)
       });
     } else {
       res.render("home", {
@@ -340,29 +327,33 @@ router.get("/realtimeproducts", isLoggedIn, auth, async (req, res) => {
     orderBy = null,
   } = req.query;
 
-  const findParams = {
-    categoryParam,
-    availableOnly,
-    limitParam,
-    numPage,
-    orderBy,
+
+  availableOnly = availableOnly ? availableOnly === "true" : null;
+  numPage = parseInt(numPage);
+  limit = parseInt(limitParam);
+  orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
+
+  const filter = {};
+  if (categoryParam) filter.category = categoryParam;
+  if (typeof availableOnly === "boolean") filter.status = availableOnly;
+
+  const options = {
+    limit,
+    page: numPage,
+    lean: true,
+    sort: orderBy ? { price: orderBy } : {},
   };
 
   try {
-    const user = req.user;
-    // const user=userUser
+    let user = req.user;
+
+  
+
+
+    const result = await productsManager.getProducts(filter, options);
     const {
-      docs,
-      page,
-      hasPrevPage,
-      hasNextPage,
-      prevPage,
-      nextPage,
-      totalPages,
-      totalDocs,
-      pagingCounter,
-      limit,
-    } = await productsManager.getProducts(findParams);
+      docs, page,  hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,
+      totalDocs, pagingCounter, limit, } = result;
 
     const categoryArray = await productsManager.getCategories();
 
@@ -382,9 +373,15 @@ router.get("/realtimeproducts", isLoggedIn, auth, async (req, res) => {
     if (docs.length > 0) {
       formatearProductos(docs);
 
-      req.io.on("connection", (socket) => {
+
+  
+      req.io.on("connection", async (socket) => {
+        // socket.username = user.email; 
         req.io.emit("Server:loadProducts", docs);
       });
+
+
+
 
       res.render("realTimeProducts", {
         username: user.mail,
@@ -410,6 +407,9 @@ router.get("/realtimeproducts", isLoggedIn, auth, async (req, res) => {
         lastLink,
         urlBase,
         styles: "homeStyles.css",
+        user: JSON.stringify(user),
+    username: user.email
+
       });
     }
   } catch (error) {
@@ -418,10 +418,15 @@ router.get("/realtimeproducts", isLoggedIn, auth, async (req, res) => {
   }
 });
 
-router.get("/chat", async (req, res) => {
+router.get("/chat", isLoggedIn, async (req, res) => {
+  const user = req.user
+
+
   res.render("chat", {
     title: "Chat mercadito || Gago",
     styles: "chat.css",
+    user:JSON.stringify(user),
+    username: user.email
   });
 });
 
@@ -453,11 +458,10 @@ router.get("/carts", isLoggedIn, async (req, res) => {
 
 router.get("/carts/:cid", isLoggedIn, async (req, res) => {
   const cid = req.params.cid;
+  const user = req.user;
 
   try {
-    // const user=userAdmin
-    // const user = userUser;
-    const user = req.user;
+
     const cart = await cartsManager.getCartById(cid);
     const products = cart.products;
     if (products.length > 0) {

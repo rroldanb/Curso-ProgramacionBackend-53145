@@ -1,24 +1,6 @@
 const getUsername = async () => {
-  const username = localStorage.getItem("username");
-  if (username) {
-    console.log(`User existed ${username}`);
-    return username;
-  }
-
-  const { value: inputUsername } = await Swal.fire({
-    title: "Se requiere un nombre de usuario",
-    input: "email",
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    inputLabel: "Indique su correo",
-    inputPlaceholder: "tu correo aquí",
-  });
-  if (!inputUsername) {
-    return "Debes indicar un correo!";
-  }
-
-  localStorage.setItem("username", inputUsername);
-  return inputUsername;
+  return document.getElementById("username").innerText
+  ;
 };
 
 (async () => {
@@ -34,7 +16,6 @@ const getUsername = async () => {
   const messages = document.getElementById("messages");
 
   document.getElementById("chat-btn-logout").addEventListener("click", () => {
-    localStorage.removeItem("username");
     window.location.reload();
   });
 
@@ -56,14 +37,11 @@ const getUsername = async () => {
   }
 
   socket.on("server_message", (msg) => {
-    // console.log(msg)
     const item = `<li>
-    
-    <div class="message_head">
-    <small>${msg.username}</small>
-    <small>${getTime(msg.dateTime)}</small>
-    
-    </div>
+      <div class="message_head">
+        <small>${msg.username}</small>
+        <small>${getTime(msg.dateTime)}</small>
+      </div>
       <p>${escapeHtml(msg.message)}</p>
     </li>`;
     messages.insertAdjacentHTML("beforeend", item);

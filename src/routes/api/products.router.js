@@ -1,4 +1,3 @@
-
 const { Router } = require("express");
 const { ProductsController } = require("../../controllers/products.controller");
 

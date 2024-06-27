@@ -1,5 +1,6 @@
 const { productsModel } = require('./models/products.model.js');
 
+
 class ProductsManager {
   constructor() {
     this.productsModel = productsModel;

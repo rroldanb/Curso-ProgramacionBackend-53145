@@ -439,10 +439,10 @@ router.get("/carts", isLoggedIn, async (req, res) => {
     }
     // const nombre_completo = (user.first_name === user.last_name)? user.first_name: (user.first_name + ' ' + user.last_name)
 
-    const existingCart = await cartsManager.getCartByEmail(user.email);
+    const existingCart = await cartsManager.getCartById(user.cart_id);
 
     if (!existingCart) {
-      const newCart = await cartsManager.createCartForUser(user.email);
+      const newCart = await cartsManager.createCartForUser(user._id);
       if (!newCart) {
         throw new Error("Error al crear el carrito para el usuario");
       }

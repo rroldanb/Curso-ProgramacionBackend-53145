@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
         span.style.color = "red";
       }
     });
-
   });
   
   document.addEventListener('DOMContentLoaded', () => {
@@ -206,6 +205,9 @@ function checkAuthStatus() {
 
 
 function redirectToCart() {
+            const cartIdElement = document.getElementById('cart_id');
+            const cartId = cartIdElement ? cartIdElement.textContent.split(' ')[2] : null; 
+
   fetch("/carts", {
     method: "GET",
     credentials: "same-origin", 
@@ -215,7 +217,7 @@ function redirectToCart() {
   })
   .then(response => response.json())
   .then(data => {
-    const cid = data.cartId;
+    const cid = cartId;
     window.location.href = `/carts/${cid}`;
   })
   .catch(error => {

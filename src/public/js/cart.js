@@ -141,9 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-
-    
-
     // Llamada al backend para actualizar la cantidad en la base de datos
     fetch(`/api/carts/${cid}/product/${pid}`, {
       method: 'PUT',
@@ -154,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.status === 200) {
+      if (data.status === 'success') {
         // Actualizar el subtotal en el frontend
         const precioElement = productContainer.querySelector('.carrito-producto-precio h4');
         const productName = productContainer.querySelector('.carrito-producto-titulo h3').innerText;

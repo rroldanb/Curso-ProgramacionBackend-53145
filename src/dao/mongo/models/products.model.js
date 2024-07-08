@@ -14,9 +14,7 @@ const ProductSchema = new Schema({
     thumbnails: { type: [String], required: false } 
 });
 
-
 ProductSchema.plugin(mongoosePaginate)
 
 exports.productsModel =  model(productCollection, ProductSchema)
-
 

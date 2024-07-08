@@ -144,7 +144,7 @@ router.put("/:pid", async (req, res) => {
     }
 
     // EXISTE CODE
-    existeCode = await productsManager.validaCode(updatedFields.code);
+    existeCode = await productsManager.validateCode(updatedFields.code);
     if (existeCode) {
       console.log(
         `El código '${updatedFields.code}' ya existe y no se actualizará.`

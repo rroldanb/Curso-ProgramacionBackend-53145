@@ -11,26 +11,27 @@ const {
   logout,
   status,
 } = require("../../controllers/sessions.controller");
+const { authorization } = require("../../middlewares/auth.middleware");
 
 const sessionsRouter = Router();
 
-sessionsRouter.get("/github", passport.authenticate("github", { scope: "user:email" }), githubAuth);
+sessionsRouter.get("/github",authorization(['public']), passport.authenticate("github", { scope: "user:email" }), githubAuth);
 
-sessionsRouter.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/login" }), githubCallback);
+sessionsRouter.get("/githubcallback", authorization(['public']), passport.authenticate("github", { failureRedirect: "/login" }), githubCallback);
 
-sessionsRouter.post("/register", passport.authenticate("register", { failureRedirect: "/failregister" }), register);
+sessionsRouter.post("/register", authorization(['public']), passport.authenticate("register", { failureRedirect: "/failregister" }), register);
 
-sessionsRouter.post("/failregister", failRegister);
+sessionsRouter.post("/failregister", authorization(['public']), failRegister);
 
-sessionsRouter.post("/login", passport.authenticate("login", { failureRedirect: "faillogin" }), login);
+sessionsRouter.post("/login", authorization(['public']), passport.authenticate("login", { failureRedirect: "faillogin" }), login);
 
-sessionsRouter.get("/faillogin", failLogin);
+sessionsRouter.get("/faillogin", authorization(['public']), failLogin);
 
-sessionsRouter.get("/current", currentUser);
+sessionsRouter.get("/current", authorization(['user', 'admin']), currentUser);
 
-sessionsRouter.get("/logout", logout);
+sessionsRouter.get("/logout", authorization(['public']), logout);
 
-sessionsRouter.get("/status", status);
+sessionsRouter.get("/status", authorization(['public']), status);
 
 module.exports = { sessionsRouter };
 

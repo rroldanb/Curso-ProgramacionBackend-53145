@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-class SessionsService {
+class SessionDaoMongo {
   async register(req) {
     return { status: "success", message: "User Registered" };
   }
@@ -21,6 +21,7 @@ class SessionsService {
       cart_id: req.user.cart_id,
       admin: req.user.role === "admin",
       email: req.user.email,
+      role: req.user.role
     };
 
     return { status: "success", payload: req.session.user };
@@ -31,9 +32,14 @@ class SessionsService {
     return { error: "Login failed" };
   }
 
-  async currentUser(req) {
+  async currentUser(req, res) {
     const user = req.session.user;
-    return { status: "success", payload: user };
+    if (user) {
+      return { status: "success", payload: user };
+    } else {
+      return { status: "error", error: "Usuario no autenticado" };
+    }
+    
   }
 
   async logout(req) {
@@ -42,7 +48,7 @@ class SessionsService {
         if (err) {
           reject({ status: "error", error: err });
         } else {
-          resolve("/login");
+          resolve("/");
         }
       });
     });
@@ -63,4 +69,4 @@ class SessionsService {
   }
 }
 
-module.exports = SessionsService;
+module.exports = SessionDaoMongo;

@@ -65,7 +65,7 @@ class ProductsManager {
    */
 addProduct(nuevoProducto) {
   if (this.#archivoLeido) {
-      if (!this.#validaCode(nuevoProducto.code)) {
+      if (!this.#validateCode(nuevoProducto.code)) {
           const product = {
               id: this.#getNewId(),
               title: nuevoProducto.title,
@@ -84,7 +84,7 @@ addProduct(nuevoProducto) {
 }
 
 
-  #validaCode(code) {
+  #validateCode(code) {
     return this.#products.some((product) => product.code === code);
   }
 

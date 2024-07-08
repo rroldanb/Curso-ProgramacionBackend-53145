@@ -83,7 +83,9 @@
             <p>Total Compra:</p>
             <h4 id="total" >{{calculateTotal products}}</h4>
           </div>
-        <button class="btn btn-primary carrito-acciones-comprar" >Finalizar Compra</button>
+        
+        <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}">Finalizar Compra</button>
+
           {{!-- <button class="carrito-acciones-comprar " data-bs-toggle="modal" data-bs-target="#modalPago">Finalizar Compra</button> --}}
 
       </div>

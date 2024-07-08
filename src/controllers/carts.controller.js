@@ -2,9 +2,9 @@ const { CartsService, UsersService, ProductsService } = require("../services/ind
 
 class CartsController {
   constructor() {
-    this.cartsService = new CartsService();
-    this.usersService = new UsersService();
-    this.productsService = new ProductsService();
+    this.cartsService =  CartsService;
+    this.usersService =  UsersService;
+    this.productsService =  ProductsService;
   }
 
   getCartByEmail = async (req, res) => {
@@ -14,7 +14,6 @@ class CartsController {
       if (!user) {
         return res.status(404).json({ error: "Usuario no encontrado" });
       }
-console.log('CC L 17', email)
       // const cart = await this.cartsService.getCartByEmail({userId: user._id});
       res.json(cart);
     } catch (error) {
@@ -83,7 +82,7 @@ console.log('CC L 17', email)
 
     try {
       
-      const validPid = await this.productsService.validaId(pid);
+      const validPid = await this.productsService.validateId(pid);
       if (!validPid) {
         return res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });
       }

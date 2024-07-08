@@ -85,7 +85,7 @@ async addProduct(nuevoProducto) {
       return;
   }
 
-  if (this.#validaCode(nuevoProducto.code)) {
+  if (this.#validateCode(nuevoProducto.code)) {
       console.log("Error: El código del producto ya existe");
       return;
   }
@@ -106,7 +106,7 @@ async addProduct(nuevoProducto) {
 }
 
 
-  #validaCode(code) {
+  #validateCode(code) {
     return this.#products.some((product) => product.code === code);
   }
 

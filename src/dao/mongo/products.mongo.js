@@ -1,17 +1,16 @@
-const { productsModel } = require('./models/products.model.js');
+const { productsModel } = require("./models/products.model.js");
 
-
-class ProductsManager {
+class ProductDaoMongo {
   constructor() {
     this.productsModel = productsModel;
   }
-
-  async validaCode(code) {
+ 
+  async validateCode(code) {
     const product = await this.productsModel.findOne({ code: code });
     return !!product;
   }
 
-  async validaId(pid) {
+  async validateId(pid) {
     const product = await this.productsModel.findById(pid);
     return !!product;
   }
@@ -22,7 +21,7 @@ class ProductsManager {
 
   async getProducts(filter, options) {
     const result = await this.productsModel.paginate(filter, options);
-    return result
+    return result;
   }
 
   async getProductById(pid) {
@@ -42,4 +41,4 @@ class ProductsManager {
   }
 }
 
-module.exports = ProductsManager;
+module.exports = ProductDaoMongo;

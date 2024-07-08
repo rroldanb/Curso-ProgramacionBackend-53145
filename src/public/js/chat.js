@@ -15,9 +15,9 @@ const getUsername = async () => {
   const input = document.getElementById("input");
   const messages = document.getElementById("messages");
 
-  document.getElementById("chat-btn-logout").addEventListener("click", () => {
-    window.location.reload();
-  });
+  // document.getElementById("chat-btn-logout").addEventListener("click", () => {
+  //   window.location.reload();
+  // });
 
   const getTime = (msgTimeStr) => {
     const msgTime = new Date(msgTimeStr);

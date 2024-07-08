@@ -1,11 +1,21 @@
-const CartsManager = require("../dao/CartsMongo.manager");
-const ProductsManager = require("../dao/ProductsMongo.manager");
-const SessionsService = require("../dao/SessionsManager");
-const { UsersManagerMongo } = require("../dao/UsersManager");
+const { ProductDao, SessionDao, UserDao, CartDao, TicketDao } = require("../dao/factory.js");
+
+const ProductRepository = require("../repositories/products.repository.js");
+const CartRepository    = require("../repositories/carts.repository.js");
+const SessionRepository = require("../repositories/sessions.repository.js");
+const UserRepository    = require("../repositories/users.repository.js");
+const TicketRepository  = require("../repositories/tickets.repository.js");
+
+const ProductsService   = new ProductRepository(new ProductDao());
+const CartsService      = new CartRepository(new CartDao());
+const SessionsService   = new SessionRepository(new SessionDao());
+const UsersService      = new UserRepository(new UserDao());
+const TicketsService    = new TicketRepository(new TicketDao());
 
 module.exports = {
-    ProductsService: ProductsManager,
-    CartsService: CartsManager, 
-    UsersService: UsersManagerMongo,
-    SessionsService,
+  ProductsService,
+  CartsService,
+  UsersService,
+  SessionsService,
+  TicketsService
 };

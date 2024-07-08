@@ -21,7 +21,7 @@ class ProductManager {
    * @param {number} stock
    */
   addProduct(title, description, price, thumbinal, code, stock) {
-    if (!this.#validaCode(code)) {
+    if (!this.#validateCode(code)) {
       const product = {
         id: this.#getNewId(),
         title,
@@ -38,7 +38,7 @@ class ProductManager {
     }
   }
 
-  #validaCode(code) {
+  #validateCode(code) {
     return this.#products.some((product) => product.code === code);
   }
 

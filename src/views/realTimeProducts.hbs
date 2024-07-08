@@ -17,12 +17,12 @@
 
   </div>
     {{#if admin}}
-      <div class="container-fluid h-100 ">
+      <div class="container-fluid h-100 mx-auto">
   {{>filters}}
 
-        <div class="row h-100 ">
+        <div class="row h-100 container-fluid d-flex flex-row mx-auto">
 
-          <div class="my-3 col-3 d-flex justify-content-center">
+          <div class="py-3 col-3 d-flex justify-content-center">
               <form id="productForm" class="rounded-0" >
                   <div class="card" id="newProdDetails" style="min-width: 380px;">
                     <h3 id="editBoxTitle" class="mx-auto">Agregar nuevo producto</h3>
@@ -44,7 +44,7 @@
               </form>
           </div>
 
-          <div class=" px-3 py-3 col-9 d-flex flex-wrap" id="realTimeProductsArea">
+          <div class=" px-3 py-3 col-9 d-flex flex-wrap " id="realTimeProductsArea">
 
           </div>
         </div>

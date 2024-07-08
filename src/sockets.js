@@ -1,4 +1,4 @@
-const { chatModel } = require("./dao/models/chat.model.js");
+const { chatModel } = require("./dao/mongo/models/chat.model.js");
 
 module.exports = (io) => {
   io.on("connection", async (socket) => {

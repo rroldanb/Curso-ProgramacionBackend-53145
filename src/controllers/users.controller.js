@@ -1,12 +1,9 @@
-const 
-    UsersService
-   = require("../services/index");
+const {UsersService}= require("../services/index");
   
   class UsersController {
     constructor() {
-        this.usersService = new UsersService();
+        this.usersService =  UsersService;
     }
-
 
 
   getUsers = async (req, res) => {
@@ -68,4 +65,4 @@ const
   };
 }
 
-module.exports = UsersController;
+module.exports = {UsersController};

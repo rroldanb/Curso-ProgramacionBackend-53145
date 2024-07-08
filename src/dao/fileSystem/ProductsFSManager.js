@@ -14,7 +14,7 @@ class ProductsManager {
     this.#readFile();
   }
 
-  async validaCode(code) {
+  async validateCode(code) {
     return this.#products.some((product) => product.code === code);
   }
 
@@ -116,7 +116,7 @@ class ProductsManager {
       return;
     }
 
-    if (await this.validaCode(nuevoProducto.code)) {
+    if (await this.validateCode(nuevoProducto.code)) {
       // console.log("Error: El código del producto ya existe");
       return true;
     }

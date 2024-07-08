@@ -69,7 +69,7 @@ function generatePaginationLinks(pagLinksParams) {
 
 class ProductsController {
   constructor() {
-    this.productsService = new ProductsService();
+    this.productsService =  ProductsService;
   }
 
   getProducts = async (req, res) => {
@@ -184,7 +184,7 @@ class ProductsController {
           .json({ error: `El campo stock debe ser numérico` });
       }
 
-      if (await this.productsService.validaCode(nuevoProducto.code)) {
+      if (await this.productsService.validateCode(nuevoProducto.code)) {
         return res
           .status(400)
           .json({
@@ -240,7 +240,7 @@ class ProductsController {
     const updatedFields = req.body;
 
     try {
-      const updateable = await this.productsService.validaId(pid);
+      const updateable = await this.productsService.validateId(pid);
       if (!updateable) {
         return res
           .status(400)
@@ -248,7 +248,7 @@ class ProductsController {
       }
 
       if (updatedFields.code) {
-        const existeCode = await this.productsService.validaCode(
+        const existeCode = await this.productsService.validateCode(
           updatedFields.code
         );
         if (existeCode) {
@@ -309,7 +309,7 @@ class ProductsController {
     const { pid } = req.params;
 
     try {
-      const existeId = await this.productsService.validaId(pid);
+      const existeId = await this.productsService.validateId(pid);
       if (!existeId) {
         return res
           .status(400)

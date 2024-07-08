@@ -6,7 +6,6 @@ class CartsManager {
   }
 
   async getCartByEmail(email) {
-    console.log('userId CMM L 9', email)
     return await this.model.findOne({ email }).lean();
   }
 
@@ -23,7 +22,11 @@ class CartsManager {
   }
 
   async updateCartWithUserId(cartId, userId) {
-    return await this.model.findByIdAndUpdate(cartId, { userId }, { new: true });
+    return await this.model.findByIdAndUpdate(
+      cartId,
+      { userId },
+      { new: true }
+    );
   }
 
   async addProductToCart(cid, productId, quantity) {
@@ -59,9 +62,6 @@ class CartsManager {
   }
 
   async updateProductQuantity(cid, pid, newQuantity) {
-
-
- 
     return await this.model.updateOne(
       { _id: cid, "products.pid": pid },
       { $set: { "products.$.quantity": newQuantity } }

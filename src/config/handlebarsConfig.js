@@ -2,7 +2,7 @@ const handlebars = require('express-handlebars');
 const Handlebarshlp = require('handlebars');
 
 Handlebarshlp.registerHelper('multiply', function(a, b) {
-  const cleanA = parseFloat(a.replace(/[^0-9.-]+/g, ""));
+  const cleanA = parseFloat(a.replace(/[^0-9,-]+/g, ""));
   const cleanB = parseFloat(b);
   if (isNaN(cleanA) || isNaN(cleanB)) {
     return 0;
@@ -14,7 +14,7 @@ Handlebarshlp.registerHelper('multiply', function(a, b) {
 Handlebarshlp.registerHelper('calculateTotal', function(products) {
   let total = 0;
   products.forEach(product => {
-    total += parseFloat(product.pid.price.replace(/[^0-9.-]+/g, "")) * product.quantity;
+    total += parseFloat(product.pid.price.replace(/[^0-9,-]+/g, "")) * product.quantity;
   });
   return total.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
 });

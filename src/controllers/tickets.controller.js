@@ -1,7 +1,7 @@
 const {
   CartsService,
   TicketsService,
-  UsersService,
+  // UsersService,
   ProductsService,
 } = require("../services/index");
 
@@ -61,8 +61,18 @@ class TicketsController {
 
   getUserTickets = async (req, res) => {
     const email = req.session.user.email;
+try {
+  
+  const tickets = await this.ticketsService.getTicketsBy({purchaser: email});
+  res.send({
+    status: "success",
+    payload: tickets
+  });
+} catch (error) {
+  console.error("Error al obtener los tickets del usuario:", error);
+  res.status(500).json({ error: "Error al obtener los tickets del usuario." });
+}
 
-    const tickets = await this.ticketsService.getTickesByEmail(email);
   };
 }
 module.exports = { TicketsController };

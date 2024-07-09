@@ -10,7 +10,7 @@ class TicketDaoMongo {
     return await this.ticketModel.create(ticket);
   }
 
-  async getTicketBy(filter) {
+  async getTicketsBy(filter) {
     return await this.ticketModel.findOne({filter});
   }
 

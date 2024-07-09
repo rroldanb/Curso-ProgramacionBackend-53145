@@ -200,26 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const purchaseButton = document.querySelector(".carrito-acciones-comprar");
-
   if (purchaseButton) {
     purchaseButton.addEventListener("click", async () => {
       const cartId = purchaseButton.getAttribute("data-cart-id");
-
       try {
-        const response = await fetch(`/carts/${cartId}/purchase`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          window.location.href = "/tickets";
-        } else {
-          alert(`Error: ${result.error}`);
-        }
+        window.location.href =`/carts/${cartId}/purchase`
       } catch (error) {
         console.error("Error:", error);
       }

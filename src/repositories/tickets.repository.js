@@ -7,7 +7,7 @@ class TicketRepository {
     return await this.ticketDao.get();
   }
   async getTicketsBy(filter){
-    return await this.ticketDao.getTicketBy(filter)
+    return await this.ticketDao.getTicketsBy(filter)
   }
 
   async getTicketsByEmail(email) {

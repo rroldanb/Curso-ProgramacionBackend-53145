@@ -1,0 +1,148 @@
+<main>
+  <div class="bienvenida mt-4">
+    <h1>Hola {{email}}, bienvenido a nuestro e-commerce</h1>
+    <h2>Tu ticket de compra es el siguiente</h2>
+    <div class="container rounded-3 p-2 d-flex justify-content-between align-items-center" style="background-color: rgb(193, 193, 193);">
+      <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
+      <p class="my-auto" id="cart_id">CartID: <strong> {{cid}} </strong></p>
+
+        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Volver al carrito <i class="bi bi-cart"></i></button>
+    </div>
+  </div>
+
+  <section class="w-75 mx-auto mt-4">
+    <div class="container">
+      <h3>Productos comprados:</h3>
+      <div class="carrito-productos container">
+        {{#if purchasedProducts.length}}
+          {{#each purchasedProducts}}
+            <div class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center" id="product-{{@index}}">
+              <div class="col-md-2">
+                <img class="carrito-producto-imagen w-50" src="{{this.product.thumbnails.[0]}}" alt="{{this.product.title}}">
+              </div>
+
+              <div class="col-md-3">
+                <div class="carrito-producto-titulo d-flex flex-column align-items-center">
+                  <small>Producto</small>
+                  <h3>{{this.product.title}}</h3>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-stock d-flex flex-column align-items-center">
+                  <small>Stock</small>
+                  <h4 id="carrito-stock-{{this.product._id}}">{{this.product.stock}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
+                  <small>Cantidad</small>
+                  <h4 id="ticket-cantidad">{{this.quantity}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-precio d-flex flex-column align-items-center">
+                  <small>Precio</small>
+                  <h4 class="price">{{this.product.price}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
+                  <small>Subtotal</small>
+                  <h4>{{multiply this.product.price this.quantity}}</h4>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="carrito-vacio">
+            <h2>No hay productos comprados <i class="bi bi-emoji-frown"></i></h2>
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="carrito-footer mb-3 d-flex flex-nowrap flex-row container rounded-3 p-8 align-items-center justify-content-around" style="background-color: rgb(193, 193, 193);">
+               <form method="POST" action="/carts/{{cid}}/purchase/cancel">
+          <button type="submit" class="btn btn-danger">Seguir comprando <i class="bi bi-cart"></i></button>
+        </form>
+
+        <div class="carrito-footer-cantidad d-flex flex-column align-items-center">
+          <p>Cantidad de artículos:</p>
+          <h4 id="cant">{{purchasedProducts.length}}</h4>
+        </div>
+        <div class="carrito-footer-total d-flex flex-column align-items-center">
+          <p>Total Compra:</p>
+          <h3 id="total" class="price">{{totalAmount}}</h3>
+        </div>
+
+        <form method="POST" action="/carts/{{cid}}/purchase/confirm">
+          <button type="submit" class="btn btn-primary">Proceder al pago <i class="bi bi-credit-card"></i></button>
+        </form>
+
+      </div>
+
+      <h3>Productos no comprados por falta de stock:</h3>
+      <div class="carrito-productos container">
+        {{#if failedProducts.length}}
+          {{#each failedProducts}}
+            <div class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center" id="product-{{@index}}">
+              <div class="col-md-2">
+                <img class="carrito-producto-imagen w-50" src="{{this.product.thumbnails.[0]}}" alt="{{this.product.title}}">
+              </div>
+
+              <div class="col-md-3">
+                <div class="carrito-producto-titulo d-flex flex-column align-items-center">
+                  <small>Producto</small>
+                  <h3>{{this.product.title}}</h3>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-stock d-flex flex-column align-items-center">
+                  <small>Stock</small>
+                  <h4 id="carrito-stock-{{this.product._id}}">{{this.product.stock}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
+                  <small>Cantidad</small>
+                  <h4 id="ticket-cantidad">{{this.quantity}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-1">
+                <div class="carrito-producto-precio d-flex flex-column align-items-center">
+                  <small>Precio</small>
+                  <h4 class="price">{{this.product.price}}</h4>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
+                  <small>Subtotal</small>
+                  <h4>{{multiply this.product.price this.quantity}}</h4>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        {{else}}
+          <div class="carrito-vacio">
+            <h2>Todos los productos tienen stock suficiente <i class="bi bi-emoji-smile"></i></h2>
+          </div>
+        {{/if}}
+      </div>
+
+
+    </div>
+  </section>
+
+  <footer class="container">
+    <p class="texto-footer mx-auto text-light">© 2024 Gagolabs</p>
+  </footer>
+</main>
+
+<script src="/js/purchase.js"></script>

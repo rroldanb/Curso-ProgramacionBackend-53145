@@ -518,7 +518,54 @@ router.get("/carts/:cid", authorization(["user"]), isLoggedIn, async (req, res) 
   }
 );
 
-// router.get("/carts/:cid/purchase", authorization(["user"]), isLoggedIn, getUserTickets);
+router.get("/carts/:cid/purchase", authorization(["user"]), async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const cart = await cartsManager.getCartById(cid);
+
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    let totalAmount = 0;
+    const purchasedProducts = [];
+    const failedProducts = [];
+
+    for (const item of cart.products) {
+      const product = await productsManager.getProductById(item.pid);
+
+      if (product.stock >= item.quantity) {
+        product.stock -= item.quantity;
+        // await productsManager.updateProduct(product._id, product);
+        totalAmount += product.price * item.quantity;
+        purchasedProducts.push({
+          ...item,
+          product
+        });
+      } else {
+        failedProducts.push({
+          ...item,
+          product
+        });
+      }
+    }
+
+      res.render("purchase", {
+        purchasedProducts,
+        failedProducts,
+        totalAmount,
+        email: req.session.user.email,
+        cid,
+        title: "carrito || Gago",
+        styles: "homeStyles.css",
+      
+    })
+  } catch (error) {
+    console.error("Error processing purchase:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
   try {
@@ -528,7 +575,7 @@ router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
       user = user.user;
       
     }
-    const tickets = ticketsManager.getTicketsByEmail(user.email)
+    const tickets = ticketsManager.getTicketsBy({purchaser: user.email})
 
     res.render("ticket",{
       tickets,

@@ -2,7 +2,7 @@ const handlebars = require('express-handlebars');
 const Handlebarshlp = require('handlebars');
 
 Handlebarshlp.registerHelper('multiply', function(a, b) {
-  const cleanA = parseFloat(a.replace(/[^0-9,-]+/g, ""));
+  const cleanA = parseFloat(a);
   const cleanB = parseFloat(b);
   if (isNaN(cleanA) || isNaN(cleanB)) {
     return 0;

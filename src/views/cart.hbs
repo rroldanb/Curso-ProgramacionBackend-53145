@@ -2,10 +2,15 @@
     <div class="bienvenida mt-4">
       <h1>Hola {{username}}, bienvenido a nuestro e-commerce</h1>
       <h2>Contenido del Carrito de <strong>{{nombre}}</strong></h2>
-      <div class="container rounded-3 p-2 d-flex  justify-content-between align-items-center" style="background-color: rgb(193, 193, 193);">
-        <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
         <p class="my-auto" >CartID: <strong> {{cid}} </strong> </p>
+      <div class="container rounded-3 p-2 d-flex  justify-content-between align-items-center" style="background-color: rgb(193, 193, 193);">
+        <div>
+        <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
         <button class="btn btn-danger empty-cart-btn me-4" data-cart-id="{{cid}}">Vaciar carrito <i class="bi bi-cart-x"></i></button>
+        </div>
+        <div>
+        <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}">Finalizar Compra <i class="bi bi-cash-coin"></i></button>
+        </div>
       </div>
     </div>
 
@@ -80,11 +85,11 @@
             <h4 id="cant">{{products.length}}</h4>
           </div>
           <div class="carrito-footer-total d-flex flex-column align-items-center">
-            <p>Total Compra:</p>
-            <h4 id="total" >{{calculateTotal products}}</h4>
+            <p>Total Carrito:</p>
+            <h3 id="total" >{{calculateTotal products}}</h3>
           </div>
         
-        <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}">Finalizar Compra</button>
+        <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}">Finalizar Compra <i class="bi bi-cash-coin"></i></button>
 
           {{!-- <button class="carrito-acciones-comprar " data-bs-toggle="modal" data-bs-target="#modalPago">Finalizar Compra</button> --}}
 

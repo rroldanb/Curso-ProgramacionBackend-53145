@@ -241,6 +241,38 @@ function redirectToCart() {
     });
 }
 
+
+function redirectToTickets() {
+  const cartIdElement = document.getElementById("cart_id");
+  const cartId = cartIdElement ? cartIdElement.textContent.split(" ")[2] : null;
+
+  if (!cartId) {
+    console.error("No se pudo obtener el ID del carrito.");
+    return;
+  }
+
+  fetch(`/carts`, {
+    method: "GET",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    window.location.href = `/carts/${cartId}/tickets`;
+  })
+  .catch((error) => {
+    console.error("Error en la solicitud:", error);
+  });
+}
+
+
 document.querySelectorAll(".toggle-password-btn").forEach((button) => {
   button.addEventListener("click", function () {
     const input = this.previousElementSibling;

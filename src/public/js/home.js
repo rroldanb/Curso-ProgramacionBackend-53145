@@ -186,6 +186,7 @@ function checkAuthStatus() {
     const btnCart = document.getElementById("btn-cart");
     const btnChat = document.getElementById("btn-chat");
     const btnRTP = document.getElementById("btn-rtp");
+    const btnTickets = document.getElementById("btn-tickets");
     const addToCartButtons = document.getElementsByClassName('add-to-cart-btn')
     if (data.isAuthenticated) {
       btnLogin.classList.add("d-none");
@@ -194,12 +195,14 @@ function checkAuthStatus() {
         btnRTP.classList.remove("d-none");
         btnCart.classList.add("d-none");
         btnChat.classList.add("d-none");
+        btnTickets.classList.add("d-none");
         Array.from(addToCartButtons).forEach(button => {
           button.classList.add("d-none");
         });
       } else {
         btnChat.classList.remove("d-none");
         btnCart.classList.remove("d-none");
+        btnTickets.classList.remove("d-none");
         btnRTP.classList.add("d-none");
         Array.from(addToCartButtons).forEach(button => {
           button.classList.remove("d-none");
@@ -211,6 +214,7 @@ function checkAuthStatus() {
       btnLogout.classList.add("d-none");
       btnCart.classList.add("d-none");
       btnChat.classList.add("d-none");
+      btnTickets.classList.add("d-none");
       return false;
     }
   })

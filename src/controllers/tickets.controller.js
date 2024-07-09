@@ -1,7 +1,6 @@
 const {
   CartsService,
   TicketsService,
-  // UsersService,
   ProductsService,
 } = require("../services/index");
 

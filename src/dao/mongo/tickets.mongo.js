@@ -7,11 +7,17 @@ class TicketDaoMongo {
 
 
   async createTicket(ticket) {
-    return await this.ticketModel.create(ticket);
+    const result =  await this.ticketModel.create(ticket);
+    return result
   }
+  async delete(ticket) {
+    const result = await this.ticketModel.deleteOne({ _id: ticket });
+    return result;
+  }
+  
 
-  async getTicketsBy(filter) {
-    return await this.ticketModel.findOne({filter});
+  async getTicketBy(filter) {
+    return await this.ticketModel.findOne(filter);
   }
 
   async getTicketsByEmail(email) {

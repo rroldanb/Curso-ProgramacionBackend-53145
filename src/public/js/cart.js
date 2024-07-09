@@ -199,15 +199,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const purchaseButton = document.querySelector(".carrito-acciones-comprar");
-  if (purchaseButton) {
-    purchaseButton.addEventListener("click", async () => {
-      const cartId = purchaseButton.getAttribute("data-cart-id");
-      try {
-        window.location.href =`/carts/${cartId}/purchase`
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    });
-  }
+
+  const purchaseButtons = document.querySelectorAll(".carrito-acciones-comprar");
+
+purchaseButtons.forEach(button => {
+  button.addEventListener("click", async () => {
+    const cartId = button.getAttribute("data-cart-id");
+    try {
+      window.location.href = `/carts/${cartId}/purchase`;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+});
 });

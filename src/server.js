@@ -19,8 +19,9 @@ const app = express();
 const port = objectConfig.port;
 // Configura CORS
 app.use(cors());
+
 // Conexión a la base de datos
-connectDB();
+// connectDB(); //ahora va en Factory
 
 // Configuración del servidor HTTP y Socket.IO
 const httpServer = app.listen(port, (error) => {

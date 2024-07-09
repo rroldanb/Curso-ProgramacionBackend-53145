@@ -31,15 +31,15 @@ const TicketSchema = new Schema({
     },
 });
 
-// ticketSchema.pre('find', function() {
-//     this.populate('products.pid')
-// })
-// ticketSchema.pre('findOne', function() {
-//     this.populate('products.pid')
-// })
-// ticketSchema.pre('findById', function() {
-//     this.populate('products.pid')
-// })
+TicketSchema.pre('find', function() {
+    this.populate('purchase.pid')
+})
+TicketSchema.pre('findOne', function() {
+    this.populate('purchase.pid')
+})
+TicketSchema.pre('findById', function() {
+    this.populate('purchase.pid')
+})
 
 TicketSchema.plugin(mongoosePaginate);
 

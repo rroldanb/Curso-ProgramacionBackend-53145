@@ -4,11 +4,6 @@ class CartRepository {
   }
 
 
-//    constructor(productDao) {
-//    this.productDao = productDao
-//}
-
-
   async getCartByEmail(email) {
     return await this.cartsManager.getCartByEmail(email);
   }

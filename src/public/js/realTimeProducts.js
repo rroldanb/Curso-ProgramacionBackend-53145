@@ -156,12 +156,12 @@ function updateProductCard(productId, updatedProduct) {
     const priceLine = productCard.querySelector("p:nth-of-type(3)");
     priceLine.innerHTML = `<strong>Precio:</strong> ${updatedProduct.price}`;
 
-    // const statusLine = productCard.querySelector("p:nth-of-type(4)");
-    // statusLine.innerHTML = `<strong>Estado:</strong> 
-    //   <span style="color: ${updatedProduct.status ? 'green' : 'red'}">
-    //     ${updatedProduct.status ? 'Disponible' : 'No disponible'}
-    //   </span>
-    // `;
+    const statusLine = productCard.querySelector("p:nth-of-type(4)");
+    statusLine.innerHTML = `<strong>Estado:</strong> 
+      <span style="color: ${updatedProduct.status ? 'green' : 'red'}">
+        ${updatedProduct.status ? 'Disponible' : 'No disponible'}
+      </span>
+    `;
     
 
     const stockLine = productCard.querySelector("p:nth-of-type(5)");

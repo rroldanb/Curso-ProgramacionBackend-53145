@@ -26,7 +26,7 @@ const TicketSchema = new Schema({
         required: true
     },
     purchaser: {
-        type: String,
+        type: String, 
         required: true
     },
 });

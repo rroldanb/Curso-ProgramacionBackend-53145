@@ -16,6 +16,7 @@ router.use("/api/carts", cartsRouter);
 router.use("/api/tickets", ticketsRouter);
 
 router.use("/api/users", usersRouter);
+
 router.use("/sessions", sessionsRouter);
 router.use("/api/sessions", sessionsRouter);
 

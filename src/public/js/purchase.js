@@ -1,8 +1,7 @@
 function redirectToCart() {
     const cartIdElement = document.getElementById("cart_id");
-  const cid = cartIdElement ? cartIdElement.textContent.split(" ")[2] : null;
+  const cid = cartIdElement ? cartIdElement.textContent.split : null;
 
-console.log(cid)
    window.location.href =`/carts/${cid}`
   }
 
@@ -21,7 +20,7 @@ console.log(cid)
   
   document.addEventListener("DOMContentLoaded", () => {
     const ticketCodeElement = document.getElementById("ticketCode");
-    const tCode = ticketCodeElement ? ticketCodeElement.textContent.split(" ")[4] : null;
+    const tCode = ticketCodeElement ? ticketCodeElement.textContent : null;
   
     async function handleCancel(cartId, redirectUrl) {
       try {
@@ -34,7 +33,6 @@ console.log(cid)
   
         if (response.ok) {
           const result = await response.json();
-          console.log('Cancel Result:', result);
           window.location.href = redirectUrl;
         } else {
           const result = await response.json();
@@ -71,15 +69,11 @@ console.log(cid)
     }
   });
   
-  
-  
-
-  
 
 document.addEventListener("DOMContentLoaded", () => {
     const purchaseForm = document.getElementById("purchase-form");
     const ticketCodeElement = document.getElementById("ticketCode");
-    const tCode = ticketCodeElement ? ticketCodeElement.textContent.split(" ")[4] : null;
+    const tCode = ticketCodeElement ? ticketCodeElement.textContent : null;
     if (purchaseForm) {
       purchaseForm.addEventListener("submit", async (event) => {
         event.preventDefault();

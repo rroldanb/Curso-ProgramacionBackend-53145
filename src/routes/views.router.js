@@ -644,6 +644,10 @@ router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
 });
 
 
+const {currentUser} = require("../controllers/sessions.controller");
+router.get("/current", authorization(['user', 'admin']), currentUser);
+
+
 router.get("/login", authorization(["public"]), (req, res) => {
   res.render("login");
 });

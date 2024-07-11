@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
           if (response.ok) {
             const result = await response.json();
-            // console.log('Producto eliminado del carrito:', result);
             Swal.fire({ text: `${productName} eliminado del carrito`,
               position: 'top',
               icon: 'success',
@@ -55,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   
-    // Botón para vaciar el carrito
     const emptyCartButton = document.querySelector('.empty-cart-btn');
     emptyCartButton.addEventListener('click', async (event) => {
       const cartId = event.target.getAttribute('data-cart-id');
@@ -70,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
         if (response.ok) {
           const result = await response.json();
-          // console.log('Carrito vaciado:', result);
           Swal.fire({text: `Carrito vaciado`,
             title:'Éxito',
             position: 'top',
@@ -141,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Llamada al backend para actualizar la cantidad en la base de datos
     fetch(`/api/carts/${cid}/product/${pid}`, {
       method: 'PUT',
       headers: {
@@ -152,15 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
       if (data.status === 'success') {
-        // Actualizar el subtotal en el frontend
         const precioElement = productContainer.querySelector('.carrito-producto-precio h4');
         const productName = productContainer.querySelector('.carrito-producto-titulo h3').innerText;
-        const precio = parseFloat(precioElement.innerText.replace('$', ''));
+        const precio = parseFloat(precioElement.innerText.replace('$', '').replace('.',''));
         const subtotalElement = productContainer.querySelector('.carrito-producto-subtotal h4');
         const nuevoSubtotal = precio * nuevaCantidad;
         subtotalElement.innerText = nuevoSubtotal.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
 
-        // Actualizar el total en el frontend
         actualizarTotal();
 
         Swal.fire({title: `Cantidad de ${productName} actualizada a ${nuevaCantidad}`,
@@ -186,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cartProducts.forEach((product) => {
       const cantidad = parseInt(product.querySelector('.carrito-producto-cantidad-input').value);
-      const precio = parseFloat(product.querySelector('.carrito-producto-precio h4').innerText.replace('$', ''));
+      const precio = parseFloat(product.querySelector('.carrito-producto-precio h4').innerText.replace('$', '').replace('.',''));
       totalCalculado += cantidad * precio;
     });
 

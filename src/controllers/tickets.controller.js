@@ -20,6 +20,7 @@ class TicketsController {
     let totalAmount = 0;
     const purchasedProducts = [];
     const failedProducts = [];
+    const code = `TCK-${Date.now()}`
 
     for (const item of cart.products) {
       const product = await ProductsService.getProductById(item.pid);
@@ -35,8 +36,10 @@ class TicketsController {
     }
 
     const ticket = {
+      code, 
+      purchase: purchasedProducts,
       amount: totalAmount,
-      purchaser: req.session.user.email,
+      purchaser: req.session.user.email
     };
 
     await this.ticketsService.createTicket(ticket);

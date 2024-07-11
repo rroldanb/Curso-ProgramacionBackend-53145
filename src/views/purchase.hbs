@@ -2,13 +2,26 @@
   <div class="bienvenida mt-4">
     <h1>Hola {{email}}, bienvenido a nuestro e-commerce</h1>
     <h2>Tu ticket de compra es el siguiente</h2>
-    <div class="container rounded-3 p-2 d-flex justify-content-between align-items-center" style="background-color: rgb(193, 193, 193);">
-      {{!-- <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a> --}}
-      <a href="#" id="btn-store" class="btn btn-dark ms-4" data-cart-id="{{cid}}">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
+    <div
+      class="container rounded-3 p-2 d-flex justify-content-between align-items-center"
+      style="background-color: rgb(193, 193, 193);"
+    >
+      {{! <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a> }}
+      <a
+        href="#"
+        id="btn-store"
+        class="btn btn-dark ms-4"
+        data-cart-id="{{cid}}"
+      >Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
 
-      <p class="my-auto d-none" id="cart_id">CartID: <strong> {{cid}} </strong></p>
-        <button class="btn btn-secondary" id="btn-cart" data-cart-id="{{cid}}">Volver al carrito <i class="bi bi-cart"></i></button>
-        {{!-- <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Volver al carrito <i class="bi bi-cart"></i></button> --}}
+      <p class="my-auto d-none" >CartID: 
+        <strong id="cart_id">{{cid}} </strong></p>
+      <button
+        class="btn btn-secondary"
+        id="btn-cart"
+        data-cart-id="{{cid}}"
+      >Volver al carrito <i class="bi bi-cart"></i></button>
+      {{! <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Volver al carrito <i class="bi bi-cart"></i></button> }}
     </div>
   </div>
 
@@ -16,133 +29,187 @@
     <div class="container">
       <div class="carrito-productos container">
         {{#if purchasedProducts.length}}
-        <div class="d-flex flex-column align-items-center mb-2">
+          <div class="d-flex flex-column align-items-center mb-2">
 
-      <h3>Productos comprados:</h3>
-      <p class="my-auto " id="ticketCode">Código del Ticket: <strong> {{code}} </strong></p>
-        </div>
+            <h3>Productos comprados:</h3>
+            <p class="my-auto" >Código del Ticket: 
+              <strong id="ticketCode">{{code}} </strong></p>
+          </div>
           {{#each purchasedProducts}}
-            <div class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center" id="product-{{@index}}">
+            <div
+              class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center"
+              id="product-{{@index}}"
+            >
               <div class="col-md-2">
-                <img class="carrito-producto-imagen w-50" src="{{this.product.thumbnails.[0]}}" alt="{{this.product.title}}">
+                <img
+                  class="carrito-producto-imagen w-50"
+                  src="{{this.product.thumbnails.[0]}}"
+                  alt="{{this.product.title}}"
+                />
               </div>
 
               <div class="col-md-3">
-                <div class="carrito-producto-titulo d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-titulo d-flex flex-column align-items-center"
+                >
                   <small>Producto</small>
                   <h3>{{this.product.title}}</h3>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-stock d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-stock d-flex flex-column align-items-center"
+                >
                   <small>Stock</small>
-                  <h4 id="carrito-stock-{{this.product._id}}">{{this.product.stock}}</h4>
+                  <h4
+                    id="carrito-stock-{{this.product._id}}"
+                  >{{this.product.stock}}</h4>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-cantidad d-flex flex-column align-items-center"
+                >
                   <small>Cantidad</small>
                   <h4 id="ticket-cantidad">{{this.quantity}}</h4>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-precio d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-precio d-flex flex-column align-items-center"
+                >
                   <small>Precio</small>
                   <h4 class="price">{{this.product.price}}</h4>
                 </div>
               </div>
 
               <div class="col-md-2">
-                <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-subtotal d-flex flex-column align-items-center"
+                >
                   <small>Subtotal</small>
-                  <h4>{{multiplyUnformat this.product.price this.quantity}}</h4>
+                  <h4>{{multiply this.product.price this.quantity}}</h4>
                 </div>
               </div>
             </div>
           {{/each}}
-      <div class="carrito-footer mb-3 d-flex flex-nowrap flex-row container rounded-3 p-8 align-items-center justify-content-around" style="background-color: rgb(193, 193, 193);">
-          {{!-- <button type="submit" class="btn btn-danger">Seguir comprando <i class="bi bi-cart"></i></button> --}}
-        <button id="cancel-purchase" class="btn btn-danger ticket-acciones-cancelar" data-cart-id="{{cid}}">Seguir comprando <i class="bi bi-cart"></i></button>
+          <div
+            class="carrito-footer mb-3 d-flex flex-nowrap flex-row container rounded-3 p-8 align-items-center justify-content-around"
+            style="background-color: rgb(193, 193, 193);"
+          >
+            {{! <button type="submit" class="btn btn-danger">Seguir comprando <i class="bi bi-cart"></i></button> }}
+            <button
+              id="cancel-purchase"
+              class="btn btn-danger ticket-acciones-cancelar"
+              data-cart-id="{{cid}}"
+            >Seguir comprando <i class="bi bi-cart"></i></button>
 
-        <div class="carrito-footer-cantidad d-flex flex-column align-items-center">
-          <p>Cantidad de artículos:</p>
-          <h4 id="cant">{{purchasedProducts.length}}</h4>
-        </div>
-        <div class="carrito-footer-total d-flex flex-column align-items-center">
-          <p>Total Compra:</p>
-          <h3 id="total" class="price">{{totalAmount}}</h3>
-        </div>
+            <div
+              class="carrito-footer-cantidad d-flex flex-column align-items-center"
+            >
+              <p>Cantidad de artículos:</p>
+              <h4 id="cant">{{purchasedProducts.length}}</h4>
+            </div>
+            <div
+              class="carrito-footer-total d-flex flex-column align-items-center"
+            >
+              <p>Total Compra:</p>
+              <h3 id="total" class="price">{{totalAmount}}</h3>
+            </div>
 
-<form id="purchase-form" method="POST" action="/carts/{{cid}}/purchase/confirm">
-  <button type="submit" class="btn btn-primary">Proceder al pago <i class="bi bi-credit-card"></i></button>
-</form>
+            <form
+              id="purchase-form"
+              method="POST"
+              action="/carts/{{cid}}/purchase/confirm"
+            >
+              <button type="submit" class="btn btn-primary">Proceder al pago
+                <i class="bi bi-credit-card"></i></button>
+            </form>
 
-
-      </div>
+          </div>
         {{else}}
           <div class="carrito-vacio">
-            <h2>No hay productos comprados <i class="bi bi-emoji-frown"></i></h2>
+            <h2>No hay productos comprados
+              <i class="bi bi-emoji-frown"></i></h2>
           </div>
         {{/if}}
       </div>
 
-
-{{!-- productos sin stock --}}
+      {{! productos sin stock }}
       <div class="carrito-productos container">
         {{#if failedProducts.length}}
-      <h3>Productos no comprados por falta de stock:</h3>
+          <h3>Productos no comprados por falta de stock:</h3>
           {{#each failedProducts}}
-            <div class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center" id="product-{{@index}}">
+            <div
+              class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center"
+              id="product-{{@index}}"
+            >
               <div class="col-md-2">
-                <img class="carrito-producto-imagen w-50" src="{{this.product.thumbnails.[0]}}" alt="{{this.product.title}}">
+                <img
+                  class="carrito-producto-imagen w-50"
+                  src="{{this.product.thumbnails.[0]}}"
+                  alt="{{this.product.title}}"
+                />
               </div>
 
               <div class="col-md-3">
-                <div class="carrito-producto-titulo d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-titulo d-flex flex-column align-items-center"
+                >
                   <small>Producto</small>
                   <h3>{{this.product.title}}</h3>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-stock d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-stock d-flex flex-column align-items-center"
+                >
                   <small>Stock</small>
-                  <h4 id="carrito-stock-{{this.product._id}}">{{this.product.stock}}</h4>
+                  <h4
+                    id="carrito-stock-{{this.product._id}}"
+                  >{{this.product.stock}}</h4>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-cantidad d-flex flex-column align-items-center"
+                >
                   <small>Cantidad</small>
                   <h4 id="ticket-cantidad">{{this.quantity}}</h4>
                 </div>
               </div>
 
               <div class="col-md-1">
-                <div class="carrito-producto-precio d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-precio d-flex flex-column align-items-center"
+                >
                   <small>Precio</small>
                   <h4 class="price">{{this.product.price}}</h4>
                 </div>
               </div>
 
               <div class="col-md-2">
-                <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
+                <div
+                  class="carrito-producto-subtotal d-flex flex-column align-items-center"
+                >
                   <small>Subtotal</small>
-                  <h4>{{multiplyUnformat this.product.price this.quantity}}</h4>
+                  <h4>{{multiply this.product.price this.quantity}}</h4>
                 </div>
               </div>
             </div>
           {{/each}}
         {{else}}
           <div class="carrito-vacio">
-            <h2>Todos los productos tienen stock suficiente <i class="bi bi-emoji-smile"></i></h2>
+            <h2>Todos los productos tienen stock suficiente
+              <i class="bi bi-emoji-smile"></i></h2>
           </div>
         {{/if}}
       </div>
-
 
     </div>
   </section>

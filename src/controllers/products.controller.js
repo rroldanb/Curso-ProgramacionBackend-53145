@@ -1,8 +1,8 @@
 const  {ProductsService}  = require("../services/index");
-// const ProductsService = require("../services/productsService");
 const CustomError = require("../utils/errors/CustomErrors");
-const { generateProductsErrorInfo } = require("../utils/errors/info");
+const { generateProductsErrorInfo, camposObligatoriosErrorInfo, campoNumericoErrorInfo} = require("../utils/errors/info");
 const EErrors = require("../utils/errors/enums");
+
 
 function generatePaginationLinks(pagLinksParams) {
   let { urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage } =
@@ -169,21 +169,22 @@ class ProductsController {
             "category",
         ];
 
+
         for (const campo of camposObligatorios) {
             if (!nuevoProducto[campo]) {
                 CustomError.createError({
-                    name: "MissingFieldsError",
-                    cause: `El campo '${campo}' es obligatorio`,
-                    message: "Faltan campos obligatorios",
-                    code: EErrors.INVALID_TYPES_ERROR,
+                    name: "Campo faltante para la creación del producto.",
+                    cause: camposObligatoriosErrorInfo(campo),
+                    message: 'Falta uno de los campos obligatorios para la creación del producto',
+                    code: EErrors.MISSING_FIELD,
                 });
             }
         }
 
         if (isNaN(nuevoProducto.price)) {
             CustomError.createError({
-                name: "InvalidTypeError",
-                cause: `El campo price debe ser numérico, pero se recibió ${nuevoProducto.price}`,
+                name: "Campo no Validado",
+                cause: campoNumericoErrorInfo('price',nuevoProducto.price),
                 message: "Tipo de dato incorrecto para el campo price",
                 code: EErrors.INVALID_TYPES_ERROR,
             });
@@ -192,7 +193,7 @@ class ProductsController {
         if (isNaN(nuevoProducto.stock)) {
             CustomError.createError({
                 name: "InvalidTypeError",
-                cause: `El campo stock debe ser numérico, pero se recibió ${nuevoProducto.stock}`,
+                cause: campoNumericoErrorInfo('stock', nuevoProducto.stock),
                 message: "Tipo de dato incorrecto para el campo stock",
                 code: EErrors.INVALID_TYPES_ERROR,
             });
@@ -243,55 +244,108 @@ class ProductsController {
 
         res.status(201).json({ mensaje: "Producto agregado correctamente" });
     } catch (error) {
+      console.log('Error', error.name, error.cause)
+      // res.send({status: 'error', error: error.name, error: error.cause})
         next(error);
     }
 };
 
 
-updateProduct = async (req, res, next) => {
-    const { pid } = req.params;
-    const updatedFields = req.body;
+updateProduct = async (req, res) => {
+  const { pid } = req.params;
+  const updatedFields = req.body;
 
-    try {
-        const product = await this.productsService.getProductById(pid);
-        if (!product) {
-            return res.status(404).json({ error: `No existe un producto con ID: ${pid}` });
-        }
-
-        if (updatedFields.code && await this.productsService.validateCode(updatedFields.code)) {
-            delete updatedFields.code;
-        }
-
-        if (updatedFields.price && isNaN(updatedFields.price)) {
-            delete updatedFields.price;
-        }
-
-        if (updatedFields.stock && isNaN(updatedFields.stock)) {
-            delete updatedFields.stock;
-        }
-
-        if (updatedFields.thumbnails && !Array.isArray(updatedFields.thumbnails)) {
-            updatedFields.thumbnails = [updatedFields.thumbnails];
-        }
-
-        const result = await this.productsService.updateProduct(pid, updatedFields);
-        req.io.emit("Server:productUpdate", result);
-        res.status(200).json({ status: 'success', payload: result });
-    } catch (error) {
-        next(error);
+  try {
+    const updateable = await this.productsService.validateId(pid);
+    if (!updateable) {
+      return res
+        .status(400)
+        .json({ error: `No existe un producto con id: ${pid}` });
     }
+
+    if (updatedFields.code) {
+      const existeCode = await this.productsService.validateCode(
+        updatedFields.code
+      );
+      if (existeCode) {
+        delete updatedFields.code;
+      }
+    }
+
+    if (updatedFields.thumbnails) {
+      if (typeof updatedFields.thumbnails === "string") {
+        updatedFields.thumbnails = [updatedFields.thumbnails];
+      } else if (!Array.isArray(updatedFields.thumbnails)) {
+        delete updatedFields.thumbnails;
+      } else {
+        const invalidThumbnails = updatedFields.thumbnails.filter(
+          (thumbnail) => typeof thumbnail !== "string"
+        );
+        if (invalidThumbnails.length > 0) {
+          delete updatedFields.thumbnails;
+        }
+      }
+    }
+
+    if (typeof updatedFields.status !== "boolean") {
+      updatedFields.status = true;
+    }
+
+    if (updatedFields.price && isNaN(updatedFields.price)) {
+      delete updatedFields.price;
+    }
+
+    if (updatedFields.stock && isNaN(updatedFields.stock)) {
+      delete updatedFields.stock;
+    }
+
+    const product = await this.productsService.getProductById(pid);
+    const docKeys = Object.keys(product._doc);
+    const validFields = {};
+    for (const key in updatedFields) {
+      if (docKeys.includes(key)) {
+        validFields[key] = updatedFields[key];
+      }
+    }
+
+    await this.productsService.updateProduct(pid, validFields);
+    const updatedProduct = await this.productsService.getProductById(pid);
+    req.io.emit("Server:productUpdate", updatedProduct);
+
+    res
+      .status(200)
+      .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
+  } catch (error) {
+    console.error("Error al actualizar el producto:", error);
+    res.status(500).json({ error: "Error al actualizar el producto" });
+  }
 };
 
-deleteProduct = async (req, res, next) => {
-    const { pid } = req.params;
+deleteProduct = async (req, res) => {
+  const { pid } = req.params;
 
-    try {
-        const result = await this.productsService.deleteProduct(pid);
-        req.io.emit("Server:loadProducts", await this.productsService.getProducts({}, { lean: true }));
-        res.status(200).json({ status: 'success', payload: result });
-    } catch (error) {
-        next(error);
+  try {
+    const existeId = await this.productsService.validateId(pid);
+    if (!existeId) {
+      return res
+        .status(400)
+        .json({ error: `No existe un producto con id: ${pid}` });
     }
+
+    await this.productsService.deleteProduct(pid);
+    const products = await this.productsService.getProducts(
+      {},
+      { lean: true }
+    );
+
+    req.io.emit("Server:loadProducts", products);
+    res
+      .status(200)
+      .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error);
+    res.status(500).json({ error: "Error al eliminar el producto" });
+  }
 };
 }
 

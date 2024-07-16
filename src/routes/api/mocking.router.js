@@ -10,7 +10,7 @@ const mockingRouter = Router();
 mockingRouter.get("/products", authorization(["admin"]), async (req, res) => {
   let products = [];
   try {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       products.push(generateProducts());
     }
 
@@ -23,7 +23,7 @@ mockingRouter.get("/products", authorization(["admin"]), async (req, res) => {
   mockingRouter.get("/users", authorization(["admin"]), async (req, res) => {
     let users = [];
     try {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 50; i++) {
         users.push(generateUsers());
       }
       res.status(200).send({ status: "success", payload: users });

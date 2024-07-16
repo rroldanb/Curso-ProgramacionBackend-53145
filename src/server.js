@@ -10,6 +10,7 @@ const initializePassport = require("./config/passport.config").initializePasspor
 const { router: routerApp } = require("./routes/index");
 const Sockets = require("./sockets");
 const cors = require('cors');
+const handleErrors = require("./middlewares/error");
 
 // Configuración de entorno
 dotenv.config();
@@ -48,7 +49,7 @@ configureSession(app);
 // Inicialización de Passport
 initializePassport();
 app.use(passport.initialize());
-app.use(passport.session()); // Uso de sesiones de Passport
+app.use(passport.session()); 
 
 // Configuración de vistas y motor de plantillas
 app.set("views", path.join(__dirname, "views"));
@@ -58,5 +59,6 @@ app.set("view engine", ".hbs");
 
 // Rutas
 app.use(routerApp);
+app.use(handleErrors())
 
 module.exports = app;

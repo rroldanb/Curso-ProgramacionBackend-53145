@@ -369,29 +369,24 @@ router.get("/mockingproducts", authorization(["public"]), isLoggedIn, async (req
     let mockProducts = [];
     let categorySet = new Set();
 
-    // Generar productos mock
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       let product = generateProducts();
       mockProducts.push(product);
-      categorySet.add(product.category); // Agregar categorías al set
+      categorySet.add(product.category); 
     }
 
-    // Convertir el set a array
     const categoryArray = Array.from(categorySet);
 
-    // Filtrar productos
     let filteredProducts = mockProducts.filter(product => {
       if (filter.category && product.category !== filter.category) return false;
       if (typeof filter.status === "boolean" && product.status !== filter.status) return false;
       return true;
     });
 
-    // Ordenar productos
     if (orderBy) {
       filteredProducts.sort((a, b) => orderBy === 1 ? a.price - b.price : b.price - a.price);
     }
 
-    // Calcular paginación
     const totalDocs = filteredProducts.length;
     const totalPages = Math.ceil(totalDocs / limit);
     const start = (numPage - 1) * limit;

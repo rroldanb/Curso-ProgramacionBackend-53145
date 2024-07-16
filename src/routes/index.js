@@ -28,10 +28,10 @@ router.use((req, res, next) => {
   res.status(404).send(`La ruta ${req.url} no está definida para este método`);
 });
 
-router.use((error, req, res, next) => {
-  console.log(error);
-  res.status(500).send("Error 500 en el server");
-});
+// router.use((error, req, res, next) => {
+//   console.log(error);
+//   res.status(500).send("Error 500 en el server");
+// });
 
 module.exports = {
   router,

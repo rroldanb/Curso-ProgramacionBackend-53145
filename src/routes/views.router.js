@@ -344,6 +344,147 @@ router.get("/products", authorization(["public"]), isLoggedIn, async (req, res) 
   }
 );
 
+
+router.get("/mockingproducts", authorization(["public"]), isLoggedIn, async (req, res) => {
+  const { generateProducts } = require('../utils/generateMocks.js');
+  let {
+    numPage = 1,
+    limitParam = 4,
+    categoryParam = null,
+    availableOnly = null,
+    orderBy = null,
+  } = req.query;
+
+  availableOnly = availableOnly ? availableOnly === "true" : null;
+  numPage = parseInt(numPage);
+  limit = parseInt(limitParam);
+  orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
+
+  const filter = {};
+  if (categoryParam) filter.category = categoryParam;
+  if (typeof availableOnly === "boolean") filter.status = availableOnly;
+
+  try {
+    let user = req.user;
+    let mockProducts = [];
+    let categorySet = new Set();
+
+    // Generar productos mock
+    for (let i = 0; i < 100; i++) {
+      let product = generateProducts();
+      mockProducts.push(product);
+      categorySet.add(product.category); // Agregar categorías al set
+    }
+
+    // Convertir el set a array
+    const categoryArray = Array.from(categorySet);
+
+    // Filtrar productos
+    let filteredProducts = mockProducts.filter(product => {
+      if (filter.category && product.category !== filter.category) return false;
+      if (typeof filter.status === "boolean" && product.status !== filter.status) return false;
+      return true;
+    });
+
+    // Ordenar productos
+    if (orderBy) {
+      filteredProducts.sort((a, b) => orderBy === 1 ? a.price - b.price : b.price - a.price);
+    }
+
+    // Calcular paginación
+    const totalDocs = filteredProducts.length;
+    const totalPages = Math.ceil(totalDocs / limit);
+    const start = (numPage - 1) * limit;
+    const end = start + limit;
+    const docs = filteredProducts.slice(start, end);
+    const hasPrevPage = numPage > 1;
+    const hasNextPage = numPage < totalPages;
+    const prevPage = hasPrevPage ? numPage - 1 : null;
+    const nextPage = hasNextPage ? numPage + 1 : null;
+    const pagingCounter = start + 1;
+
+    const urlParam = req.url;
+    const pagLinksParams = {
+      urlParam,
+      totalPages,
+      nextPage,
+      prevPage,
+      hasNextPage,
+      hasPrevPage,
+    };
+
+    const { nextLink, prevLink, firstLink, lastLink, urlBase } = generatePaginationLinks(pagLinksParams);
+
+    if (docs.length > 0) {
+      formatearProductos(docs);
+    }
+
+    if (user) {
+      if (user.user) {
+        user = user.user;
+      }
+      const nombre_completo = user.first_name === user.last_name
+        ? user.first_name
+        : user.first_name + " " + user.last_name;
+
+      res.render("home", {
+        cart_id: user.cart_id,
+        username: user.email,
+        nombre_completo,
+        nombre: user.first_name,
+        apellido: user.last_name,
+        admin: user.admin,
+        title: "mercadito || Gago",
+        products: docs,
+        page: numPage,
+        hasPrevPage,
+        hasNextPage,
+        prevPage,
+        nextPage,
+        totalPages,
+        totalDocs,
+        pagingCounter,
+        limit,
+        categoryArray,
+        nextLink,
+        prevLink,
+        firstLink,
+        lastLink,
+        urlBase,
+        styles: "homeStyles.css",
+        user: JSON.stringify(user),
+      });
+    } else {
+      res.render("home", {
+        title: "mercadito || Gago",
+        products: docs,
+        page: numPage,
+        hasPrevPage,
+        hasNextPage,
+        prevPage,
+        nextPage,
+        totalPages,
+        totalDocs,
+        pagingCounter,
+        limit,
+        categoryArray,
+        nextLink,
+        prevLink,
+        firstLink,
+        lastLink,
+        urlBase,
+        styles: "homeStyles.css",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error al obtener los productos" });
+  }
+});
+
+
+
+
 router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req, res) => {
     let {
       numPage = 1,
@@ -552,7 +693,7 @@ router.get("/carts/:cid/purchase", authorization(["user"]), async (req, res) => 
 
 
     if (purchasedProducts.length > 0) {
-      const newTicket = {
+        const newTicket = {
         code, 
         purchase: purchasedProducts,
         amount: totalAmount,

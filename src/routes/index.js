@@ -7,6 +7,7 @@ const { Router } = require("express");
 const mailRouter = require("./api/mail.router.js");
 const usersRouter = require("./api/users.router.js");
 const ticketsRouter = require("./api/tickets.router.js");
+const mockingRouter = require("./api/mocking.router.js");
 const router = Router();
 
 router.use("/", viewsRouter);
@@ -17,9 +18,10 @@ router.use("/api/tickets", ticketsRouter);
 
 router.use("/api/users", usersRouter);
 
-router.use("/sessions", sessionsRouter);
 router.use("/api/sessions", sessionsRouter);
+router.use('/api/mocking', mockingRouter)
 
+router.use("/sessions", sessionsRouter);
 router.use('/mail', mailRouter)
 
 router.use((req, res, next) => {

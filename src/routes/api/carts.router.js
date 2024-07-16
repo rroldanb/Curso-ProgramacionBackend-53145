@@ -16,7 +16,7 @@ router.delete("/:cid/product/:pid",authorization(['user']),  deleteProductFromCa
 router.put("/:cid",authorization(['user']),  addProductsToCart);
 router.put("/:cid/product/:pid",authorization(['user']),  updateProductQuantity)
 
-// router.post("/:cid/purchase",authorization(['user']),  purchaseCart)
+// router.post("/:cid/purchase",authorization(['user']),  purchaseTicket)
 
 
 

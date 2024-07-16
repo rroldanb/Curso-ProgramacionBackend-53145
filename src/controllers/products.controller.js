@@ -1,4 +1,8 @@
-const { ProductsService } = require("../services/index");
+const  {ProductsService}  = require("../services/index");
+// const ProductsService = require("../services/productsService");
+const CustomError = require("../utils/errors/CustomErrors");
+const { generateProductsErrorInfo } = require("../utils/errors/info");
+const EErrors = require("../utils/errors/enums");
 
 function generatePaginationLinks(pagLinksParams) {
   let { urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage } =
@@ -153,184 +157,142 @@ class ProductsController {
     }
   };
 
-  createProduct = async (req, res) => {
+  createProduct = async (req, res, next) => {
     try {
-      const nuevoProducto = req.body;
-      const camposObligatorios = [
-        "title",
-        "description",
-        "code",
-        "price",
-        "stock",
-        "category",
-      ];
-      for (const campo of camposObligatorios) {
-        if (!nuevoProducto[campo]) {
-          return res
-            .status(400)
-            .json({ error: `El campo '${campo}' es obligatorio` });
+        const nuevoProducto = req.body;
+        const camposObligatorios = [
+            "title",
+            "description",
+            "code",
+            "price",
+            "stock",
+            "category",
+        ];
+
+        for (const campo of camposObligatorios) {
+            if (!nuevoProducto[campo]) {
+                CustomError.createError({
+                    name: "MissingFieldsError",
+                    cause: `El campo '${campo}' es obligatorio`,
+                    message: "Faltan campos obligatorios",
+                    code: EErrors.INVALID_TYPES_ERROR,
+                });
+            }
         }
-      }
 
-      if (isNaN(nuevoProducto.price)) {
-        return res
-          .status(400)
-          .json({ error: `El campo price debe ser numérico` });
-      }
-
-      if (isNaN(nuevoProducto.stock)) {
-        return res
-          .status(400)
-          .json({ error: `El campo stock debe ser numérico` });
-      }
-
-      if (await this.productsService.validateCode(nuevoProducto.code)) {
-        return res
-          .status(400)
-          .json({
-            error: `El código del producto ${nuevoProducto.code} ya existe`,
-          });
-      }
-
-      if (!nuevoProducto.thumbnails) {
-        nuevoProducto.thumbnails = [];
-      } else if (typeof nuevoProducto.thumbnails === "string") {
-        nuevoProducto.thumbnails = [nuevoProducto.thumbnails];
-      } else if (!Array.isArray(nuevoProducto.thumbnails)) {
-        return res
-          .status(400)
-          .json({
-            error:
-              "El campo 'thumbnails' debe ser un string o un array de strings",
-          });
-      } else {
-        const invalidThumbnails = nuevoProducto.thumbnails.filter(
-          (thumbnail) => typeof thumbnail !== "string"
-        );
-        if (invalidThumbnails.length > 0) {
-          return res
-            .status(400)
-            .json({
-              error:
-                "Algunos elementos de 'thumbnails' no son cadenas de texto válidas.",
+        if (isNaN(nuevoProducto.price)) {
+            CustomError.createError({
+                name: "InvalidTypeError",
+                cause: `El campo price debe ser numérico, pero se recibió ${nuevoProducto.price}`,
+                message: "Tipo de dato incorrecto para el campo price",
+                code: EErrors.INVALID_TYPES_ERROR,
             });
         }
-      }
 
-      if (typeof nuevoProducto.status !== "boolean") {
-        nuevoProducto.status = true;
-      }
+        if (isNaN(nuevoProducto.stock)) {
+            CustomError.createError({
+                name: "InvalidTypeError",
+                cause: `El campo stock debe ser numérico, pero se recibió ${nuevoProducto.stock}`,
+                message: "Tipo de dato incorrecto para el campo stock",
+                code: EErrors.INVALID_TYPES_ERROR,
+            });
+        }
 
-      const result = await this.productsService.addProduct(nuevoProducto);
-      const stringLastID = result._id.toString();
+        if (await this.productsService.validateCode(nuevoProducto.code)) {
+            CustomError.createError({
+                name: "DuplicateCodeError",
+                cause: `El código del producto ${nuevoProducto.code} ya existe`,
+                message: "Código de producto duplicado",
+                code: EErrors.INVALID_TYPES_ERROR,
+            });
+        }
 
-      req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID });
+        if (!nuevoProducto.thumbnails) {
+            nuevoProducto.thumbnails = [];
+        } else if (typeof nuevoProducto.thumbnails === "string") {
+            nuevoProducto.thumbnails = [nuevoProducto.thumbnails];
+        } else if (!Array.isArray(nuevoProducto.thumbnails)) {
+            CustomError.createError({
+                name: "InvalidTypeError",
+                cause: "El campo 'thumbnails' debe ser un string o un array de strings",
+                message: "Tipo de dato incorrecto para el campo thumbnails",
+                code: EErrors.INVALID_TYPES_ERROR,
+            });
+        } else {
+            const invalidThumbnails = nuevoProducto.thumbnails.filter(
+                (thumbnail) => typeof thumbnail !== "string"
+            );
+            if (invalidThumbnails.length > 0) {
+                CustomError.createError({
+                    name: "InvalidTypeError",
+                    cause: "Algunos elementos de 'thumbnails' no son cadenas de texto válidas.",
+                    message: "Tipo de dato incorrecto en thumbnails",
+                    code: EErrors.INVALID_TYPES_ERROR,
+                });
+            }
+        }
 
-      res.status(201).json({ mensaje: "Producto agregado correctamente" });
+        if (typeof nuevoProducto.status !== "boolean") {
+            nuevoProducto.status = true;
+        }
+
+        const result = await this.productsService.addProduct(nuevoProducto);
+        const stringLastID = result._id.toString();
+
+        req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID });
+
+        res.status(201).json({ mensaje: "Producto agregado correctamente" });
     } catch (error) {
-      console.error("Error al agregar el producto:", error);
-      res
-        .status(400)
-        .json({ error: "Error al agregar el producto", mensaje: error.errmsg });
+        next(error);
     }
-  };
+};
 
-  updateProduct = async (req, res) => {
+
+updateProduct = async (req, res, next) => {
     const { pid } = req.params;
     const updatedFields = req.body;
 
     try {
-      const updateable = await this.productsService.validateId(pid);
-      if (!updateable) {
-        return res
-          .status(400)
-          .json({ error: `No existe un producto con id: ${pid}` });
-      }
-
-      if (updatedFields.code) {
-        const existeCode = await this.productsService.validateCode(
-          updatedFields.code
-        );
-        if (existeCode) {
-          delete updatedFields.code;
+        const product = await this.productsService.getProductById(pid);
+        if (!product) {
+            return res.status(404).json({ error: `No existe un producto con ID: ${pid}` });
         }
-      }
 
-      if (updatedFields.thumbnails) {
-        if (typeof updatedFields.thumbnails === "string") {
-          updatedFields.thumbnails = [updatedFields.thumbnails];
-        } else if (!Array.isArray(updatedFields.thumbnails)) {
-          delete updatedFields.thumbnails;
-        } else {
-          const invalidThumbnails = updatedFields.thumbnails.filter(
-            (thumbnail) => typeof thumbnail !== "string"
-          );
-          if (invalidThumbnails.length > 0) {
-            delete updatedFields.thumbnails;
-          }
+        if (updatedFields.code && await this.productsService.validateCode(updatedFields.code)) {
+            delete updatedFields.code;
         }
-      }
 
-      if (typeof updatedFields.status !== "boolean") {
-        updatedFields.status = true;
-      }
-
-      if (updatedFields.price && isNaN(updatedFields.price)) {
-        delete updatedFields.price;
-      }
-
-      if (updatedFields.stock && isNaN(updatedFields.stock)) {
-        delete updatedFields.stock;
-      }
-
-      const product = await this.productsService.getProductById(pid);
-      const docKeys = Object.keys(product._doc);
-      const validFields = {};
-      for (const key in updatedFields) {
-        if (docKeys.includes(key)) {
-          validFields[key] = updatedFields[key];
+        if (updatedFields.price && isNaN(updatedFields.price)) {
+            delete updatedFields.price;
         }
-      }
 
-      await this.productsService.updateProduct(pid, validFields);
-      const updatedProduct = await this.productsService.getProductById(pid);
-      req.io.emit("Server:productUpdate", updatedProduct);
+        if (updatedFields.stock && isNaN(updatedFields.stock)) {
+            delete updatedFields.stock;
+        }
 
-      res
-        .status(200)
-        .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
+        if (updatedFields.thumbnails && !Array.isArray(updatedFields.thumbnails)) {
+            updatedFields.thumbnails = [updatedFields.thumbnails];
+        }
+
+        const result = await this.productsService.updateProduct(pid, updatedFields);
+        req.io.emit("Server:productUpdate", result);
+        res.status(200).json({ status: 'success', payload: result });
     } catch (error) {
-      console.error("Error al actualizar el producto:", error);
-      res.status(500).json({ error: "Error al actualizar el producto" });
+        next(error);
     }
-  };
+};
 
-  deleteProduct = async (req, res) => {
+deleteProduct = async (req, res, next) => {
     const { pid } = req.params;
 
     try {
-      const existeId = await this.productsService.validateId(pid);
-      if (!existeId) {
-        return res
-          .status(400)
-          .json({ error: `No existe un producto con id: ${pid}` });
-      }
-
-      await this.productsService.deleteProduct(pid);
-      const products = await this.productsService.getProducts(
-        {},
-        { lean: true }
-      );
-
-      req.io.emit("Server:loadProducts", products);
-      res
-        .status(200)
-        .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });
+        const result = await this.productsService.deleteProduct(pid);
+        req.io.emit("Server:loadProducts", await this.productsService.getProducts({}, { lean: true }));
+        res.status(200).json({ status: 'success', payload: result });
     } catch (error) {
-      console.error("Error al eliminar el producto:", error);
-      res.status(500).json({ error: "Error al eliminar el producto" });
+        next(error);
     }
-  };
+};
 }
 
 module.exports = { ProductsController };

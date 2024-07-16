@@ -20,8 +20,7 @@ class ProductDaoMongo {
   }
 
   async getProducts(filter, options) {
-    const result = await this.productsModel.paginate(filter, options);
-    return result;
+    return await this.productsModel.paginate(filter, options);
   }
 
   async getProductById(pid) {

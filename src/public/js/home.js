@@ -1,4 +1,4 @@
-const { logger } = require("../../utils/loggers");
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const thumbnails = document.querySelectorAll(".thumbnail");
@@ -113,7 +113,7 @@ function login(event) {
     })
     .then((data) => {
       if (data.status === "success") {
-        logger.info("Login exitoso");
+        // logger.info("Login exitoso");
         window.location.reload();
       } else {
         alert(data.error || "Error desconocido");

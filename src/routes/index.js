@@ -23,6 +23,7 @@ router.use("/api/users", usersRouter);
 router.use("/api/sessions", sessionsRouter);
 router.use('/api/mocking', mockingRouter)
 router.use('/api/loggertest', loggerRouter)
+router.use('/loggertest', loggerRouter)
 
 router.use("/sessions", sessionsRouter);
 router.use('/mail', mailRouter)

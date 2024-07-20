@@ -1,12 +1,15 @@
 const passport = require("passport");
+const logger = require('../../utils/loggers')
 
 class SessionDaoMongo {
   async register(req) {
     return { status: "success", message: "User Registered" };
   }
 
+
+
   async failRegister() {
-    console.log("falló la estrategia");
+    logger.error("falló la estrategia");
     return { error: "Register failed" };
   }
 
@@ -28,7 +31,7 @@ class SessionDaoMongo {
   }
 
   async failLogin() {
-    console.log("login failed");
+    logger.error("login failed");
     return { error: "Login failed" };
   }
 

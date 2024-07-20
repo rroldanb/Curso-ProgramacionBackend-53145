@@ -1,12 +1,13 @@
 const { chatModel } = require("./dao/mongo/models/chat.model.js");
+const { logger } = require("./utils/loggers.js");
 
 module.exports = (io) => {
   io.on("connection", async (socket) => {
     
-    console.log(`${socket.handshake.auth.username} se ha conectado`);
+    logger.info(`${socket.handshake.auth.username} se ha conectado`);
 
     socket.on("disconnect", () => {
-      console.log(`${socket.handshake.auth.username} se ha desconectado`);
+      logger.info(`${socket.handshake.auth.username} se ha desconectado`);
     });
 
     socket.on("client_message", async (msg) => {

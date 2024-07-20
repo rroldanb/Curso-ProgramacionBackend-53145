@@ -1,14 +1,19 @@
-# Rubén Roldán - Desafio entregable #8 Mocking y manejo de errores
+# Rubén Roldán - Desafio entregable #9 Implementación de logger
 Curso CoderHouse Programación Backend, Comisión 53145
 
 ## Descripción de la entrega
 
 ### Consigna
-- Se aplicará un módulo de mocking y un manejador de errores a tu servidor actual
+- Basado en nuestro proyecto principal, implementar un logger
 
 ### Aspectos a incluir:
-- Generar un módulo de Mocking para el servidor, con el fin de que, al inicializarse pueda generar y entregar 100 productos con el mismo formato que entregaría una petición de Mongo. Ésto solo debe ocurrir en un endpoint determinado (‘/mockingproducts’)
-- Además, generar un customizador de errores y crear un diccionario para tus errores más comunes al crear un producto, agregarlo al carrito, etc.
+- Primero, definir un sistema de niveles que tenga la siguiente prioridad (de menor a mayor):
+`debug, http, info, warning, error, fatal`
+- Después implementar un logger para desarrollo y un logger para producción, el logger de desarrollo deberá loggear a partir del nivel debug, sólo en consola
+- Sin embargo, el logger del entorno productivo debería loggear sólo a partir de nivel info.
+- Además, el logger deberá enviar en un transporte de archivos a partir del nivel de error en un nombre “errors.log”
+- Agregar logs de valor alto en los puntos importantes de tu servidor (errores, advertencias, etc) y modificar los console.log() habituales que tenemos para que muestren todo a partir de winston.
+- Crear un endpoint /loggerTest que permita probar todos los logs
 
 
 
@@ -22,68 +27,6 @@ Curso CoderHouse Programación Backend, Comisión 53145
     - `npm run dev` Este script utiliza Nodemon para iniciar la aplicación en el puerto 8080, con la capacidad de reiniciarse automáticamente cada vez que detecta cambios en los archivos.
     - `npm run start:dev` Este script inicia la aplicación en el puerto 8080, en un entorno de desarrollo, similar al script "dev", pero utilizando directamente Node.js con la opción --watch para observar cambios en el archivo src/app.js. Aunque proporciona funcionalidad similar a la anterior, algunos desarrolladores pueden preferir esta opción si no quieren depender de Nodemon.
 - Para detener la ejecución de la aplicacion presinonar juntas las teclas: Ctrl + C
-
-
-## Vistas disponibles
-- Una vez iniciado el servidor se podrá usar el navegador para llegar a la página raiz del proyecto:
-- En la url: http://localhost:8080/ en el cual se dispuso de un enlace para ingresar al Real Time Products
-- http://localhost:8080/realtimeproducts despliega en tiempo real los prouctos almacenados y permite la edicion y eliminación de productos existentes asi como la posibilidad de agregar nuevos, reflejandose estos cambios tan proto se ejecutan a cualquier otro cliente conectado
-- http://localhost:8080/chat/ donde se puede ingresar al chat en tiempo real.
-
-## Acceso al servidor
-- Desde el navegador se recibirá una respuesta en las siguientes url
-
-    - http://localhost:8080
-    - http://localhost:8080/products
-    - http://localhost:8080/realtimeproducts
-    - http://localhost:8080/chat 
-    - http://localhost:8080/carts/664006dadff1d46a8cdb49c4 (vista del único carrito disponible)
-
-## Métodos HTTP disponibles
-- En el cliente de HTTP se recibirá una respuesta en los siguientes enpoints:
-
-    - Métodos GET de productos:
-        - http://localhost:8080/api/products sin query, eso devolverá todos los productos con que se inicializó el proyecto.
-        - http://localhost:8080/api/products?limit=n , eso devolverà los primeros n productos. El número del límite n puede ser un entero entre el 1 y el 10
-        - http://localhost:8080/api/products/:pid, eso devolverà sólo el producto con id=:pid (product id). El :pid es un identificador único, se dan algunos ejemplos mas abajo.
-        - http://localhost:8080/api/products/663836fe95f9e8c1519dc0f0, al no existir el id del producto, devolverà un objeto con un error indicando que el producto no existe.
-
-    - Parámetros disponibles para el método GET:
-        - numPage: valor por defecto: 1, para poder mostrar los resultados de una página específica.
-        - limit: valor por defecto: 10, para indicar cuantos productos se mostrarán por página.
-        - category: valor por defecto: null, permite filtrar en base a alguna categoría.
-        - availableOnly: valor por defecto: null, permite filtrar productos en base a su status, valores permitidos: true, false, null.
-        - orderByPrice: valor por defecto: null, permite ordenar los productos en base a su precio, valores permitidos: asc, desc, null.
-
-
-    - Método POST de productos:
-        - http://localhost:8080/api/products incluyendo todos los campos obligatorio en el body del request creará un nuevo producto, se valida que el código del producto no exista.
-
-    - Método PUT de productos:
-        - http://localhost:8080/api/products/:pid permite modificar el producto con el :pid indicado con los nuevos valores indicados en el body del request, se valida que el código del producto no exista.
-
-    - Método DELETE de productos:
-        - http://localhost:8080/api/products/:pid eliminara el producto con el :pid indicado
-
-    - Método GET del carrito:
-        - http://localhost:8080/api/cart:cid devolverá los productos que pertenezcan al carrito con el parámetro cid proporcionados.
-
-    - Métodos POST del carrito:
-        - http://localhost:8080/api/cart iniicializará un nuevo carrito y devolverá el cid (cart id)
-        - http://localhost:8080/api/cart/:cid/product/:pid agregará o incrementará la cantidad de productos con el :pid indicado en el :cid indicado
-
-    - Métodos PUT del carrito
-        - http://localhost:8080/api/carts/:cid actualiza el carrito con un arreglo de productos con el formato especificado arriba.
-        - http://localhost:8080/api/carts/:cid/products/:pid actualiza SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
-
-    - Métodos DELETE del carrito
-        - http://localhost:8080/api/carts/:cid/products/:pid elimina del carrito el producto seleccionado. 
-        - http://localhost:8080/api/carts/:cid elimina todos los productos del carrito
-
-    
-
-
-- Para ejecutar las pruebas de los endpoints se incluye el archivo `thunder-collection_ecommerce.json` dentro de la carpeta `/src/utils` que puede ser importado al cliente HTTP "Thunder Client", que funciona como una extencion de VSCode
 
 
 

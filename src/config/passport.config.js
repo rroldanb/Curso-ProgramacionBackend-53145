@@ -8,10 +8,10 @@ const { createHash, isValidPassword } = require("../utils/bcrypt.js");
 const { toCapital } = require("../public/js/renderUtils.js");
 
 const GithubStrategy = require("passport-github2");
+const { logger } = require("../utils/loggers.js");
 
 const LocalStrategy = local.Strategy;
 const userService = new UserDaoMongo();
-
 const initializePassport = () => {
   passport.use("github", new GithubStrategy(
       {
@@ -82,7 +82,7 @@ const initializePassport = () => {
             done(null, user);
           }
         } catch (error) {
-          console.log("error", error);
+          logger.error(`Error: ${error}`);
           return done(error);
         }
       }
@@ -99,13 +99,13 @@ const initializePassport = () => {
         const { first_name, last_name, age } = req.body;
         try {
           if (isNaN(age)) {
-            console.log("La edad debe ser un número");
+            logger.error("La edad debe ser un número");
             return done(null, false);
           }
           // verificar si existe el usuario
           let userFound = await userService.getUserBy({ email: username });
           if (userFound) {
-            console.log("el usuario ya existe");
+            logger.error("el usuario ya existe");
             return done(null, false);
           }
 
@@ -159,7 +159,7 @@ const initializePassport = () => {
             email: username.toLowerCase(),
           });
           if (!user) {
-            console.log("usuario no encontrado");
+            logger.error("usuario no encontrado");
             return done(null, false);
           }
           const validPassword = isValidPassword(password, {

@@ -1,5 +1,4 @@
 
-const { connect } = require('mongoose');
 const dotenv = require('dotenv');
 const { program } = require('../utils/commander');
 const { mode } = program.opts();
@@ -14,12 +13,8 @@ exports.objectConfig = {
   mongo_secret: process.env.MONGO_SECRET,
   gmail_user: process.env.GMAIL_USER,
   gmail_pass: process.env.GMAIL_PASS,
-  persistence: process.env.PERSISTENCE || 'MONGO'
+  persistence: process.env.PERSISTENCE || 'MONGO',
+  execMode: mode
 
 };
 
-exports.connectDB = () => {
-  connect(process.env.MONGO_URL)
-    .then(() => console.log("Base de datos conectada"))
-    .catch((err) => console.error("Error conectando a la base de datos", err));
-};

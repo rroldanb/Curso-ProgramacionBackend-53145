@@ -1,4 +1,5 @@
-const  {persistence, connectDB} = require('../config/config.js')
+const  {persistence} = require('../config/config.js')
+const { connectDB } = require('../config/connectDB.js')
 
 let ProductDao
 let UserDao

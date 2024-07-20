@@ -1,3 +1,5 @@
+const { logger } = require("../../utils/loggers");
+
 let savedId = "";
 const productForm = document.getElementById("productForm");
 const newProdTitle = document.getElementById("newProdTitle");
@@ -94,7 +96,7 @@ function saveNewProduct(newProduct) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      logger.info(data);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -266,7 +268,7 @@ function deleteProduct(pid) {
       return response.json();
     })
     .then((data) => {
-      console.log("Producto eliminado:", data);
+  logger.info(`Producto eliminado: ${data}`);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -336,7 +338,7 @@ const socket = io({
 
 
 socket.on("Server:addProduct", (data) => {
-  console.log("recibiendo datos del nuevo producto", data);
+  logger.info(`recibiendo datos del nuevo producto: ${data}`);
   appendProduct(data);
 });
 socket.on("Server:loadProducts", (data) => {

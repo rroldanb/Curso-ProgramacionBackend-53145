@@ -11,6 +11,7 @@ const { router: routerApp } = require("./routes/index");
 const Sockets = require("./sockets");
 const cors = require('cors');
 const handleErrors = require("./middlewares/error");
+const { addLogger, logger } = require("./utils/loggers");
 
 // Configuración de entorno
 dotenv.config();
@@ -21,13 +22,16 @@ const port = objectConfig.port;
 // Configura CORS
 app.use(cors());
 
+app.use(addLogger)
+
+
 // Conexión a la base de datos
 // connectDB(); //ahora va en Factory
 
 // Configuración del servidor HTTP y Socket.IO
 const httpServer = app.listen(port, (error) => {
-  if (error) console.log(error);
-  console.log(`Server escuchando en el puerto ${port}`);
+  if (error) logger.fatal(error);
+  logger.info(`Server escuchando en el puerto ${port}`);
 });
 const io = new Server(httpServer);
 Sockets(io);

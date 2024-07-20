@@ -2,6 +2,8 @@ const ProductsManager = require("../dao/mongo/products.mongo.js");
 const CartsManager = require("../dao/mongo/carts.mongo.js");
 const TicketsManager = require ('../dao/mongo/tickets.mongo.js')
 
+
+
 const {
   isLoggedIn,
   authorization,
@@ -214,7 +216,7 @@ router.get("/", authorization(["public"]), isLoggedIn, async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     res.status(500).json({ error: "Error al obtener los productos" });
   }
 });
@@ -338,7 +340,7 @@ router.get("/products", authorization(["public"]), isLoggedIn, async (req, res) 
         });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       res.status(500).json({ error: "Error al obtener los productos" });
     }
   }
@@ -472,7 +474,7 @@ router.get("/mockingproducts", authorization(["public"]), isLoggedIn, async (req
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     res.status(500).json({ error: "Error al obtener los productos" });
   }
 });
@@ -574,7 +576,7 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
         });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       res.status(500).json({ error: "Error al obtener los productos" });
     }
   }
@@ -648,7 +650,7 @@ router.get("/carts/:cid", authorization(["user"]), isLoggedIn, async (req, res) 
         });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       res.status(500).json({ error: "Error al obtener los productos" });
     }
   }
@@ -775,12 +777,13 @@ router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
       styles: "homeStyles.css",
     })
   } catch (error) {
-    console.log(error)
+    logger.error(error)
   }
 });
 
 
 const {currentUser} = require("../controllers/sessions.controller");
+const { logger } = require("../utils/loggers.js");
 router.get("/current", authorization(['user', 'admin']), currentUser);
 
 

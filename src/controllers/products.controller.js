@@ -2,6 +2,7 @@ const  {ProductsService}  = require("../services/index");
 const CustomError = require("../utils/errors/CustomErrors");
 const { generateProductsErrorInfo, camposObligatoriosErrorInfo, campoNumericoErrorInfo} = require("../utils/errors/info");
 const EErrors = require("../utils/errors/enums");
+const { logger } = require("../utils/loggers");
 
 
 function generatePaginationLinks(pagLinksParams) {
@@ -135,7 +136,7 @@ class ProductsController {
         totalDocs: result.totalDocs,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       res.status(500).json({ error: "Error al obtener los productos" });
     }
   };
@@ -150,7 +151,7 @@ class ProductsController {
         res.status(404).json({ error: `Producto con ID ${pid} no encontrado` });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       res
         .status(400)
         .json({ error: "Error al obtener el producto, pid no válido" });
@@ -244,7 +245,7 @@ class ProductsController {
 
         res.status(201).json({ mensaje: "Producto agregado correctamente" });
     } catch (error) {
-      console.log('Error', error.name, error.cause)
+      logger.error(`Error, ${error.name}, ${error.cause}`)
       // res.send({status: 'error', error: error.name, error: error.cause})
         next(error);
     }

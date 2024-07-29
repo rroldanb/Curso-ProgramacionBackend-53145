@@ -5,7 +5,7 @@ const { Router } = require("express");
 const { authorization } = require("../middlewares/auth.middleware");
 const router = Router();
 
-router.get("/", authorization(['user']), async (req, res) => {
+router.get("/", authorization(['user, premium']), async (req, res) => {
   req.io.on("connection", async (socket) => {
     try {
       const messages = await chatModel.find({});
@@ -21,7 +21,7 @@ router.get("/", authorization(['user']), async (req, res) => {
   });
 });
 
-router.post("/", authorization(['user']), async (req, res) => {
+router.post("/", authorization(['user, premium']), async (req, res) => {
   const { io } = req;
   const { msg } = req.body;
 

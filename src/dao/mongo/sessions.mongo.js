@@ -9,7 +9,7 @@ class SessionDaoMongo {
 
 
   async failRegister() {
-    logger.error("falló la estrategia");
+    console.error("falló la estrategia");
     return { error: "Register failed" };
   }
 
@@ -31,7 +31,7 @@ class SessionDaoMongo {
   }
 
   async failLogin() {
-    logger.error("login failed");
+    console.error("login failed");
     return { error: "Login failed" };
   }
 
@@ -61,7 +61,9 @@ class SessionDaoMongo {
     if (req.session.user) {
       return {
         isAuthenticated: true,
+        username: req.session.user.email,
         isAdmin: req.session.user.admin,
+        isPremium: req.session.user.role.toLowerCase() === 'premium'
       };
     } else {
       return {

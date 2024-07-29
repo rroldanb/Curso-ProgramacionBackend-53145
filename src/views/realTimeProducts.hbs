@@ -1,8 +1,14 @@
 <main>
   <div class="bienvenida">
     <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
-    <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
+    {{#if admin}}
+      <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
+    {{else}}
+      <h2> {{nombre}} {{apellido}} Aquí puedes editar tus productos</h2>
+    {{/if}}
+
     <p class="d-none" id="username"> {{username}}</p>
+    <p class="d-none" id="isPremium"> {{premium}}</p>
 
     <div class="container d-flex justify-content-between">
 
@@ -16,13 +22,13 @@
     </div>
 
   </div>
-    {{#if admin}}
+    {{#ifOr admin premium }}
       <div class="container-fluid h-100 mx-auto">
   {{>filters}}
 
-        <div class="row h-100 container-fluid d-flex flex-row mx-auto">
+        <div class="row h-100 container-fluid mx-auto ">
 
-          <div class="py-3 col-3 d-flex justify-content-center">
+          <div class="ml-2 py-3 col-3 d-flex justify-content-center">
               <form id="productForm" class="rounded-0" >
                   <div class="card" id="newProdDetails" style="min-width: 380px;">
                     <h3 id="editBoxTitle" class="mx-auto">Agregar nuevo producto</h3>
@@ -35,6 +41,9 @@
                       <p class="detail-item chk-boton">Activo: <input type="checkbox" id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
                       <p class="detail-item">Stock: <input type="text" id="newProdStock" required></p>
                       <p class="detail-item">Categoría: <input type="text" id="newProdCategory" required></p>
+                      {{#if admin}}
+                      <p class="detail-item">Propietario: <input type="text" id="newProdOwner" required></p>
+                      {{/if}}
                       <p class="detail-item">Rutas de Imagenes, separadas por coma (,)   </p>
                       <textarea rows="6" id="newProdFileNames"></textarea> 
 
@@ -43,8 +52,9 @@
                   </div>
               </form>
           </div>
+          <div class=" px-3 py-3 col-9 d-flex flex-wrap container-fluid" id="realTimeProductsArea">
+          {{!-- <div class=" px-3 py-3 col-1 d-flex flex-wrap container" id="fakeArea"> --}}
 
-          <div class=" px-3 py-3 col-9 d-flex flex-wrap " id="realTimeProductsArea">
 
           </div>
         </div>
@@ -57,7 +67,7 @@
         Necesitas permisos de administrador para editar los productos
       </h2>
     </div>
-    {{/if}}
+    {{/ifOr}}
 </main>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/editProducts.js"></script>

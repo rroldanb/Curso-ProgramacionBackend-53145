@@ -8,13 +8,13 @@ const { purchaseCart } = require("../../controllers/tickets.controller");
 const { getCart, createCart, deleteProductFromCart, emptyCart, addProductToCart, 
   addProductsToCart, updateProductQuantity} = new CartsController()
 
-router.get("/:cid",authorization(['user']), getCart);
-router.post("/",authorization(['user']),  createCart);
-router.post("/:cid/product/:pid",authorization(['user']),  addProductToCart);
-router.delete("/:cid",authorization(['user']),  emptyCart);
-router.delete("/:cid/product/:pid",authorization(['user']),  deleteProductFromCart);
-router.put("/:cid",authorization(['user']),  addProductsToCart);
-router.put("/:cid/product/:pid",authorization(['user']),  updateProductQuantity)
+router.get("/:cid",authorization(['user', 'premium']), getCart);
+router.post("/",authorization(['user', 'premium']),  createCart);
+router.post("/:cid/product/:pid",authorization(['user', 'premium']),  addProductToCart);
+router.delete("/:cid",authorization(['user', 'premium']),  emptyCart);
+router.delete("/:cid/product/:pid",authorization(['user', 'premium']),  deleteProductFromCart);
+router.put("/:cid",authorization(['user', 'premium']),  addProductsToCart);
+router.put("/:cid/product/:pid",authorization(['user', 'premium']),  updateProductQuantity)
 
 // router.post("/:cid/purchase",authorization(['user']),  purchaseTicket)
 

@@ -15,14 +15,16 @@ const UserSchema = new Schema({
     password: String,
     role: {
         type: String,
-        enum: ['user', 'user_premium', 'admin'],
+        enum: ['user', 'premium', 'admin'],
         default: 'user'
     },
     cart_id: { 
         type: Schema.Types.ObjectId, 
         ref: 'carts', 
         required: true 
-    }
+    },
+    resetPasswordToken: String, 
+    resetPasswordExpires: Date  
 });
 UserSchema.plugin(mongoosePaginate)
 

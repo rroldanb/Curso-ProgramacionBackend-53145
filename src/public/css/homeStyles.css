@@ -14,6 +14,7 @@ p{
     color: rgb(55, 62, 69);
     display: flex;
     justify-content: space-between;
+    margin-bottom: 4px;
 }
 
 #newProdDetails{
@@ -82,13 +83,21 @@ left: 28px;
 
   .thumbnail-display-area {
     text-align: center;
+    overflow: hidden;
+    position: relative;
   }
   
   .thumbnail-display-area img {
-    max-width: 100%;
-    height: auto;
-    max-height: 200px;
+    /* position: absolute; */
+  /* top: 50%;
+  left: 50%; */
+    /* max-width: 100%; */
+    /* max-height: 200px; */
     margin-bottom: 10px;
+    height: 200px;
+    /* width: auto;  */
+    overflow: hidden;
+
   }
   
   .thumbnails {
@@ -98,7 +107,7 @@ left: 28px;
   }
   
   .thumbnail {
-    width: 50px;
+    width: auto;
     height: 50px;
     margin-right: 5px;
     cursor: pointer;

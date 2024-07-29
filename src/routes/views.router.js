@@ -115,6 +115,9 @@ router.get("/", authorization(["public"]), isLoggedIn, async (req, res) => {
   const filter = {};
   if (categoryParam) filter.category = categoryParam;
   if (typeof availableOnly === "boolean") filter.status = availableOnly;
+  // if (req.user.role.toLowerCase() === "premium") filter.owner = req.user.email 
+
+// console.log('filter VR L 120', filter) //owner: 'premiumuser@coder.com'
 
   const options = {
     limit,
@@ -166,6 +169,7 @@ router.get("/", authorization(["public"]), isLoggedIn, async (req, res) => {
         user.first_name === user.last_name
           ? user.first_name
           : user.first_name + " " + user.last_name;
+      const isPremium = req.user.role.toLowerCase() === "premium"
 
       res.render("home", {
         cart_id: user.cart_id,
@@ -174,6 +178,7 @@ router.get("/", authorization(["public"]), isLoggedIn, async (req, res) => {
         nombre: user.first_name,
         apellido: user.last_name,
         admin: user.admin,
+        premium: isPremium,
         title: "mercadito || Gago",
         products: docs,
         page,
@@ -221,7 +226,7 @@ router.get("/", authorization(["public"]), isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/products", authorization(["public"]), isLoggedIn, async (req, res) => {
+router.get("/products", authorization(["user", "premium", "admin"]), isLoggedIn, async (req, res) => {
     let {
       numPage = 1,
       limitParam = 4,
@@ -289,6 +294,7 @@ router.get("/products", authorization(["public"]), isLoggedIn, async (req, res) 
           user.first_name === user.last_name
             ? user.first_name
             : user.first_name + " " + user.last_name;
+            const isPremium = req.user.role.toLowerCase() === "premium"
 
         res.render("home", {
           cart_id: user.cart_id,
@@ -297,6 +303,7 @@ router.get("/products", authorization(["public"]), isLoggedIn, async (req, res) 
           nombre: user.first_name,
           apellido: user.last_name,
           admin: user.admin,
+          premium: isPremium,
           title: "mercadito || Gago",
           products: docs,
           page,
@@ -482,7 +489,7 @@ router.get("/mockingproducts", authorization(["public"]), isLoggedIn, async (req
 
 
 
-router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req, res) => {
+router.get("/realtimeproducts", authorization(["premium", "admin"]), isLoggedIn, async (req, res) => {
     let {
       numPage = 1,
       limitParam = 4,
@@ -499,6 +506,9 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
     const filter = {};
     if (categoryParam) filter.category = categoryParam;
     if (typeof availableOnly === "boolean") filter.status = availableOnly;
+    if (req.user.role.toLowerCase()==="premium") filter.owner = req.user.email
+
+    console.log('VR L511 filter', filter)
 
     const options = {
       limit,
@@ -509,7 +519,6 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
 
     try {
       let user = req.user;
-
       const result = await productsManager.getProducts(filter, options);
       const {
         docs,
@@ -546,6 +555,42 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
           // socket.username = user.email;
           req.io.emit("Server:loadProducts", docs);
         });
+        const isPremium = req.user.role.toLowerCase() === "premium"
+        res.render("realTimeProducts", {
+          username: user.mail,
+          renderPage: "/realTimeProducts/",
+          nombre: user.first_name,
+          apellido: user.last_name,
+          admin: user.admin,
+          premium: isPremium,
+          title: "Edit mercadito || Gago",
+          products: docs,
+          page,
+          hasPrevPage,
+          hasNextPage,
+          prevPage,
+          nextPage,
+          totalPages,
+          totalDocs,
+          pagingCounter,
+          limit,
+          categoryArray,
+          nextLink,
+          prevLink,
+          firstLink,
+          lastLink,
+          urlBase,
+          styles: "homeStyles.css",
+          user: JSON.stringify(user),
+          username: user.email,
+        });
+      }
+      else {
+        req.io.on("connection", async (socket) => {
+          // socket.username = user.email;
+          req.io.emit("Server:loadProducts", docs);
+        });
+        const isPremium = req.user.role.toLowerCase() === "premium"
 
         res.render("realTimeProducts", {
           username: user.mail,
@@ -553,8 +598,9 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
           nombre: user.first_name,
           apellido: user.last_name,
           admin: user.admin,
+          premium: isPremium,
           title: "Edit mercadito || Gago",
-          products: docs,
+          products: [],
           page,
           hasPrevPage,
           hasNextPage,
@@ -582,7 +628,7 @@ router.get("/realtimeproducts", authorization(["admin"]), isLoggedIn, async (req
   }
 );
 
-router.get("/chat", authorization(["user"]), isLoggedIn, async (req, res) => {
+router.get("/chat", authorization(["user, premium"]), isLoggedIn, async (req, res) => {
   const user = req.user;
 
   res.render("chat", {
@@ -593,7 +639,7 @@ router.get("/chat", authorization(["user"]), isLoggedIn, async (req, res) => {
   });
 });
 
-router.get("/carts", authorization(["user"]), isLoggedIn, async (req, res) => {
+router.get("/carts", authorization(["user, premium"]), isLoggedIn, async (req, res) => {
   try {
     let user = req.user;
 
@@ -619,7 +665,7 @@ router.get("/carts", authorization(["user"]), isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/carts/:cid", authorization(["user"]), isLoggedIn, async (req, res) => {
+router.get("/carts/:cid", authorization(["user, premium"]), isLoggedIn, async (req, res) => {
     const cid = req.params.cid;
     const user = req.user;
 
@@ -656,7 +702,7 @@ router.get("/carts/:cid", authorization(["user"]), isLoggedIn, async (req, res) 
   }
 );
 
-router.get("/carts/:cid/purchase", authorization(["user"]), async (req, res) => {
+router.get("/carts/:cid/purchase", authorization(["user, premium"]), async (req, res) => {
   try {
     const { cid } = req.params;
     const cart = await cartsManager.getCartById(cid);
@@ -720,7 +766,7 @@ router.get("/carts/:cid/purchase", authorization(["user"]), async (req, res) => 
   }
 });
 
-router.get("/carts/:cid/cancel/:tCode", authorization(["user"]), async (req, res) => {
+router.get("/carts/:cid/cancel/:tCode", authorization(["user, premium"]), async (req, res) => {
   const { cid, tCode } = req.params;
   try {
     const cart = await cartsManager.getCartById(cid);
@@ -756,7 +802,7 @@ router.get("/carts/:cid/cancel/:tCode", authorization(["user"]), async (req, res
 
 
 
-router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
+router.get("/carts/:cid/tickets", authorization(["user, premium"]),  async (req,res) =>{
   try {
     const cid = req.params.cid;
     const user = req.user;
@@ -778,6 +824,43 @@ router.get("/carts/:cid/tickets", authorization(["user"]),  async (req,res) =>{
     })
   } catch (error) {
     logger.error(error)
+  }
+});
+
+
+router.get('/reset-password', async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.status(400).render('error', {
+      title: 'Error',
+      message: 'Token de restablecimiento no proporcionado. Por favor, verifica el enlace en tu correo.'
+    });
+  }
+
+  try {
+    const UsersManager = require("../dao/mongo/users.mongo.js");
+    const usersManager = new UsersManager();
+    const user = await usersManager.getUserByResetToken(token);
+
+    if (!user) {
+      return res.status(400).render('error', {
+        title: 'Error',
+        message: 'Token de restablecimiento inválido o expirado. Por favor, solicita uno nuevo.'
+      });
+    }
+
+    res.render('reset-password', {
+      title: 'Restablecer Contraseña',
+      styles: "homeStyles.css",
+      token: token 
+    });
+  } catch (error) {
+    console.error('Error while fetching user by reset token:', error);
+    res.status(500).render('error', {
+      title: 'Error del servidor',
+      message: 'Ocurrió un error al intentar restablecer la contraseña. Por favor, intenta nuevamente más tarde.'
+    });
   }
 });
 

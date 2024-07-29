@@ -31,6 +31,30 @@ const {UsersService}= require("../services/index");
     }
   };
 
+  switchPremium = async (req, res) => {
+    try {
+      const { uid } = req.params;
+      const user = await this.usersService.getUserBy({_id:uid});
+      
+      if (!user) {
+        return res.status(404).send({ status: "error", message: "User not found" });
+      }
+
+      if (user.role !== 'user' && user.role !== 'premium') {
+        return res.status(403).send({ status: "error", message: "Role switch not allowed for this user" });
+      }
+      
+      const newRole = user.role === 'user' ? 'premium' : 'user';
+      const updatedUser = await this.usersService.updateUserRole(uid, newRole);
+  
+      res.send({ status: "success", payload: updatedUser });
+    } catch (error) {
+      console.error("Error switching user's role:", error);
+      res.status(500).json({ error: "Error switching user's role" });
+    }
+  };
+  
+
   getUserBy = async (req, res) => {
     try {
       const filter = req.query;

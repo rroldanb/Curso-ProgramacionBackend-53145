@@ -1,4 +1,4 @@
-const { logger } = require("../../utils/loggers");
+// const { logger } = require("../../utils/loggers");
 
 let savedId = "";
 const productForm = document.getElementById("productForm");
@@ -9,11 +9,13 @@ const newProdPrice = document.getElementById("newProdPrice");
 const newProdStatus = document.getElementById("btn-switch");
 const newProdStock = document.getElementById("newProdStock");
 const newProdCategory = document.getElementById("newProdCategory");
+const newProdOwner = document.getElementById("newProdOwner");
 const newProdFileNames = document.getElementById("newProdFileNames");
 const productsArea = document.getElementById("realTimeProductsArea");
 const h3 = document.querySelector("#newProdDetails h3");
 const prodDetails = document.querySelector("#newProdDetails");
 const username = document.getElementById("username").innerText
+const isPremium = document.getElementById("isPremium").innerText
 
 const saveButton = document.querySelector(".btn-save");
 saveButton.disabled = true;
@@ -63,8 +65,10 @@ productForm.addEventListener("submit", (e) => {
     status: newProdStatus.checked,
     stock: parseInt(newProdStock.value),
     category: newProdCategory.value,
+    owner: newProdOwner.value,
     thumbnails: imageUrls,
   };
+  if (isPremium) newProduct.owner = username.trim()
 
   if (h3.textContent === "Editar producto") {
     updateProduct(savedId, newProduct);
@@ -96,7 +100,8 @@ function saveNewProduct(newProduct) {
       return response.json();
     })
     .then((data) => {
-      logger.info(data);
+      console.log(data);
+    
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -131,6 +136,7 @@ function cleanProductsForm() {
   newProdStatus.checked = false;
   newProdStock.value = "";
   newProdCategory.value = "";
+  newProdOwner.value = "";
   newProdFileNames.value = "";
 }
 
@@ -171,6 +177,9 @@ function updateProductCard(productId, updatedProduct) {
 
     const categoryLine = productCard.querySelector("p:nth-of-type(6)");
     categoryLine.innerHTML = `<strong>Categoría:</strong> ${updatedProduct.category}`;
+   
+    const ownerLine = productCard.querySelector("p:nth-of-type(7)");
+    ownerLine.innerHTML = `<strong>Propietario:</strong> ${updatedProduct.owner}`;
 
     const thumbnailsDiv = productCard.querySelector(".thumbnails");
     thumbnailsDiv.innerHTML = ""; 
@@ -234,6 +243,8 @@ const renderProductUI = (product) => {
 
       <p><strong>Stock:</strong> ${product.stock}</p>
       <p><strong>Categoría:</strong> ${product.category}</p>
+        <p><strong>Propietario:</strong> ${product.owner}</p>
+
       <div class="container-fluid d-flex justify-content-evenly">
         <button class="btn btn-danger delete" data-id="${
           product._id
@@ -268,7 +279,7 @@ function deleteProduct(pid) {
       return response.json();
     })
     .then((data) => {
-  logger.info(`Producto eliminado: ${data}`);
+  console.log(`Producto eliminado: ${data}`);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -289,6 +300,7 @@ function renderProductsForm(product) {
   newProdStatus.checked = product.status;
   newProdStock.value = product.stock;
   newProdCategory.value = product.category;
+  newProdOwner.value = product.owner;
   const fileNamesString = product.thumbnails.join(", ");
   newProdFileNames.value = fileNamesString;
   savedId = product._id;
@@ -338,7 +350,7 @@ const socket = io({
 
 
 socket.on("Server:addProduct", (data) => {
-  logger.info(`recibiendo datos del nuevo producto: ${data}`);
+  console.log(`recibiendo datos del nuevo producto: ${data}`);
   appendProduct(data);
 });
 socket.on("Server:loadProducts", (data) => {

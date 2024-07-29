@@ -19,7 +19,7 @@
   </div>
   <div class="container">
     {{>filters}}
-
+{{!-- Despliega Productos --}}
     {{#each products}}
       <div class="card" id="product-{{_id}}">
         <div class="thumbnail-display-area">
@@ -39,6 +39,7 @@
           </span>
         </p>
         <p><strong>Categoría:</strong> {{this.category}}</p>
+        <p class="d-none owner" id="owner">{{this.owner}}</p>
         {{#if this.status}}
 
         <button class="btn btn-warning add-to-cart-btn" data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
@@ -77,8 +78,10 @@
             </div>
           </div>
           <button type="submit" class="btn btn-outline-primary w-100 mt-3">Ingresar <i class="bi bi-person-check"></i></button>
+          <a href="#" class="btn btn-outline-success w-100 mt-2" data-bs-toggle="modal" data-bs-target="#restoreModal" id="btn-restore">Restablecer Contraseña <i class="bi bi-envelope-at"></i></a>
+          {{!-- <button class="btn btn-outline-success w-100 mt-3">Restablecer Contraseña <i class="bi bi-envelope-at"></i></button> --}}
           <a href="/sessions/github" class="btn btn-outline-dark w-100 mt-3">Github <i class="bi bi-github"></i></a>
-          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse <i class="bi bi-person-plus"></i></i></a>
+          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse <i class="bi bi-person-plus"></i></a>
           <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
         </form>
       </div>
@@ -122,6 +125,29 @@
             </div>
           </div>
           <button class="btn btn-outline-primary w-100 mt-3">Guardar <i class="bi bi-person-plus"></i></button>
+          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a>
+          <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Restablecer-->
+<div class="modal fade" id="restoreModal" tabindex="-2" aria-labelledby="restoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content bg-primary-subtle">
+      <div class="modal-header">
+        <h5 class="modal-title" id="restoreModalLabel">Restablecer Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="restoreForm" class="form-group">
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" placeholder="correo" name="email" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-outline-primary w-100 mt-3">Enviar Correo para restablecer contraseña <i class="bi bi-envelope-at"></i></button>
           <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a>
           <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
         </form>

@@ -28,18 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
 
-      // Verificar el estado de autenticación antes de agregar al carrito
       checkAuthStatus().then((isAuthenticated) => {
         if (!isAuthenticated) {
-          // Si no está autenticado, accionar el modal de login
           let loginModalLabel = document.getElementById('loginModalLabel');
         loginModalLabel.innerHTML = 'Debes loguearte para utilizar el carrito';
 
           document.getElementById('btn-login').click();
-          return; // Salir de la función
+          return; 
         }
 
-        // Si está autenticado, proceder a agregar el producto al carrito
         const cartIdElement = document.getElementById("cart_id");
         const cartId = cartIdElement ? cartIdElement.textContent.split(" ")[2] : null;
 
@@ -116,7 +113,7 @@ function login(event) {
         // logger.info("Login exitoso");
         window.location.reload();
       } else {
-        alert(data.error || "Error desconocido");
+        alert(data.error || "Usuario o Contraseña no validados");
       }
     })
     .catch((error) => {
@@ -183,6 +180,7 @@ function checkAuthStatus() {
   })
   .then((response) => response.json())
   .then((data) => {
+    // console.log('data home.js L 183', data)
     const btnLogin = document.getElementById("btn-login");
     const btnLogout = document.getElementById("btn-logout");
     const btnCart = document.getElementById("btn-cart");
@@ -190,6 +188,9 @@ function checkAuthStatus() {
     const btnRTP = document.getElementById("btn-rtp");
     const btnTickets = document.getElementById("btn-tickets");
     const addToCartButtons = document.getElementsByClassName('add-to-cart-btn')
+    const owners = document.getElementsByClassName("owner")
+    const username = data.username
+
     if (data.isAuthenticated) {
       btnLogin.classList.add("d-none");
       btnLogout.classList.remove("d-none");
@@ -201,15 +202,34 @@ function checkAuthStatus() {
         Array.from(addToCartButtons).forEach(button => {
           button.classList.add("d-none");
         });
-      } else {
-        btnChat.classList.remove("d-none");
-        btnCart.classList.remove("d-none");
-        btnTickets.classList.remove("d-none");
-        btnRTP.classList.add("d-none");
-        Array.from(addToCartButtons).forEach(button => {
-          button.classList.remove("d-none");
-        });
+      }else {
+
+        if (data.isPremium) {
+          btnRTP.classList.remove("d-none");
+          btnCart.classList.remove("d-none");
+          btnChat.classList.remove("d-none");
+          btnTickets.classList.remove("d-none");
+          Array.from(addToCartButtons).forEach((button,index) => {
+            button.classList.remove("d-none");
+            const owner = owners[index].innerText.trim();
+          if (username === owner) {
+            button.title = "No puedes agregar tus propios productos al carrito";
+            button.disabled = true;
+            button.classList.remove('btn-warning')
+            button.classList.add('btn-danger')
+          }
+          });
+        } else {
+          btnChat.classList.remove("d-none");
+          btnCart.classList.remove("d-none");
+          btnTickets.classList.remove("d-none");
+          btnRTP.classList.add("d-none");
+          Array.from(addToCartButtons).forEach(button => {
+            button.classList.remove("d-none");
+          });
+        }
       }
+      
       return true;
     } else {
       btnLogin.classList.remove("d-none");
@@ -296,3 +316,60 @@ document.querySelectorAll(".toggle-password-btn").forEach((button) => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  const restoreForm = document.getElementById('restoreForm');
+
+  restoreForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); 
+
+    const emailInput = restoreForm.querySelector('input[name="email"]');
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      Swal.fire({
+        text: `Por favor, ingresa tu correo electrónico.`,
+        title: "Oops...",
+        position: "top",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // alert('Por favor, ingresa tu correo electrónico.');
+      return;
+    }
+    try {
+      const response = await fetch('/mail/recoverpass', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        Swal.fire({
+          text: 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña.',
+          position: "top",
+          icon: "success",
+          title: "Éxito",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // alert('Se ha enviado un correo con las instrucciones para restablecer tu contraseña.');
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error al enviar el correo de recuperación:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.',
+        confirmButtonText: 'Aceptar'
+      });
+      // alert('Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.');
+    }
+  });
+});

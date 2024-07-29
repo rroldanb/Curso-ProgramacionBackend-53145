@@ -19,11 +19,39 @@ class UserDaoMongo {
   }
 
   async getUserBy(filter) {
-    return this.userModel.findOne(filter);
+    return await this.userModel.findOne(filter);
+  }
+
+
+  async updateRole(id, newRole) {
+    return await this.userModel.findByIdAndUpdate(id, { role: newRole }, { new: true });
   }
 
   async getUserByEmail(email) {
-    return this.users.find((user) => user.email === email);
+    return await this.userModel.findOne(email);
+  }
+
+
+  async updateUser(id, updateData) {
+    try {
+      const updatedUser = await this.userModel.findByIdAndUpdate(id, updateData, { new: true });
+      return updatedUser;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
+  }
+  
+  async getUserByResetToken(token) {
+    try {
+      return await this.userModel.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() }
+      });
+    } catch (error) {
+      console.error('Error in getUserByResetToken:', error);
+      throw error;
+    }
   }
 }
 

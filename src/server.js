@@ -14,15 +14,15 @@ const handleErrors = require("./middlewares/error");
 const { addLogger, logger } = require("./utils/loggers");
 
 // Configuración de entorno
-dotenv.config();
 
 // Inicialización de la aplicación Express
 const app = express();
+dotenv.config();
+app.use(addLogger)
 const port = objectConfig.port;
 // Configura CORS
 app.use(cors());
 
-app.use(addLogger)
 
 
 // Conexión a la base de datos

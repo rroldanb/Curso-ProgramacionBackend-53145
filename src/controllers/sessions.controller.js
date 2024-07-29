@@ -34,6 +34,7 @@ const failRegister = async (req, res) => {
     const result = await sessionsService.failRegister();
     res.send(result);
   } catch (error) {
+    
     res.status(500).send({ error: 'Internal Server Error' });
   }
 };

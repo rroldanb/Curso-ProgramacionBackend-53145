@@ -167,7 +167,7 @@ const initializePassport = () => {
           });
           if (!validPassword) return done(null, false);
 
-          return done(null, user); // req.user // password
+          return done(null, user); 
         } catch (error) {
           return done(error);
         }

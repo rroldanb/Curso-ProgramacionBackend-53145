@@ -57,7 +57,7 @@ productForm.addEventListener("submit", (e) => {
   });
 
 
-  const newProduct = {
+  const newProduct={
     title: newProdTitle.value,
     description: newProdDescription.value,
     code: newProdCode.value,
@@ -65,16 +65,18 @@ productForm.addEventListener("submit", (e) => {
     status: newProdStatus.checked,
     stock: parseInt(newProdStock.value),
     category: newProdCategory.value,
-    owner: newProdOwner.value,
+    owner: newProdOwner.value.trim(),
     thumbnails: imageUrls,
   };
-  if (isPremium) newProduct.owner = username.trim()
+
 
   if (h3.textContent === "Editar producto") {
+
     updateProduct(savedId, newProduct);
     h3.textContent = "Agregar nuevo producto";
     prodDetails.style.backgroundColor = "rgb(143, 167, 191)";
   } else {
+  
     saveNewProduct(newProduct);
   }
 
@@ -108,14 +110,14 @@ function saveNewProduct(newProduct) {
     });
 }
 
-async function updateProduct(pid, product) {
+async function updateProduct(pid, newProduct) {
   try {
     const response = await fetch(`/api/products/${pid}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(product),
+      body: JSON.stringify(newProduct),
     });
 
     if (!response.ok) {
@@ -136,7 +138,9 @@ function cleanProductsForm() {
   newProdStatus.checked = false;
   newProdStock.value = "";
   newProdCategory.value = "";
-  newProdOwner.value = "";
+  if (!isPremium) {
+    newProdOwner.value = "";
+  }
   newProdFileNames.value = "";
 }
 
@@ -278,9 +282,7 @@ function deleteProduct(pid) {
       }
       return response.json();
     })
-    .then((data) => {
-  console.log(`Producto eliminado: ${data}`);
-    })
+    
     .catch((error) => {
       console.error("Error:", error);
     });
@@ -339,6 +341,11 @@ const appendProduct = (product) => {
   productsArea.appendChild(productUI);
 };
 
+const removeProduct = (pid) => {
+  const productCard = getProductCardById(pid);
+  if (productCard) {
+  productsArea.removeChild(productCard)}
+};
 
 ///Socket
 const socket = io({
@@ -352,6 +359,10 @@ const socket = io({
 socket.on("Server:addProduct", (data) => {
   console.log(`recibiendo datos del nuevo producto: ${data}`);
   appendProduct(data);
+});
+socket.on("Server:removeProduct", (pid) => {
+  console.log(`Eliminando el producto: ${pid}`);
+  removeProduct(pid);
 });
 socket.on("Server:loadProducts", (data) => {
   renderProducts(data);

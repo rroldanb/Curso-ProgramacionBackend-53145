@@ -347,17 +347,21 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-
-      if (data.ok) {
+      if (response.ok) {
         Swal.fire({
           text: 'Se ha enviado un correo con las instrucciones para restablecer tu contraseña.',
           position: "top",
           icon: "success",
           title: "Éxito",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2000,
+        }).then(() => {
+          emailInput.value=""
+          const myModal = document.getElementById('cierraModal');
+          myModal.click();
+          // const restoreModal = new bootstrap.Modal(document.getElementById('restoreModal'));
+          // restoreModal.hide();
         });
-        // alert('Se ha enviado un correo con las instrucciones para restablecer tu contraseña.');
       } else {
         alert(`Error: ${data.message}`);
       }

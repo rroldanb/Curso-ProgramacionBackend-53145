@@ -9,6 +9,7 @@
 
     <p class="d-none" id="username"> {{username}}</p>
     <p class="d-none" id="isPremium"> {{premium}}</p>
+    <p class="d-none" id="isAdmin"> {{admin}}</p>
 
     <div class="container d-flex justify-content-between">
 
@@ -16,8 +17,6 @@
   {{!-- <button class="btn btn-danger " id="rtp-btn-logout" >Desconectarse</button> --}}
  
       <button class="btn btn-danger" onclick="logout()" id="btn-logout">LogOut</button>
-
-  
 
     </div>
 
@@ -42,7 +41,10 @@
                       <p class="detail-item">Stock: <input type="text" id="newProdStock" required></p>
                       <p class="detail-item">Categoría: <input type="text" id="newProdCategory" required></p>
                       {{#if admin}}
-                      <p class="detail-item">Propietario: <input type="text" id="newProdOwner" required></p>
+                      <p class="detail-item">Propietario: <input type="text" id="newProdOwner" ></p>
+                      {{/if}}
+                      {{#if premium}}
+                      <p class="detail-item d-none">Propietario: <input type="text" id="newProdOwner" value="{{username}}"></p>
                       {{/if}}
                       <p class="detail-item">Rutas de Imagenes, separadas por coma (,)   </p>
                       <textarea rows="6" id="newProdFileNames"></textarea> 

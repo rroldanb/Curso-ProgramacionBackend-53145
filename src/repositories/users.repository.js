@@ -25,7 +25,7 @@ class UserRepository {
     return await this.userDao.updateRole(id, newRole);
   }
   async updateUser(uid, userToUpdate) {
-    return await this.userDao.update(uid, userToUpdate);
+    return await this.userDao.updateUser(uid, userToUpdate);
   }
   async deleteUser(uid) {
     return await this.userDao.delete(uid);

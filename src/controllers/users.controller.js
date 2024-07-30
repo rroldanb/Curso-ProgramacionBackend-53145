@@ -1,6 +1,9 @@
 const {UsersService}= require("../services/index");
-  
-  class UsersController {
+const bcrypt = require('bcrypt');
+const { createHash, isValidPassword } = require("../utils/bcrypt.js");
+
+
+class UsersController {
     constructor() {
         this.usersService =  UsersService;
     }
@@ -87,6 +90,62 @@ const {UsersService}= require("../services/index");
       res.status(500).json({ error: "Error getting user by email" });
     }
   };
+
+resetPassword =  async (req, res) => {
+  const { token } = req.query;
+  let expired =false
+  try {
+    const user = await this.usersService.getUserBy({
+      resetPasswordToken: token,
+    });
+    if (!user) {
+      return res.status(400).send('Token de restablecimiento inválido');
+    }
+    if (user.resetPasswordExpires < new Date()) {
+      console.log("token expirado")
+      expired = true
+      return res.status(400).send('Token de restablecimiento expirado');
+    }
+    res.render('reset-password', { token , expired}); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error en la solicitud');
+  }
+};
+
+challengePassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+  let expired =false
+  try {
+    const user = await this.usersService.getUserBy({
+      resetPasswordToken: token,
+    });
+    if (!user) {
+      return res.status(400).json({ message: 'Token de restablecimiento inválido' });
+    }
+    if (user.resetPasswordExpires < new Date()) {
+      console.log("token expirado")
+      expired = true
+      return res.status(400).send('Token de restablecimiento expirado');
+    }
+    const isSamePassword = isValidPassword(newPassword, {
+      password: user.password,
+    });  //await bcrypt.compare(newPassword, user.password);
+    if (isSamePassword) {
+      return res.status(400).json({ message: 'La nueva contraseña no puede ser la misma que la anterior' });
+    }
+    user.password = createHash(newPassword) // await bcrypt.hash(newPassword, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = (new Date()-3600);
+    await this.usersService.updateUser(user._id, user);
+
+    res.status(200).json({ message: 'Contraseña restablecida con éxito' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al restablecer la contraseña' });
+  }
+};
+
 }
 
 module.exports = {UsersController};

@@ -9,7 +9,7 @@ const usersRouter = require("./api/users.router.js");
 const ticketsRouter = require("./api/tickets.router.js");
 const mockingRouter = require("./api/mocking.router.js");
 const loggerRouter = require("./api/logger.router.js");
-const authRouter = require("./api/auth.router.js");
+// const authRouter = require("./api/auth.router.js");
 
 const router = Router();
 
@@ -25,7 +25,7 @@ router.use("/api/sessions", sessionsRouter);
 router.use('/api/mocking', mockingRouter)
 router.use('/api/loggertest', loggerRouter)
 router.use('/loggertest', loggerRouter)
-router.use('/auth', authRouter)
+// router.use('/auth', authRouter)
 router.use("/sessions", sessionsRouter);
 router.use('/mail', mailRouter)
 

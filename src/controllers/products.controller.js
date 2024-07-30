@@ -334,12 +334,9 @@ deleteProduct = async (req, res) => {
     }
 
     await this.productsService.deleteProduct(pid);
-    const products = await this.productsService.getProducts(
-      {},
-      { lean: true }
-    );
 
-    req.io.emit("Server:loadProducts", products);
+    req.io.emit("Server:removeProduct", (pid));
+
     res
       .status(200)
       .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });

@@ -179,14 +179,12 @@ const productsManager = new ProductsManager();
 
   console.log(" L180 notMocking:", notMocking);
       if (user) {
-  console.log(" L180 notMocking:", notMocking);
   if (user.user) {user = user.user}
         const nombre_completo =
           user.first_name === user.last_name
             ? user.first_name
             : user.first_name + " " + user.last_name;
         const isPremium = req.user.role.toLowerCase() === "premium";
-        console.log(" L189 notMocking:", notMocking);
   
         res.render(`${urlFrom}`, {
           user: JSON.stringify(user), cart_id: user.cart_id, 
@@ -198,7 +196,6 @@ const productsManager = new ProductsManager();
           firstLink,lastLink,urlBase,styles,notMocking,
         });
       } else {
-  console.log(" L201 notMocking:", notMocking);
   res.render(`${urlFrom}`, {
           title,products: docs,page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,
           totalDocs,pagingCounter,limit,categoryArray,nextLink,prevLink,firstLink,lastLink,urlBase,

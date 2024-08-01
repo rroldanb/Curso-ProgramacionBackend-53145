@@ -235,7 +235,6 @@ function checkAuthStatus() {
           Array.from(addToCartButtons).forEach(button => {
             button.classList.remove("d-none");
             if (notMocking==='false') button.disabled=true
-            console.log('L238', notMocking)
           });
         }
       }

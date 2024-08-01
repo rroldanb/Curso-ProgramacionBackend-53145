@@ -4,6 +4,7 @@ class UsersViewsController {
   resetPassword = async (req, res) => {
     const { token } = req.query;
     let expired = false
+    let inValidToken = false
     if (!token) {
       return res.status(400).render("error", {
         title: "Error",
@@ -17,13 +18,11 @@ class UsersViewsController {
       const usersManager = new UsersManager();
       const user = await usersManager.getUserByResetToken(token);
       if (!user) {
-        return res.status(400).render("error", {
-          title: "Error",
-          message:
-            "Token de restablecimiento inválido. Por favor, solicita uno nuevo.",
-        });
+        inValidToken = true
+        console.log('no user found')
+
       }
-      if (user.resetPasswordExpires < new Date()) {
+      if (user?.resetPasswordExpires < new Date()) {
         console.log("token expirado")
         expired = true
       }
@@ -31,7 +30,7 @@ class UsersViewsController {
         title: "Restablecer Contraseña",
         styles: "homeStyles.css",
         token: token,
-        expired
+        expired, inValidToken
       });
     } catch (error) {
       console.error("Error while fetching user by reset token:", error);

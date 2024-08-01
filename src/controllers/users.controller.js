@@ -113,6 +113,8 @@ resetPassword =  async (req, res) => {
   }
 };
 
+
+
 challengePassword = async (req, res) => {
   const { token, newPassword } = req.body;
   let expired =false
@@ -135,9 +137,15 @@ challengePassword = async (req, res) => {
       return res.status(400).json({ message: 'La nueva contraseña no puede ser la misma que la anterior' });
     }
     user.password = createHash(newPassword) // await bcrypt.hash(newPassword, 10);
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = (new Date()-3600);
-    await this.usersService.updateUser(user._id, user);
+    // user.resetPasswordExpires = (new Date()-3600);
+    // await this.usersService.updateUser(user._id, {...user, resetPasswordToken : undefined , resetPasswordExpires: undefined});
+    await this.usersService.updateUser(user._id, {
+      password: user.password,
+      $unset: {
+        resetPasswordToken: "",
+        resetPasswordExpires: "",
+      }
+    });
 
     res.status(200).json({ message: 'Contraseña restablecida con éxito' });
   } catch (error) {

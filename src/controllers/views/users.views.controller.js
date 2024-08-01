@@ -8,7 +8,7 @@ class UsersViewsController {
       return res.status(400).render("error", {
         title: "Error",
         message:
-          "Token de restablecimiento no proporcionado. Por favor, verifica el enlace en tu correo.",
+          "Token de restablecimiento no proporcionado. Por favor, verifica el enlace en tu correo o solicita uno nuevo.",
       });
     }
 

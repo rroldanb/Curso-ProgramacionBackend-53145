@@ -24,7 +24,7 @@ Curso CoderHouse Programación Backend, Comisión 53145
 /api/users/premium/:uid la cual permitirá cambiar el rol de un usuario, de “user” a “premium” y viceversa.
 
 
-## Instalación y ejecución
+## Instalación y ejecución desde la terminal
 - Para descargar el código se recomienda clonar el repositorio desde una linea de comandos ejecutando: `git clone https://github.com/rroldanb/Curso-ProgramacionBakend-53145.git `
 - Ingresar a la carpeta generada al clonar el repositorio mediante `cd Curso-ProgramacionBakend-53145`
 - Instalar la dependencias mediante `npm i`

@@ -75,7 +75,7 @@ class UsersController {
 
   getUserByEmail = async (req, res) => {
     try {
-      const { email } = req.query;
+      const  email  = req.query;
       if (!email) {
         throw new Error("Email is required");
       }  

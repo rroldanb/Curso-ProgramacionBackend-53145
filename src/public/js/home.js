@@ -318,8 +318,8 @@ document.querySelectorAll(".toggle-password-btn").forEach((button) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const restoreForm = document.getElementById('restoreForm');
-
-  restoreForm.addEventListener('submit', async (event) => {
+if (restoreForm)
+{  restoreForm.addEventListener('submit', async (event) => {
     event.preventDefault(); 
 
     const emailInput = restoreForm.querySelector('input[name="email"]');
@@ -375,5 +375,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       // alert('Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.');
     }
-  });
+  });}
 });

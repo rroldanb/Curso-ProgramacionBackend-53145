@@ -77,539 +77,147 @@ const productsManager = new ProductsManager();
     return { nextLink, prevLink, firstLink, lastLink, urlBase };
   }
 
-class ProductsViewsController {
-    constructor() {}
+ async function RenderView  (req, res, urlFrom) {
+    let {
+      numPage = 1,
+      limitParam = 4,
+      categoryParam = null,
+      availableOnly = null,
+      orderBy = null,
+    } = req.query;
 
-    renderHome = async (req, res) => {
-        let {
-          numPage = 1,
-          limitParam = 4,
-          categoryParam = null,
-          availableOnly = null,
-          orderBy = null,
-        } = req.query;
-      
-        availableOnly = availableOnly ? availableOnly === "true" : null;
-        numPage = parseInt(numPage);
-        let limit = parseInt(limitParam);
-        orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
-      
-        const filter = {};
-        if (categoryParam) filter.category = categoryParam;
-        if (typeof availableOnly === "boolean") filter.status = availableOnly;
-        // if (req.user.role.toLowerCase() === "premium") filter.owner = req.user.email
-      
-        // console.log('filter VR L 120', filter) //owner: 'premiumuser@coder.com'
-      
-        const options = {
-          limit,
-          page: numPage,
-          lean: true,
-          sort: orderBy ? { price: orderBy } : {},
-        };
-      
-        try {
-          let user = req.user;
-      
-          const result = await productsManager.getProducts(filter, options);
-          const {
-            docs,
-            page,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            totalPages,
-            totalDocs,
-            pagingCounter,
-            limit,
-          } = result;
-          const categoryArray = await productsManager.getCategories();
-      
-          const urlParam = req.url;
-          const pagLinksParams = {
-            urlParam,
-            totalPages,
-            nextPage,
-            prevPage,
-            hasNextPage,
-            hasPrevPage,
-          };
-      
-          const { nextLink, prevLink, firstLink, lastLink, urlBase } =
-            generatePaginationLinks(pagLinksParams);
-      
-          if (docs.length > 0) {
-            formatearProductos(docs);
-          }
-      
-          if (user) {
-            if (user.user) {
-              user = user.user;
-            }
-            const nombre_completo =
-              user.first_name === user.last_name
-                ? user.first_name
-                : user.first_name + " " + user.last_name;
-            const isPremium = req.user.role.toLowerCase() === "premium";
-      
-            res.render("home", {
-              cart_id: user.cart_id,
-              username: user.email,
-              nombre_completo,
-              nombre: user.first_name,
-              apellido: user.last_name,
-              admin: user.admin,
-              premium: isPremium,
-              title: "mercadito || Gago",
-              products: docs,
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-            });
-          } else {
-            res.render("home", {
-              title: "mercadito || Gago",
-              products: docs,
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: "Error al obtener los productos" });
-        }
-      }
 
-    renderProducts =   async (req, res) => {
-        let {
-          numPage = 1,
-          limitParam = 4,
-          categoryParam = null,
-          availableOnly = null,
-          orderBy = null,
-        } = req.query;
-    
-        availableOnly = availableOnly ? availableOnly === "true" : null;
-        numPage = parseInt(numPage);
-        let limit = parseInt(limitParam);
-        orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
-    
-        const filter = {};
-        if (categoryParam) filter.category = categoryParam;
-        if (typeof availableOnly === "boolean") filter.status = availableOnly;
-    
-        const options = {
-          limit,
-          page: numPage,
-          lean: true,
-          sort: orderBy ? { price: orderBy } : {},
-        };
-    
-        try {
-          let user = req.user;
-    
-          const result = await productsManager.getProducts(filter, options);
-          const {
-            docs,
-            page,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            totalPages,
-            totalDocs,
-            pagingCounter,
-            limit,
-          } = result;
-    
-          const categoryArray = await productsManager.getCategories();
-    
-          const urlParam = req.url;
-          const pagLinksParams = {
-            urlParam,
-            totalPages,
-            nextPage,
-            prevPage,
-            hasNextPage,
-            hasPrevPage,
-          };
-    
-          const { nextLink, prevLink, firstLink, lastLink, urlBase } =
-            generatePaginationLinks(pagLinksParams);
-    
-          if (docs.length > 0) {
-            formatearProductos(docs);
-          }
-          if (user) {
-            if (user.user) {
-              user = user.user;
-            }
-            const nombre_completo =
-              user.first_name === user.last_name
-                ? user.first_name
-                : user.first_name + " " + user.last_name;
-            const isPremium = req.user.role.toLowerCase() === "premium";
-    
-            res.render("home", {
-              cart_id: user.cart_id,
-              username: user.email,
-              nombre_completo,
-              nombre: user.first_name,
-              apellido: user.last_name,
-              admin: user.admin,
-              premium: isPremium,
-              title: "mercadito || Gago",
-              products: docs,
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-              user: JSON.stringify(user),
-            });
-          } else {
-            res.render("home", {
-              title: "mercadito || Gago",
-              products: docs,
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: "Error al obtener los productos" });
-        }
-      }
 
-    mockingProducts = async (req, res) => {
+    availableOnly = availableOnly ? availableOnly === "true" : null;
+    numPage = parseInt(numPage);
+    let limit = parseInt(limitParam);
+    orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
+  
+    const filter = {};
+    if (categoryParam) filter.category = categoryParam;
+    if (typeof availableOnly === "boolean") filter.status = availableOnly;
+    if (urlFrom  === 'realtimeproducts' && req.user.role.toLowerCase() === "premium"){
+        filter.owner = req.user.email;
+    }
+
+    try {
+      let user = req.user;
+      let  docs, page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,totalDocs,pagingCounter
+      let  categoryArray =[]
+      if (urlFrom  === 'mockingproducts'){
+        urlFrom = 'home'
         const { generateProducts } = require("../../utils/generateMocks");
-        let {
-          numPage = 1,
-          limitParam = 4,
-          categoryParam = null,
-          availableOnly = null,
-          orderBy = null,
-        } = req.query;
-    
-        availableOnly = availableOnly ? availableOnly === "true" : null;
-        numPage = parseInt(numPage);
-        let limit = parseInt(limitParam);
-        orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
-    
-        const filter = {};
-        if (categoryParam) filter.category = categoryParam;
-        if (typeof availableOnly === "boolean") filter.status = availableOnly;
-    
-        try {
-          let user = req.user;
-          let mockProducts = [];
-          let categorySet = new Set();
-    
-          for (let i = 0; i < 50; i++) {
-            let product = generateProducts();
-            mockProducts.push(product);
-            categorySet.add(product.category);
-          }
-    
-          const categoryArray = Array.from(categorySet);
-    
-          let filteredProducts = mockProducts.filter((product) => {
-            if (filter.category && product.category !== filter.category)
-              return false;
-            if (
-              typeof filter.status === "boolean" &&
-              product.status !== filter.status
-            )
-              return false;
-            return true;
-          });
-    
-          if (orderBy) {
-            filteredProducts.sort((a, b) =>
-              orderBy === 1 ? a.price - b.price : b.price - a.price
-            );
-          }
-    
-          const totalDocs = filteredProducts.length;
-          const totalPages = Math.ceil(totalDocs / limit);
-          const start = (numPage - 1) * limit;
-          const end = start + limit;
-          const docs = filteredProducts.slice(start, end);
-          const hasPrevPage = numPage > 1;
-          const hasNextPage = numPage < totalPages;
-          const prevPage = hasPrevPage ? numPage - 1 : null;
-          const nextPage = hasNextPage ? numPage + 1 : null;
-          const pagingCounter = start + 1;
-    
-          const urlParam = req.url;
-          const pagLinksParams = {
-            urlParam,
-            totalPages,
-            nextPage,
-            prevPage,
-            hasNextPage,
-            hasPrevPage,
-          };
-    
-          const { nextLink, prevLink, firstLink, lastLink, urlBase } =
-            generatePaginationLinks(pagLinksParams);
-    
-          if (docs.length > 0) {
-            formatearProductos(docs);
-          }
-    
-          if (user) {
-            if (user.user) {
-              user = user.user;
-            }
-            const nombre_completo =
-              user.first_name === user.last_name
-                ? user.first_name
-                : user.first_name + " " + user.last_name;
-    
-            res.render("home", {
-              cart_id: user.cart_id,
-              username: user.email,
-              nombre_completo,
-              nombre: user.first_name,
-              apellido: user.last_name,
-              admin: user.admin,
-              title: "mercadito || Gago",
-              products: docs,
-              page: numPage,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-              user: JSON.stringify(user),
-            });
-          } else {
-            res.render("home", {
-              title: "mercadito || Gago",
-              products: docs,
-              page: numPage,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: "Error al obtener los productos" });
+        let mockProducts = [];
+        let categorySet = new Set();
+  
+        for (let i = 0; i < 50; i++) {
+          let product = generateProducts();
+          mockProducts.push(product);
+          categorySet.add(product.category);
         }
-      }
-
-    realTimeProducts =  async (req, res) => {
-        let {
-          numPage = 1,
-          limitParam = 4,
-          categoryParam = null,
-          availableOnly = null,
-          orderBy = null,
-        } = req.query;
-    
-        availableOnly = availableOnly ? availableOnly === "true" : null;
-        numPage = parseInt(numPage);
-        let limit = parseInt(limitParam);
-        orderBy ? (orderBy = parseInt(orderBy)) : (orderBy = null);
-    
-        const filter = {};
-        if (categoryParam) filter.category = categoryParam;
-        if (typeof availableOnly === "boolean") filter.status = availableOnly;
-        if (req.user.role.toLowerCase() === "premium")
-          filter.owner = req.user.email;
-    
+  
+        categoryArray = Array.from(categorySet);
+  
+        let filteredProducts = mockProducts.filter((product) => {
+          if (filter.category && product.category !== filter.category)
+            return false;
+          if (
+            typeof filter.status === "boolean" &&
+            product.status !== filter.status
+          )
+            return false;
+          return true;
+        });
+  
+        if (orderBy) {
+          filteredProducts.sort((a, b) =>
+            orderBy === 1 ? a.price - b.price : b.price - a.price
+          );
+        }
+  
+        totalDocs = filteredProducts.length;
+        totalPages = Math.ceil(totalDocs / limit);
+        const start = (numPage - 1) * limit;
+        const end = start + limit;
+        docs = filteredProducts.slice(start, end);
+        hasPrevPage = numPage > 1;
+        hasNextPage = numPage < totalPages;
+        prevPage = hasPrevPage ? numPage - 1 : null;
+        nextPage = hasNextPage ? numPage + 1 : null;
+        pagingCounter = start + 1;
+  
+      } else {
         const options = {
           limit,
           page: numPage,
           lean: true,
           sort: orderBy ? { price: orderBy } : {},
         };
-    
-        try {
-          let user = req.user;
-          const result = await productsManager.getProducts(filter, options);
-          const {
-            docs,
-            page,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            totalPages,
-            totalDocs,
-            pagingCounter,
-            limit,
-          } = result;
-    
-          const categoryArray = await productsManager.getCategories();
-    
-          const urlParam = req.url;
-          const pagLinksParams = {
-            urlParam,
-            totalPages,
-            nextPage,
-            prevPage,
-            hasNextPage,
-            hasPrevPage,
-          };
-    
-          const { nextLink, prevLink, firstLink, lastLink, urlBase } =
-            generatePaginationLinks(pagLinksParams);
-    
-          if (docs.length > 0) {
-            formatearProductos(docs);
-    
-            req.io.on("connection", async (socket) => {
-              // socket.username = user.email;
-              req.io.emit("Server:loadProducts", docs);
-            });
-            const isPremium = req.user.role.toLowerCase() === "premium";
-            res.render("realTimeProducts", {
-              username: user.mail,
-              renderPage: "/realTimeProducts/",
-              nombre: user.first_name,
-              apellido: user.last_name,
-              admin: user.admin,
-              premium: isPremium,
-              title: "Edit mercadito || Gago",
-              products: docs,
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-              user: JSON.stringify(user),
-              username: user.email,
-            });
-          } else {
-            req.io.on("connection", async (socket) => {
-              // socket.username = user.email;
-              req.io.emit("Server:loadProducts", docs);
-            });
-            const isPremium = req.user.role.toLowerCase() === "premium";
-    
-            res.render("realTimeProducts", {
-              username: user.mail,
-              renderPage: "/realTimeProducts/",
-              nombre: user.first_name,
-              apellido: user.last_name,
-              admin: user.admin,
-              premium: isPremium,
-              title: "Edit mercadito || Gago",
-              products: [],
-              page,
-              hasPrevPage,
-              hasNextPage,
-              prevPage,
-              nextPage,
-              totalPages,
-              totalDocs,
-              pagingCounter,
-              limit,
-              categoryArray,
-              nextLink,
-              prevLink,
-              firstLink,
-              lastLink,
-              urlBase,
-              styles: "homeStyles.css",
-              user: JSON.stringify(user),
-              username: user.email,
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: "Error al obtener los productos" });
-        }
+        const result = await productsManager.getProducts(filter, options);
+        ({ docs, page, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages, totalDocs, pagingCounter, limit } = result);
+
+        categoryArray = await productsManager.getCategories();
       }
+
+      const urlParam = req.url;
+      const pagLinksParams = {urlParam,totalPages,nextPage,prevPage,hasNextPage,hasPrevPage,};
+      const { nextLink, prevLink, firstLink, lastLink, urlBase } = generatePaginationLinks(pagLinksParams);
+      let title = "Mercadito || Gago"
+      let styles= "homeStyles.css"
+      
+      let renderPage= "/"
+
+      if (docs.length > 0) { formatearProductos(docs)} else docs=[]
+    if (urlFrom  === 'realtimeproducts'){
+    req.io.on("connection", async (socket) => {
+      req.io.emit("Server:loadProducts", docs);
+      title= "Edit mercadito || Gago",
+      renderPage= "/realTimeProducts/"
+    });
+  }
+
+      if (user) {
+        if (user.user) {user = user.user}
+        const nombre_completo =
+          user.first_name === user.last_name
+            ? user.first_name
+            : user.first_name + " " + user.last_name;
+        const isPremium = req.user.role.toLowerCase() === "premium";
+  
+        res.render(`${urlFrom}`, {
+          user: JSON.stringify(user), cart_id: user.cart_id, 
+          username: user.email,nombre_completo,nombre: user.first_name,apellido: user.last_name,
+          admin: user.admin,premium: isPremium,
+          title, renderPage, 
+          products: docs,page,hasPrevPage,
+          hasNextPage,prevPage,nextPage,totalPages,totalDocs,pagingCounter,limit,categoryArray,nextLink,prevLink,
+          firstLink,lastLink,urlBase,styles,
+        });
+      } else {
+        res.render(`${urlFrom}`, {
+          title,products: docs,page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,
+          totalDocs,pagingCounter,limit,categoryArray,nextLink,prevLink,firstLink,lastLink,urlBase,
+          styles,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error al obtener los productos" });
+    }
+  
+  }
+
+class ProductsViewsController {
+  constructor() {}
+
+    renderHome = async (req, res) => { await RenderView(req, res, "home")}
+
+    renderProducts =   async (req, res) => { await RenderView(req, res, "home")}
+
+    mockingProducts = async (req, res, ) => { await RenderView(req, res, "mockingproducts")}
+
+    realTimeProducts =  async (req, res) => { await RenderView(req, res, "realtimeproducts")
+    }
 }
 
 module.exports = ProductsViewsController;  

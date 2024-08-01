@@ -9,6 +9,7 @@ const usersRouter = require("./api/users.router.js");
 const ticketsRouter = require("./api/tickets.router.js");
 const mockingRouter = require("./api/mocking.router.js");
 const loggerRouter = require("./api/logger.router.js");
+// const chatRouter = require("./chat.router.js");
 // const authRouter = require("./api/auth.router.js");
 
 const router = Router();
@@ -16,7 +17,6 @@ const router = Router();
 router.use("/", viewsRouter);
 router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
-
 router.use("/api/tickets", ticketsRouter);
 
 router.use("/api/users", usersRouter);
@@ -26,6 +26,7 @@ router.use('/api/mocking', mockingRouter)
 router.use('/api/loggertest', loggerRouter)
 router.use('/loggertest', loggerRouter)
 // router.use('/auth', authRouter)
+// router.use ("/api/chat", chatRouter)
 router.use("/sessions", sessionsRouter);
 router.use('/mail', mailRouter)
 
@@ -34,10 +35,7 @@ router.use((req, res, next) => {
   res.status(404).send(`La ruta ${req.url} no está definida para este método`);
 });
 
-// router.use((error, req, res, next) => {
-//   console.log(error);
-//   res.status(500).send("Error 500 en el server");
-// });
+
 
 module.exports = {
   router,

@@ -41,6 +41,18 @@ class UsersViewsController {
       });
     }
   };
+
+
+  renderChat = async (req, res) => {
+    const user = req.user;
+    res.render("chat", {
+      title: "Chat mercadito || Gago",
+      styles: "chat.css",
+      user: JSON.stringify(user),
+      username: user.email,
+    });
+  }
+
 }
 
 module.exports = UsersViewsController;

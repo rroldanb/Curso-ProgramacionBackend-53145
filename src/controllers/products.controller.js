@@ -3,7 +3,7 @@ const CustomError = require("../utils/errors/CustomErrors");
 const { generateProductsErrorInfo, camposObligatoriosErrorInfo, campoNumericoErrorInfo} = require("../utils/errors/info");
 const EErrors = require("../utils/errors/enums");
 const { logger } = require("../utils/loggers");
-
+const {generateUsers,generateProducts} = require("../utils/generateMocks");
 
 function generatePaginationLinks(pagLinksParams) {
   let { urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage } =
@@ -345,6 +345,34 @@ deleteProduct = async (req, res) => {
     res.status(500).json({ error: "Error al eliminar el producto" });
   }
 };
+
+getMockingProducts = async (req, res) => {
+  let products = [];
+  try {
+    for (let i = 0; i < 50; i++) {
+      products.push(generateProducts());
+    }
+
+    res.status(200).send({ status: "success", payload: products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al crear los productos Mocking");
+  }
+
+  mockingRouter.get("/users", authorization(["admin"]), async (req, res) => {
+    let users = [];
+    try {
+      for (let i = 0; i < 50; i++) {
+        users.push(generateUsers());
+      }
+      res.status(200).send({ status: "success", payload: users });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error al crear los usuarios Mocking");
+    }
+  });
 }
+}
+
 
 module.exports = { ProductsController };

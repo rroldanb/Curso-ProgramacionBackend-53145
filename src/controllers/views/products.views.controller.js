@@ -78,6 +78,7 @@ const productsManager = new ProductsManager();
   }
 
  async function RenderView  (req, res, urlFrom) {
+  try {
     let {
       numPage = 1,
       limitParam = 4,
@@ -85,8 +86,6 @@ const productsManager = new ProductsManager();
       availableOnly = null,
       orderBy = null,
     } = req.query;
-
-
 
     availableOnly = availableOnly ? availableOnly === "true" : null;
     numPage = parseInt(numPage);
@@ -100,15 +99,17 @@ const productsManager = new ProductsManager();
         filter.owner = req.user.email;
     }
 
-    try {
       let user = req.user;
-      let  docs, page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,totalDocs,pagingCounter
-      let  categoryArray =[]
+      let docs, page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,totalDocs,pagingCounter
+      let categoryArray =[]
+      let notMocking = true
+
       if (urlFrom  === 'mockingproducts'){
         urlFrom = 'home'
         const { generateProducts } = require("../../utils/generateMocks");
         let mockProducts = [];
         let categorySet = new Set();
+        notMocking = false
   
         for (let i = 0; i < 50; i++) {
           let product = generateProducts();
@@ -176,13 +177,16 @@ const productsManager = new ProductsManager();
     });
   }
 
+  console.log(" L180 notMocking:", notMocking);
       if (user) {
-        if (user.user) {user = user.user}
+  console.log(" L180 notMocking:", notMocking);
+  if (user.user) {user = user.user}
         const nombre_completo =
           user.first_name === user.last_name
             ? user.first_name
             : user.first_name + " " + user.last_name;
         const isPremium = req.user.role.toLowerCase() === "premium";
+        console.log(" L189 notMocking:", notMocking);
   
         res.render(`${urlFrom}`, {
           user: JSON.stringify(user), cart_id: user.cart_id, 
@@ -191,13 +195,14 @@ const productsManager = new ProductsManager();
           title, renderPage, 
           products: docs,page,hasPrevPage,
           hasNextPage,prevPage,nextPage,totalPages,totalDocs,pagingCounter,limit,categoryArray,nextLink,prevLink,
-          firstLink,lastLink,urlBase,styles,
+          firstLink,lastLink,urlBase,styles,notMocking,
         });
       } else {
-        res.render(`${urlFrom}`, {
+  console.log(" L201 notMocking:", notMocking);
+  res.render(`${urlFrom}`, {
           title,products: docs,page,hasPrevPage,hasNextPage,prevPage,nextPage,totalPages,
           totalDocs,pagingCounter,limit,categoryArray,nextLink,prevLink,firstLink,lastLink,urlBase,
-          styles,
+          styles,notMocking,
         });
       }
     } catch (error) {

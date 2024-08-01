@@ -2,8 +2,12 @@
   <div class="bienvenida">
     <h1>{{nombre_completo}} Bienvenido a nuestro e-commerce</h1>
     <h2> Estos son nuestros productos</h2>
+<p id="notMocking" class="d-none">{{notMocking}}</p>
+
+
+
     <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
-    <div class="container d-flex justify-content-between">
+    <div class="container d-flex justify-content-between mt-4">
       <div class="flex">
       <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat <i class="bi bi-chat-text"></i></a>
       <a href="/realtimeproducts" class="btn btn-dark d-none" id="btn-rtp">Ir a Real Time Products</a>
@@ -40,11 +44,12 @@
         </p>
         <p><strong>Categoría:</strong> {{this.category}}</p>
         <p class="d-none owner" id="owner">{{this.owner}}</p>
-        {{#if this.status}}
-
-        <button class="btn btn-warning add-to-cart-btn" data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
+        {{#if this.status }}
+        <button class="btn btn-warning add-to-cart-btn"  data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
   Agregar al carrito <i class="bi bi-cart-plus"></i>
 </button>
+        
+
         {{else}}
         <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}">Agregar al carrito </button>
         {{/if}}

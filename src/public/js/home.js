@@ -1,6 +1,7 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  
   const thumbnails = document.querySelectorAll(".thumbnail");
   thumbnails.forEach((thumbnail) => {
     thumbnail.addEventListener("click", function () {
@@ -25,6 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
 
   addToCartButtons.forEach((button) => {
+
+
+
+
     button.addEventListener("click", (event) => {
       event.preventDefault();
 
@@ -181,6 +186,8 @@ function checkAuthStatus() {
   .then((response) => response.json())
   .then((data) => {
     // console.log('data home.js L 183', data)
+    let notMocking = document.getElementById("notMocking")
+    notMocking = notMocking.innerText
     const btnLogin = document.getElementById("btn-login");
     const btnLogout = document.getElementById("btn-logout");
     const btnCart = document.getElementById("btn-cart");
@@ -210,7 +217,7 @@ function checkAuthStatus() {
           btnChat.classList.remove("d-none");
           btnTickets.classList.remove("d-none");
           Array.from(addToCartButtons).forEach((button,index) => {
-            button.classList.remove("d-none");
+          button.classList.remove("d-none");
             const owner = owners[index].innerText.trim();
           if (username === owner) {
             button.title = "No puedes agregar tus propios productos al carrito";
@@ -220,12 +227,15 @@ function checkAuthStatus() {
           }
           });
         } else {
+
           btnChat.classList.remove("d-none");
           btnCart.classList.remove("d-none");
           btnTickets.classList.remove("d-none");
           btnRTP.classList.add("d-none");
           Array.from(addToCartButtons).forEach(button => {
             button.classList.remove("d-none");
+            if (notMocking==='false') button.disabled=true
+            console.log('L238', notMocking)
           });
         }
       }
@@ -239,6 +249,7 @@ function checkAuthStatus() {
       btnTickets.classList.add("d-none");
       return false;
     }
+
   })
   .catch((error) => {
     console.error("Error:", error);

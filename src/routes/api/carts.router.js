@@ -9,7 +9,7 @@ const { getCart, createCart, deleteProductFromCart, emptyCart, addProductToCart,
   addProductsToCart, updateProductQuantity} = new CartsController()
 
 router.get("/:cid",authorization(['user', 'premium']), getCart);
-router.post("/",authorization(['user', 'premium']),  createCart);
+// router.post("/",authorization(['user', 'premium']),  createCart);
 router.post("/:cid/product/:pid",authorization(['user', 'premium']),  addProductToCart);
 router.delete("/:cid",authorization(['user', 'premium']),  emptyCart);
 router.delete("/:cid/product/:pid",authorization(['user', 'premium']),  deleteProductFromCart);
@@ -17,8 +17,6 @@ router.put("/:cid",authorization(['user', 'premium']),  addProductsToCart);
 router.put("/:cid/product/:pid",authorization(['user', 'premium']),  updateProductQuantity)
 
 // router.post("/:cid/purchase",authorization(['user']),  purchaseTicket)
-
-
 
 module.exports = {
   router,

@@ -12,6 +12,8 @@ const Sockets = require("./sockets");
 const cors = require('cors');
 const handleErrors = require("./middlewares/error");
 const { addLogger, logger } = require("./utils/loggers");
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerUiExpress = require('swagger-ui-express')
 
 // Configuración de entorno
 
@@ -23,7 +25,21 @@ const port = objectConfig.port;
 // Configura CORS
 app.use(cors());
 
+const swaggerOptions = {
+  definition:{
+      openapi:'3.0.1',
+      info:{
+          title:'Documentación de App e-commerce',
+          description: "API para el estudio del desarrollo de e-commerce en CoderHouse"
+      }
+  },
+  apis:[`${__dirname}/docs/**/*.yaml`]
+}
+// console.log(`${__dirname}/docs/Users/Users.yaml`)
 
+const specs = swaggerJsDoc(swaggerOptions)
+
+app.use('/apidocs',swaggerUiExpress.serve,swaggerUiExpress.setup(specs))
 
 // Conexión a la base de datos
 // connectDB(); //ahora va en Factory
@@ -64,5 +80,7 @@ app.set("view engine", ".hbs");
 // Rutas
 app.use(routerApp);
 app.use(handleErrors())
+
+
 
 module.exports = app;

@@ -1,0 +1,294 @@
+openapi: 3.0.1
+info:
+  title: Carts API
+  description: API para la gestión de carritos de compras en el sistema
+  version: 1.0.0
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito a partir de su ID, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito que se desea solicitar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El carrito fue obtenido correctamente de la base de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: Carrito no encontrado
+        "401":
+          description: No autorizado
+    delete:
+      summary: Vacía un carrito a partir de su ID, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito que se desea vaciar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito vaciado exitosamente
+        "404":
+          description: Carrito no encontrado
+        "401":
+          description: No autorizado
+    put:
+      summary: Agrega múltiples productos a un carrito a partir de su ID, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito al que se desean agregar productos
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/addProductsToCart"
+      responses:
+        "200":
+          description: Productos agregados al carrito exitosamente
+        "404":
+          description: Carrito no encontrado
+        "401":
+          description: No autorizado
+  # /api/carts/:
+    # post:
+    #   summary: Crea un nuevo carrito
+    #   tags:
+    #     - Carts
+    #   requestBody:
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/requestBodies/createCart"
+    #   responses:
+    #     "201":
+    #       description: Carrito creado exitosamente
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: "#/components/schemas/Cart"
+    #     "400":
+    #       description: Datos inválidos para crear el carrito
+    #     "401":
+          # description: No autorizado
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agrega un producto al carrito, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/addProductToCart"
+      responses:
+        "200":
+          description: Producto agregado al carrito exitosamente
+        "404":
+          description: Carrito o producto no encontrado
+        "401":
+          description: No autorizado
+    delete:
+      summary: Elimina un producto del carrito, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado del carrito exitosamente
+        "404":
+          description: Carrito o producto no encontrado
+        "401":
+          description: No autorizado
+    put:
+      summary: Actualiza la cantidad de un producto en el carrito, acceso restringido solo a usuarios con role "user" o "premium"
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateProductQuantity"
+      responses:
+        "200":
+          description: Cantidad del producto actualizada exitosamente
+        "404":
+          description: Carrito o producto no encontrado
+        "401":
+          description: No autorizado
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por Mongo
+        userId:
+          type: string
+          description: El ID del usuario al que pertenece el carrito
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              pid:
+                type: string
+                description: El ID del producto
+              quantity:
+                type: number
+                description: La cantidad del producto en el carrito
+      example:
+        _id: "66712b9c5c6ad8d6fe608942"
+        userId: "66712b9d5c6ad8d6fe608944"
+        products:
+          - pid: "663836fe95f9e8c1519dcef6"
+            quantity: 2
+          - pid: "663836fe95f9e8c1519dcef7"
+            quantity: 1
+
+  requestBodies:
+    createCart:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: El ID del usuario al que pertenece el carrito
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pid:
+                      type: string
+                      description: El ID del producto
+                    quantity:
+                      type: number
+                      description: La cantidad del producto en el carrito
+            required:
+              - userId
+          example:
+            userId: "66712b9d5c6ad8d6fe608944"
+            products:
+              - pid: "663836fe95f9e8c1519dcef6"
+                quantity: 2
+              - pid: "663836fe95f9e8c1519dcef7"
+                quantity: 1
+
+    addProductToCart:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              quantity:
+                type: number
+                description: La cantidad del producto en el carrito
+            required:
+              - quantity
+          example:
+            quantity: 2
+
+    addProductsToCart:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pid:
+                      type: string
+                      description: El ID del producto
+                    quantity:
+                      type: number
+                      description: La cantidad del producto en el carrito
+            required:
+              - products
+          example:
+            products:
+              - pid: "663836fe95f9e8c1519dcef6"
+                quantity: 2
+              - pid: "663836fe95f9e8c1519dcef7"
+                quantity: 1
+
+    updateProductQuantity:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              quantity:
+                type: number
+                description: La cantidad del producto en el carrito
+            required:
+              - quantity
+          example:
+            quantity: 3

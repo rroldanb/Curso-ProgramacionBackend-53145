@@ -1,0 +1,266 @@
+openapi: 3.0.1
+info:
+  title: Products API
+  description: API para la gestión de productos en el sistema
+  version: 1.0.0
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos, no tiene restricciones de acceso
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo de conexión con la base de datos.
+    post:
+      summary: Crea un nuevo producto, acceso restringido solo a usuarios con role "premium" o "admin"
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createProduct"
+      responses:
+        "201":
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Datos inválidos para crear el producto
+        "401":
+          description: No autorizado
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un solo producto a partir de su ID, no tiene restricciones de acceso
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto que se desea solicitar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El producto fue obtenido correctamente de la base de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Producto no encontrado
+    put:
+      summary: Actualiza un producto a partir de su ID, acceso restringido solo a usuarios con role "premium" o "admin"
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Datos inválidos para actualizar el producto
+        "404":
+          description: Producto no encontrado
+        "401":
+          description: No autorizado
+    delete:
+      summary: Elimina un producto a partir de su ID, acceso restringido solo a usuarios con role "premium" o "admin"
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El ID del producto que se desea eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+        "404":
+          description: Producto no encontrado
+        "401":
+          description: No autorizado
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por Mongo
+        title:
+          type: string
+          description: El título del producto
+        description:
+          type: string
+          description: La descripción del producto
+        code:
+          type: string
+          description: Código único del producto
+        price:
+          type: number
+          description: El precio del producto
+        status:
+          type: boolean
+          description: Estado del producto (disponible o no)
+        stock:
+          type: number
+          description: La cantidad disponible del producto
+        category:
+          type: string
+          description: La categoría del producto
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: URLs de las miniaturas del producto
+        owner:
+          type: string
+          description: El propietario del producto
+      example:
+        _id: "60d9f9f9c2a3b8b1a1e5e8b7"
+        title: "Producto de ejemplo"
+        description: "Este es un producto de ejemplo"
+        code: "EX1234"
+        price: 99.99
+        status: true
+        stock: 50
+        category: "Electrónica"
+        thumbnails: ["url1", "url2"]
+        owner: "admin"
+
+  requestBodies:
+    createProduct:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: El título del producto
+              description:
+                type: string
+                description: La descripción del producto
+              code:
+                type: string
+                description: Código único del producto
+              price:
+                type: number
+                description: El precio del producto
+              status:
+                type: boolean
+                description: Estado del producto (disponible o no)
+              stock:
+                type: number
+                description: La cantidad disponible del producto
+              category:
+                type: string
+                description: La categoría del producto
+              thumbnails:
+                type: array
+                items:
+                  type: string
+                description: URLs de las miniaturas del producto
+              owner:
+                type: string
+                description: El propietario del producto
+            required:
+              - title
+              - description
+              - code
+              - price
+              - status
+              - stock
+              - category
+          example:
+            title: "Nuevo Producto"
+            description: "Descripción del nuevo producto"
+            code: "NP1234"
+            price: 49.99
+            status: true
+            stock: 100
+            category: "Juguetes"
+            thumbnails: ["url1", "url2"]
+            owner: "admin"
+
+    updateProduct:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              pid:
+                type: string
+                description: Id generado por Mongo
+              title:
+                type: string
+                description: El título del producto
+              description:
+                type: string
+                description: La descripción del producto
+              code:
+                type: string
+                description: Código único del producto
+              price:
+                type: number
+                description: El precio del producto
+              status:
+                type: boolean
+                description: Estado del producto (disponible o no)
+              stock:
+                type: number
+                description: La cantidad disponible del producto
+              category:
+                type: string
+                description: La categoría del producto
+              thumbnails:
+                type: array
+                items:
+                  type: string
+                description: URLs de las imágenes del producto
+              owner:
+                type: string
+                description: El propietario del producto
+          example:
+            id: "663836fe95f9e8c1519dcef6"
+            title: "Producto Actualizado"
+            description: "Descripción actualizada del producto"
+            code: "PA1234"
+            price: 59.99
+            status: true
+            stock: 150
+            category: "Juguetes"
+            thumbnails: ["url1", "url2"]
+            owner: "admin"

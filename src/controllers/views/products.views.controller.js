@@ -177,7 +177,6 @@ const productsManager = new ProductsManager();
     });
   }
 
-  console.log(" L180 notMocking:", notMocking);
       if (user) {
   if (user.user) {user = user.user}
         const nombre_completo =

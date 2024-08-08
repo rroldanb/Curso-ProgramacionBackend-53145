@@ -27,5 +27,5 @@ Curso CoderHouse Programación Backend, Comisión 53145
 
 
 <div style="text-align: end;">
-<span  style="font-size: 0.7em; "> RR 07/24 </span>
+<span  style="font-size: 0.7em; "> RR 08/24 </span>
 </div>

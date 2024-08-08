@@ -29,7 +29,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/createProduct"
+              $ref: "#/components/schemas/NewProduct"
+            example:
+              title: "Nuevo Producto"
+              description: "Descripción del nuevo producto"
+              code: "NP1234"
+              price: 49.99
+              status: true
+              stock: 100
+              category: "Juguetes"
+              thumbnails: ["url1", "url2"]
+              owner: "admin"
       responses:
         "201":
           description: Producto creado exitosamente
@@ -78,7 +88,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/updateProduct"
+              $ref: "#/components/schemas/NewProduct"
+            example:
+              title: "Producto Actualizado"
+              description: "Descripción actualizada del producto"
+              code: "PA1234"
+              price: 59.99
+              status: true
+              stock: 150
+              category: "Juguetes"
+              thumbnails: ["url1", "url2"]
+              owner: "admin"
       responses:
         "200":
           description: Producto actualizado exitosamente
@@ -159,108 +179,53 @@ components:
         category: "Electrónica"
         thumbnails: ["url1", "url2"]
         owner: "admin"
-
-  requestBodies:
-    createProduct:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                description: El título del producto
-              description:
-                type: string
-                description: La descripción del producto
-              code:
-                type: string
-                description: Código único del producto
-              price:
-                type: number
-                description: El precio del producto
-              status:
-                type: boolean
-                description: Estado del producto (disponible o no)
-              stock:
-                type: number
-                description: La cantidad disponible del producto
-              category:
-                type: string
-                description: La categoría del producto
-              thumbnails:
-                type: array
-                items:
-                  type: string
-                description: URLs de las miniaturas del producto
-              owner:
-                type: string
-                description: El propietario del producto
-            required:
-              - title
-              - description
-              - code
-              - price
-              - status
-              - stock
-              - category
-          example:
-            title: "Nuevo Producto"
-            description: "Descripción del nuevo producto"
-            code: "NP1234"
-            price: 49.99
-            status: true
-            stock: 100
-            category: "Juguetes"
-            thumbnails: ["url1", "url2"]
-            owner: "admin"
-
-    updateProduct:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              pid:
-                type: string
-                description: Id generado por Mongo
-              title:
-                type: string
-                description: El título del producto
-              description:
-                type: string
-                description: La descripción del producto
-              code:
-                type: string
-                description: Código único del producto
-              price:
-                type: number
-                description: El precio del producto
-              status:
-                type: boolean
-                description: Estado del producto (disponible o no)
-              stock:
-                type: number
-                description: La cantidad disponible del producto
-              category:
-                type: string
-                description: La categoría del producto
-              thumbnails:
-                type: array
-                items:
-                  type: string
-                description: URLs de las imágenes del producto
-              owner:
-                type: string
-                description: El propietario del producto
-          example:
-            id: "663836fe95f9e8c1519dcef6"
-            title: "Producto Actualizado"
-            description: "Descripción actualizada del producto"
-            code: "PA1234"
-            price: 59.99
-            status: true
-            stock: 150
-            category: "Juguetes"
-            thumbnails: ["url1", "url2"]
-            owner: "admin"
+    NewProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: El título del producto
+        description:
+          type: string
+          description: La descripción del producto
+        code:
+          type: string
+          description: Código único del producto
+        price:
+          type: number
+          description: El precio del producto
+        status:
+          type: boolean
+          description: Estado del producto (disponible o no)
+        stock:
+          type: number
+          description: La cantidad disponible del producto
+        category:
+          type: string
+          description: La categoría del producto
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: URLs de las miniaturas del producto
+        owner:
+          type: string
+          description: El propietario del producto
+      required:
+        - title
+        - description
+        - code
+        - price
+        - status
+        - stock
+        - category
+      example:
+        title: "Nuevo Producto"
+        description: "Descripción del nuevo producto"
+        code: "NP1234"
+        price: 49.99
+        status: true
+        stock: 100
+        category: "Juguetes"
+        thumbnails: ["url1", "url2"]
+        owner: "admin"

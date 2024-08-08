@@ -1,45 +1,46 @@
 const express = require("express");
-const dotenv = require('dotenv');
-const path = require('path');
+const dotenv = require("dotenv");
+const path = require("path");
 const { Server } = require("socket.io");
 const passport = require("passport");
 const { connectDB, objectConfig } = require("./config/config");
-const configureHandlebars = require('./config/handlebarsConfig');
-const configureSession = require('./config/sessionConfig');
-const initializePassport = require("./config/passport.config").initializePassport;
+const configureHandlebars = require("./config/handlebarsConfig");
+const configureSession = require("./config/sessionConfig");
+const initializePassport =
+  require("./config/passport.config").initializePassport;
 const { router: routerApp } = require("./routes/index");
 const Sockets = require("./sockets");
-const cors = require('cors');
+const cors = require("cors");
 const handleErrors = require("./middlewares/error");
 const { addLogger, logger } = require("./utils/loggers");
-const swaggerJsDoc = require('swagger-jsdoc')
-const swaggerUiExpress = require('swagger-ui-express')
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUiExpress = require("swagger-ui-express");
 
 // Configuración de entorno
 
 // Inicialización de la aplicación Express
 const app = express();
 dotenv.config();
-app.use(addLogger)
+app.use(addLogger);
 const port = objectConfig.port;
 // Configura CORS
 app.use(cors());
 
 const swaggerOptions = {
-  definition:{
-      openapi:'3.0.1',
-      info:{
-          title:'Documentación de App e-commerce',
-          description: "API para el estudio del desarrollo de e-commerce en CoderHouse"
-      }
+  definition: {
+    openapi: "3.0.1",
+    info: {
+      title: "Documentación de App e-commerce",
+      description:
+        "API para el estudio del desarrollo de e-commerce en CoderHouse",
+    },
   },
-  apis:[`${__dirname}/docs/**/*.yaml`]
-}
-// console.log(`${__dirname}/docs/Users/Users.yaml`)
+  apis: [`${__dirname}/docs/**/*.yaml`],
+};
 
-const specs = swaggerJsDoc(swaggerOptions)
+const specs = swaggerJsDoc(swaggerOptions);
 
-app.use('/apidocs',swaggerUiExpress.serve,swaggerUiExpress.setup(specs))
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 // Conexión a la base de datos
 // connectDB(); //ahora va en Factory
@@ -69,7 +70,7 @@ configureSession(app);
 // Inicialización de Passport
 initializePassport();
 app.use(passport.initialize());
-app.use(passport.session()); 
+app.use(passport.session());
 
 // Configuración de vistas y motor de plantillas
 app.set("views", path.join(__dirname, "views"));
@@ -79,8 +80,6 @@ app.set("view engine", ".hbs");
 
 // Rutas
 app.use(routerApp);
-app.use(handleErrors())
-
-
+app.use(handleErrors());
 
 module.exports = app;

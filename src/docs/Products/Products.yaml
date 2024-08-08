@@ -1,8 +1,6 @@
-openapi: 3.0.1
-info:
-  title: Products API
-  description: API para la gestión de productos en el sistema
-  version: 1.0.0
+tags:
+  - name: Products
+    description: API para la gestión de productos en el sistema
 paths:
   /api/products/:
     get:
@@ -38,7 +36,7 @@ paths:
               status: true
               stock: 100
               category: "Juguetes"
-              thumbnails: ["url1", "url2"]
+              thumbnails: ["/images/producto-prueba_03_imagen_1.jpg", "/images/producto-prueba_03_imagen_2.jpg"]
               owner: "admin"
       responses:
         "201":

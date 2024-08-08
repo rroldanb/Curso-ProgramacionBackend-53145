@@ -3,6 +3,9 @@ info:
   title: Carts API
   description: API para la gestión de carritos de compras en el sistema
   version: 1.0.0
+tags:
+  - name: Carts
+    description: API para la gestión de carritos de compras en el sistema
 paths:
   /api/carts/{cid}:
     get:
@@ -69,28 +72,6 @@ paths:
           description: Carrito no encontrado
         "401":
           description: No autorizado
-  # /api/carts/:
-    # post:
-    #   summary: Crea un nuevo carrito
-    #   tags:
-    #     - Carts
-    #   requestBody:
-    #     required: true
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: "#/components/requestBodies/createCart"
-    #   responses:
-    #     "201":
-    #       description: Carrito creado exitosamente
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: "#/components/schemas/Cart"
-    #     "400":
-    #       description: Datos inválidos para crear el carrito
-    #     "401":
-          # description: No autorizado
   /api/carts/{cid}/product/{pid}:
     post:
       summary: Agrega un producto al carrito, acceso restringido solo a usuarios con role "user" o "premium"
@@ -194,19 +175,89 @@ components:
             type: object
             properties:
               pid:
-                type: string
-                description: El ID del producto
+                $ref: "#/components/schemas/Product"
               quantity:
                 type: number
                 description: La cantidad del producto en el carrito
+              _id:
+                type: string
+                description: ID autogenerado del producto en el carrito
       example:
-        _id: "66712b9c5c6ad8d6fe608942"
-        userId: "66712b9d5c6ad8d6fe608944"
+        _id: "66a4a57d3efb6593b0faae9b"
+        userId: "66a4a57d3efb6593b0faae9d"
         products:
-          - pid: "663836fe95f9e8c1519dcef6"
-            quantity: 2
-          - pid: "663836fe95f9e8c1519dcef7"
+          - pid:
+              _id: "663836fe95f9e8c1519dcef8"
+              id: 3
+              title: "producto prueba 3"
+              description: "Este es el producto prueba 3"
+              code: "abc03"
+              price: 333
+              status: true
+              stock: 313
+              category: "Categoría impar"
+              thumbnails:
+                - "/images/producto-prueba_03_imagen_1.jpg"
+                - "/images/producto-prueba_03_imagen_2.jpg"
+                - "/images/producto-prueba_03_imagen_3.jpg"
+              owner: "admin"
             quantity: 1
+            _id: "66b43c8de01829a909ed8968"
+        __v: 0
+
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por Mongo
+        id:
+          type: number
+          description: ID del producto
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código del producto
+        price:
+          type: number
+          description: Precio del producto
+        status:
+          type: boolean
+          description: Estado del producto
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoría del producto
+        thumbnails:
+          type: array
+          items:
+            type: string
+            description: URL de las imágenes del producto
+        owner:
+          type: string
+          description: Propietario del producto
+      example:
+        _id: "663836fe95f9e8c1519dcef8"
+        id: 3
+        title: "producto prueba 3"
+        description: "Este es el producto prueba 3"
+        code: "abc03"
+        price: 333
+        status: true
+        stock: 313
+        category: "Categoría impar"
+        thumbnails:
+          - "/images/producto-prueba_03_imagen_1.jpg"
+          - "/images/producto-prueba_03_imagen_2.jpg"
+          - "/images/producto-prueba_03_imagen_3.jpg"
+        owner: "admin"
 
   requestBodies:
     createCart:
@@ -232,7 +283,7 @@ components:
             required:
               - userId
           example:
-            userId: "66712b9d5c6ad8d6fe608944"
+            userId: "66a4a57d3efb6593b0faae9d"
             products:
               - pid: "663836fe95f9e8c1519dcef6"
                 quantity: 2

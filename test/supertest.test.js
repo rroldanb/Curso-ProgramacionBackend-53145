@@ -17,13 +17,13 @@ describe("Test de mi ecommerce", () => {
   });
 
   describe("Test de producto", () => {
-    it("El endpoint GET /api/products debe devolver los 10 primeros productos", async () => {
+    it("El endpoint GET /api/products debe devolver los 10 primeros productos sin necesidad de estar logueado", async () => {
       const { statusCode, ok, _body } = await requester.get("/api/products");
       expect(ok).to.be.equal(true);
       expect(statusCode).to.be.equal(200);
       expect(_body.payload).to.be.an("array").that.has.lengthOf.at.most(10);
     });
-    it("El usuario admin debe poder agregar un producto a la base de datos y obtiene el _id del nuevo producto junto a los detalles ingresados por el usuario", async function () {
+    it("El usuario admin debe poder agregar un producto a la base de datos y obtiene el _id del nuevo producto junto a los detalles del nuevo producto", async function () {
       let mockProduct = {
         title: "Nuevo Producto",
         description: "Descripción del nuevo producto",
@@ -78,12 +78,12 @@ describe("Test de mi ecommerce", () => {
       this.cookie = headers["set-cookie"][0];
       expect(this.cookie).to.include("connect.sid");
     });
-    it("El usuario logueado debería poder acceder a un recurso protegido después de logout", async () => {
-      const { statusCode } = await requester
+    it("El usuario logueado debería poder acceder a la ruta current después de login y obtener datos no sensibles del usuario", async () => {
+      const { statusCode, _body } = await requester
         .get("/api/sessions/current")
         .set("Cookie", this.cookie);
-
       expect(statusCode).to.be.equal(200);
+      expect(_body.full_name).to.be.equal('Test User');
     });
     it("El usuario debería poder desloguearse y ser redirigido", async () => {
       const { statusCode, headers } = await requester
@@ -94,12 +94,13 @@ describe("Test de mi ecommerce", () => {
       expect(headers).to.have.property("location", "/");
     });
 
-    it("El usuario deslogueado no debería poder acceder a un recurso protegido después de logout", async () => {
-      const { statusCode } = await requester
+    it("El usuario deslogueado no debería poder acceder a la ruta current después de logout y recibira un error: 'Unauthorized' ", async () => {
+      const { statusCode, _body } = await requester
         .get("/api/sessions/current")
         .set("Cookie", this.cookie);
 
       expect(statusCode).to.be.equal(401);
+      expect(_body.error).to.be.equal('Unauthorized');
     });
   });
 
@@ -155,7 +156,7 @@ describe("Test de mi ecommerce", () => {
       this.pid = firstPid;
     });
 
-    it("El usuario debería poder ver el estado actual del carrito conteniendo un array de productos con al menos el producto agregado en el test anterior", async function () {
+    it("El usuario debería poder ver el estado actual del carrito conteniendo un array de productos con al menos uno de los productos agregados en el test anterior", async function () {
       const { statusCode, _body } = await requester
         .get(`/api/carts/${this.cid}`)
         .set("Cookie", this.cookie);
@@ -166,7 +167,7 @@ describe("Test de mi ecommerce", () => {
       expect(_body.products.length).to.be.greaterThan(0);
     });
 
-    it("El usuario debería poder eliminar un producto del carrito y recibir la confirmacion con el product id y el cart id", async function () {
+    it("El usuario debería poder eliminar un producto del carrito y recibir la confirmacion con el product id deliminado del carrito", async function () {
       const { statusCode, _body } = await requester
         .delete(`/api/carts/${this.cid}/product/${this.pid}`)
         .set("Cookie", this.cookie);

@@ -159,6 +159,7 @@ class ProductsController {
   };
 
   createProduct = async (req, res, next) => {
+    
     try {
         const nuevoProducto = req.body;
         const camposObligatorios = [
@@ -240,10 +241,10 @@ class ProductsController {
 
         const result = await this.productsService.addProduct(nuevoProducto);
         const stringLastID = result._id.toString();
+        const owner= req.user.role === 'premium'? req.user.email : 'admin'
+        req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID , owner});
 
-        req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID });
-
-        res.status(201).json({ mensaje: "Producto agregado correctamente", payload:result });
+        res.status(201).json({ message: "Producto agregado correctamente", payload:result });
     } catch (error) {
       logger.error(`Error, ${error.name}, ${error.cause}`)
       // res.send({status: 'error', error: error.name, error: error.cause})
@@ -315,7 +316,7 @@ updateProduct = async (req, res) => {
 
     res
       .status(200)
-      .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
+      .json({ message: `Producto con ID ${pid} actualizado correctamente` });
   } catch (error) {
     console.error("Error al actualizar el producto:", error);
     res.status(500).json({ error: "Error al actualizar el producto" });
@@ -339,7 +340,7 @@ deleteProduct = async (req, res) => {
 
     res
       .status(200)
-      .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });
+      .json({ message: `Producto con ID ${pid} eliminado correctamente` });
   } catch (error) {
     console.error("Error al eliminar el producto:", error);
     res.status(500).json({ error: "Error al eliminar el producto" });

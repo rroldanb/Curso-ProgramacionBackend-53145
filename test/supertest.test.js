@@ -23,7 +23,7 @@ describe("Test de mi ecommerce", () => {
       expect(statusCode).to.be.equal(200);
       expect(_body.payload).to.be.an("array").that.has.lengthOf.at.most(10);
     });
-    it("El usuario admin debe poder agregar un producto a la base de datos", async function () {
+    it("El usuario admin debe poder agregar un producto a la base de datos y obtiene el _id del nuevo producto junto a los detalles ingresados por el usuario", async function () {
       let mockProduct = {
         title: "Nuevo Producto",
         description: "Descripción del nuevo producto",
@@ -46,12 +46,14 @@ describe("Test de mi ecommerce", () => {
 
       this.pid = _body.payload._id;
     });
-    it("El usuario admin debe poder eliminar un producto a la base de datos", async function () {
-      const { statusCode } = await requester
+    it("El usuario admin debe poder eliminar un producto a la base de datos y obtener una confirmacion con el product id que se eliminó", async function () {
+      const { statusCode, _body } = await requester
         .delete(`/api/products/${this.pid}`)
         .set("Cookie", this.cookie);
-
       expect(statusCode).to.be.equal(200);
+      expect(_body.message).to.be.equal(
+        `Producto con ID ${this.pid} eliminado correctamente` 
+      );
     });
   });
 

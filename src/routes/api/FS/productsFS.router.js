@@ -120,7 +120,7 @@ router.post("/", async (req, res) => {
       req.io.emit("Server:addProduct", { ...nuevoProducto, id: lastProductId });
     }
 
-    res.status(201).json({ mensaje: "Producto agregado correctamente" });
+    res.status(201).json({ message: "Producto agregado correctamente" });
   } catch (error) {
     console.error("Error al agregar el producto:", error);
     res.status(500).json({ error: "Error al agregar el producto" });
@@ -215,7 +215,7 @@ router.put("/:pid", async (req, res) => {
     req.io.emit("Server:productUpdate", (product));
     res
       .status(200)
-      .json({ mensaje: `Producto con ID ${pid} actualizado correctamente` });
+      .json({ message: `Producto con ID ${pid} actualizado correctamente` });
   } catch (error) {
     console.error("Error al actualizar el producto:", error);
     res.status(500).json({ error: "Error al actualizar el producto" });
@@ -239,7 +239,7 @@ router.delete("/:pid", async (req, res) => {
     req.io.emit("Server:loadProducts", products);
     res
       .status(200)
-      .json({ mensaje: `Producto con ID ${pid} eliminado correctamente` });
+      .json({ message: `Producto con ID ${pid} eliminado correctamente` });
   } catch (error) {
     console.error("Error al eliminar el producto:", error);
     res.status(500).json({ error: "Error al eliminar el producto" });

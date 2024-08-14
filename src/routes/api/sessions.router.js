@@ -27,7 +27,7 @@ sessionsRouter.post("/login", authorization(['public']), passport.authenticate("
 
 sessionsRouter.get("/faillogin", authorization(['public']), failLogin);
 
-sessionsRouter.get("/current", authorization(['user', 'admin']), currentUser);
+sessionsRouter.get("/current", authorization(['user', 'premium' ,'admin']), currentUser);
 
 sessionsRouter.get("/logout", authorization(['public']), logout);
 

@@ -12,10 +12,8 @@ usersRouter.get("/premium/:uid", authorization(['admin']), usersController.switc
 usersRouter.get("/filter", authorization(['admin']), usersController.getUserBy);
 usersRouter.get("/email", authorization(['admin']), usersController.getUserByEmail);
 
-
 usersRouter.get('/reset-password', authorization(['public']), usersController.resetPassword);
 usersRouter.post('/reset-password', authorization(['public']), usersController.challengePassword);
-
 
 module.exports = usersRouter;
 

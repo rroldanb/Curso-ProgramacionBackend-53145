@@ -117,7 +117,9 @@ class CartsController {
     try {
       const result = await this.cartsService.emptyCart(cid);
       if (result && result.modifiedCount > 0) {
-        res.json({ message: "Carrito vaciado correctamente" });
+        res.status(200).json({
+          message: "Carrito vaciado correctamente" ,
+        });
       } else {
         res.status(404).json({ error: `Carrito con ID ${cid} no encontrado` });
       }

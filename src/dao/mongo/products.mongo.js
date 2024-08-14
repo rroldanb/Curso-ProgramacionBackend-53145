@@ -4,40 +4,42 @@ class ProductDaoMongo {
   constructor() {
     this.productsModel = productsModel;
   }
- 
-  async validateCode(code) {
+
+  validateCode = async (code) => {
     const product = await this.productsModel.findOne({ code: code });
     return !!product;
   }
 
-  async validateId(pid) {
+  validateId = async (pid) => {
     const product = await this.productsModel.findById(pid);
     return !!product;
   }
 
-  async getCategories() {
+  getCategories = async () => {
     return await this.productsModel.distinct("category");
   }
 
-  async getProducts(filter, options) {
+  getProducts = async (filter, options) => {
     return await this.productsModel.paginate(filter, options);
   }
 
-  async getProductById(pid) {
+  getProductById = async (pid) => {
     return await this.productsModel.findById(pid);
   }
 
-  async addProduct(product) {
+  addProduct = async (product) => {
     return await this.productsModel.create(product);
   }
 
-  async updateProduct(pid, updatedFields) {
+  updateProduct = async (pid, updatedFields) => {
     return await this.productsModel.updateOne({ _id: pid }, updatedFields);
   }
 
-  async deleteProduct(pid) {
+  deleteProduct = async (pid) => {
     return await this.productsModel.deleteOne({ _id: pid });
   }
 }
+
+//metodos de clase definidos como propiedades de clase usando la sintaxis de funciones flecha
 
 module.exports = ProductDaoMongo;

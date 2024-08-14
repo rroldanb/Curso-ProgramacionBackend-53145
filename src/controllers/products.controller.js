@@ -243,7 +243,7 @@ class ProductsController {
 
         req.io.emit("Server:addProduct", { ...nuevoProducto, _id: stringLastID });
 
-        res.status(201).json({ mensaje: "Producto agregado correctamente" });
+        res.status(201).json({ mensaje: "Producto agregado correctamente", payload:result });
     } catch (error) {
       logger.error(`Error, ${error.name}, ${error.cause}`)
       // res.send({status: 'error', error: error.name, error: error.cause})

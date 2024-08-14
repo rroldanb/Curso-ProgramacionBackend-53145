@@ -2,7 +2,7 @@
     "clientName": "Thunder Client",
     "collectionName": "ecommerce",
     "collectionId": "69d28776-2113-4999-a267-280bcdf591f9",
-    "dateExported": "2024-05-15T23:18:46.512Z",
+    "dateExported": "2024-08-14T01:31:43.050Z",
     "version": "1.2",
     "folders": [
         {
@@ -26,31 +26,35 @@
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "7bad936a-c8e1-4463-b121-7ace924eb27d",
             "name": "Todos los productos",
-            "url": "http://localhost:8080/api/products?limit=25&orderByPrice=desc&numPage=1&category=Categoría Par",
+            "url": "http://localhost:8080/api/products",
             "method": "GET",
             "sortNum": 10000,
             "created": "2024-04-08T05:39:47.525Z",
-            "modified": "2024-05-15T03:43:44.230Z",
+            "modified": "2024-06-25T03:31:47.395Z",
             "headers": [],
             "params": [
                 {
                     "name": "limit",
                     "value": "25",
+                    "isDisabled": true,
                     "isPath": false
                 },
                 {
                     "name": "orderByPrice",
                     "value": "desc",
+                    "isDisabled": true,
                     "isPath": false
                 },
                 {
                     "name": "numPage",
                     "value": "1",
+                    "isDisabled": true,
                     "isPath": false
                 },
                 {
                     "name": "category",
                     "value": "Categoría Par",
+                    "isDisabled": true,
                     "isPath": false
                 }
             ]
@@ -160,11 +164,16 @@
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-04-08T05:40:25.336Z",
-            "modified": "2024-05-04T07:47:57.067Z",
-            "headers": [],
+            "modified": "2024-07-16T20:45:07.415Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "connect.sid=s%3ABN6C7TiEcZ-wfW9zdxjn1oP8NvXEH1cJ.RX3Yu2PC09U%2FF86Y0aask1wC3fUthnV8wIyWNvBlDCI"
+                }
+            ],
             "body": {
                 "type": "json",
-                "raw": "\t\t{\n\t\t\t\"title\": \"producto prueba 1102\",\n\t\t\t\"description\": \"Este es el producto prueba 1102\",\n\t\t\t\"code\": \"abc1102\",\n\t\t\t\"price\": 111102,\n\t\t\t\"status\": true,\n\t\t\t\"stock\": 1102,\n\t\t\t\"category\": \"Categoría par\",\n\t\t\t\"thumbnails\": \"/images/producto-prueba_02_imagen_1.jpg\"\n\n\t\t}",
+                "raw": "\t\t{\n\n\t\t\t\"description\": \"otro Rezvani\",\n\t\t\t\"code\": \"RT2033\",\n\t\t\t\"price\": 123456,\n\t\t\t\"status\": true,\n\t\t\t\"stock\": \"11-2\",\n\t\t\t\"category\": \"Cars\",\n\t\t\t\"thumbnails\": \"https://images.squarespace-cdn.com/content/v1/5704138a37013bbe44e74f7e/1565575164931-7VHYZAS44T4FRFQTOBCZ/rezvani_tank_new.jpg\"\n\n\t\t}",
                 "form": []
             }
         },
@@ -215,6 +224,23 @@
             "headers": []
         },
         {
+            "_id": "a665f0c1-2ade-4978-86d3-7f999c913f94",
+            "colId": "69d28776-2113-4999-a267-280bcdf591f9",
+            "containerId": "7bad936a-c8e1-4463-b121-7ace924eb27d",
+            "name": "session Login",
+            "url": "http://localhost:8080/api/sessions/login",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-07-16T02:58:18.978Z",
+            "modified": "2024-07-16T03:01:01.003Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"adminCoder@coder.com\",\n  \"password\": \"adminCod3r123\"\n}\n",
+                "form": []
+            }
+        },
+        {
             "_id": "25264f3a-cb90-479e-bc61-841ae967ed7e",
             "colId": "69d28776-2113-4999-a267-280bcdf591f9",
             "containerId": "27971ca2-0a02-49be-a958-3beb881673db",
@@ -244,5 +270,5 @@
             "headers": []
         }
     ],
-    "ref": "wojSGZ008mY3Fr4B963yXh66iu1BmojqqRCS0nSF8bXVeLw-3SXVR3SxaleVByuNXy1ZEwsMFxroeid6BaFbJA"
+    "ref": "wojSGZ008mY3Fr4B963yXnsypKVqlFJ6DWUmIzABS1sySQegP-OcNp_oxEB1vtvUCh10iq6jtvtp2hYtn-jn_w"
 }

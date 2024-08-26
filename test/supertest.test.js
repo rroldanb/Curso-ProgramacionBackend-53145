@@ -28,7 +28,7 @@ describe("Test de mi ecommerce", () => {
         title: "Nuevo Producto",
         description: "Descripción del nuevo producto",
         code: "NP1234",
-        price: 49.99,
+        price: 5000,
         status: true,
         stock: 100,
         category: "Juguetes",

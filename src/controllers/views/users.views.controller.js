@@ -1,5 +1,48 @@
+const UsersManager = require("../../dao/mongo/users.mongo.js");
+const usersManager = new UsersManager();
 class UsersViewsController {
   constructor() {}
+
+
+  userProfile = async (req, res) => {
+    const userId = req.params.uid;
+    const requester = req.user;
+
+    const user = await usersManager.getUserBy({_id:userId})
+    if (!user) {
+      return res.status(404).render('updateUser', { message: 'Usuario no encontrado' });
+    }
+
+    res.render('updateUser', {
+      userId: userId,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      age: user.age,
+      email: user.email,
+      profile_pic: user.documents.find(doc => doc.name === 'profile')?.reference || '',
+      dni_pic: user.documents.find(doc => doc.name === 'dni')?.reference || '',
+      domicilio_pic: user.documents.find(doc => doc.name === 'domicilio')?.reference || '',
+      cta_pic: user.documents.find(doc => doc.name === 'cuenta')?.reference || '',
+      styles: "homeStyles.css",
+      requester,
+      isPremium: user.role==='premium',
+      isAdmin: user.role==='admin',
+      requesterAdmin:requester.role==='admin',
+    });
+  };
+
+  listUsers = async(req, res) =>{
+    try {
+        const users = await usersManager.getUsers({limit:20, page:1})
+        res.render('users', {users:users.docs,
+      styles: "homeStyles.css",
+
+        });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).send("Error fetching users");
+    }
+  }
 
   resetPassword = async (req, res) => {
     const { token } = req.query;
@@ -14,8 +57,7 @@ class UsersViewsController {
     }
 
     try {
-      const UsersManager = require("../../dao/mongo/users.mongo.js");
-      const usersManager = new UsersManager();
+
       const user = await usersManager.getUserByResetToken(token);
       if (!user) {
         inValidToken = true
@@ -41,6 +83,7 @@ class UsersViewsController {
       });
     }
   };
+
 
 
   renderChat = async (req, res) => {

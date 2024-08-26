@@ -2,6 +2,11 @@ const { Schema, model } = require("mongoose");
 const mongoosePaginate = require ("mongoose-paginate-v2")
 
 const userCollection = 'users';
+
+const documentItemSchema = new Schema({
+    name: { type: String, required: true }, 
+    reference: { type: String, required: true }
+});
 const UserSchema = new Schema({
     full_name: String,
     first_name: String,
@@ -23,6 +28,8 @@ const UserSchema = new Schema({
         ref: 'carts', 
         required: true 
     },
+    documents: [documentItemSchema],
+    last_connection: Date,
     resetPasswordToken: String, 
     resetPasswordExpires: Date  
 });

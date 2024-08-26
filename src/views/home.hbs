@@ -11,8 +11,12 @@
       <div class="flex">
       <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat <i class="bi bi-chat-text"></i></a>
       <a href="/realtimeproducts" class="btn btn-dark d-none" id="btn-rtp">Ir a Real Time Products</a>
+      <a href="/users" class="btn btn-success d-none" id="btn-users">Administrar usuarios</a>
       </div>
       <div class="flex">
+        <a href="/{{uid}}/profile" class="btn btn-warning" id="btn-profile">Mi perfil <i class="bi bi-person-circle"></i></a>
+
+        {{!-- <button class="btn btn-warning" id="btn-profile" onclick="redirectToProfile()">Mi perfil <i class="bi bi-person-circle"></i></button> --}}
         <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()">Ver mis compras anteriores <i class="bi bi-person-lines-fill"></i></button>
         <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Ir al carrito <i class="bi bi-cart"></i></button>
 

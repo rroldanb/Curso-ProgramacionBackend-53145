@@ -166,7 +166,9 @@ const initializePassport = () => {
             password: user.password,
           });
           if (!validPassword) return done(null, false);
-
+          const uid = user._id
+          const newDate = new Date()
+          await userService.updateUser(uid, {last_connection:newDate})
           return done(null, user); 
         } catch (error) {
           return done(error);

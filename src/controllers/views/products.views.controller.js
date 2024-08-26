@@ -218,6 +218,7 @@ async function RenderView(req, res, urlFrom) {
 
       res.render(`${urlFrom}`, {
         user: JSON.stringify(user),
+        uid: user.uid,
         cart_id: user.cart_id,
         username: user.email,
         nombre_completo,

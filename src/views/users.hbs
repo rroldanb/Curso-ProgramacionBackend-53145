@@ -1,0 +1,68 @@
+<body>
+    <div class="container">
+
+    <h1>Lista de Usuarios</h1>
+    <div class="container bg-warning rounded-4">
+
+    <table class="mt-4">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Imagen de Perfil</th>
+                <th>DNI</th>
+                <th>Domicilio</th>
+                <th>Cuenta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr>
+                <td>{{first_name}} {{last_name}}</td>
+                <td>{{email}} </td>
+                <td>{{role}}</td>
+                <td>
+                    {{#if (hasDocument "profile" this.documents)}}
+                        <span class="icon icon-check accomplish-icon-check">&#10004;</span>
+                    {{else}}
+                        <span class="icon icon-cross accomplish-icon-cross">&#10008;</span>
+                    {{/if}}
+                </td>
+                <td>
+                    {{#if (hasDocument "dni" this.documents)}}
+                        <span class="icon icon-check accomplish-icon-check">&#10004;</span>
+                    {{else}}
+                        <span class="icon icon-cross accomplish-icon-cross">&#10008;</span>
+                    {{/if}}
+                </td>
+                <td>
+                    {{#if (hasDocument "domicilio" this.documents)}}
+                        <span class="icon icon-check accomplish-icon-check">&#10004;</span>
+                    {{else}}
+                        <span class="icon icon-cross accomplish-icon-cross">&#10008;</span>
+                    {{/if}}
+                </td>
+                <td>
+                    {{#if (hasDocument "cuenta" this.documents)}}
+                        <span class="icon icon-check accomplish-icon-check">&#10004;</span>
+                    {{else}}
+                        <span class="icon icon-cross accomplish-icon-cross">&#10008;</span>
+                    {{/if}}
+                </td>
+                <td>
+                    <form action="/{{_id}}/profile" method="GET">
+                        <button class="btn btn-primary" type="submit">Revisar Perfil</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <button class="btn btn-danger my-2" type="button" onclick="window.history.back();">Volver</button>
+
+    </div>
+    </div>
+
+</body>

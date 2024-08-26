@@ -23,12 +23,15 @@ router.get("/carts/:cid/tickets",authorization(["user", "premium"]),cartsViewsCo
 
 router.get("/reset-password", authorization(["public"]), usersviewsController.resetPassword);
 router.get("/chat", authorization(["user", "premium"]), isLoggedIn, usersviewsController.renderChat);
+router.get('/:uid/profile', authorization(['user', 'premium', 'admin']), usersviewsController.userProfile);
+router.get('/users', authorization(['admin']), usersviewsController.listUsers);
 
 const { currentUser } = require("../controllers/sessions.controller");
 router.get("/current", authorization(["user", "admin"]), currentUser);
 
 router.get("/login", authorization(["public"]), (req, res) => {res.render("login");});
 router.get("/register", authorization(["public"]), (req, res) => {res.render("register");});
+
 
 module.exports = {
   router,

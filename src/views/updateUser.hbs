@@ -1,0 +1,155 @@
+<main>
+  <div class="container  d-flex flex-column"></div>
+    <h1 class="text-center">Perfil de Usuario</h1>
+    <div class="container">
+
+    <form id="profile-form" userId={{userId}} action="/api/users/{{userId}}/documents" class="bg-info p-4 rounded-3" method="POST" enctype="multipart/form-data">
+        
+    <input type="text" class="d-none" name="userId" id="userId" value="{{userId}}">
+      <div class="upload container">
+        {{#if profile_pic}}
+          <img id="profile-preview" class="mx-auto w-150 img-thumbnail clickable-image" src="/uploads/{{profile_pic}}" alt="Imagen de perfil" 
+          data-bs-toggle="modal" data-bs-target="#imageModal"  />
+          <figcaption class="my-1 d-none" id="profile-file-name">{{profile_pic}}</figcaption>
+          <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 "  id="profile-delete" ><i class="bi bi-x-circle"></i></button>
+        {{else}}
+          <img id="profile-preview" class="mx-auto img-thumbnail clickable-image" src="/noprofil.jpg" alt="imagen de perfil"
+          data-bs-toggle="modal" data-bs-target="#imageModal" >
+          <figcaption class="my-1 d-none" id="profile-file-name">profile-image</figcaption>
+        {{/if}}
+          <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 " style="display: none;" id="profile-delete" ><i class="bi bi-x-circle"></i></button>
+        <div class="round conatiner d-flex">
+          <input class="input-file" type="file" id="profile-upload"  name="profile" accept="image/*" >
+          <label class="img-profile-label my-auto mx-auto" for="profile-upload" ><i class="bi bi-cloud-upload"  style = "color: #fff;"> </i> 
+          </label>
+        </div>
+      </div>
+
+      <div class="text-fields">
+
+          <div class="mb-3">
+              <label for="first_name" id="first_name_label">Nombre</label>
+              <input type="text" value="{{first_name}}" name="first_name" id="first_name" class="form-control" autocomplete="off"/>
+          </div>
+          <div class="mb-3">
+              <label for="last_name" id="last_name_label">Apellido</label>
+              <input type="text" value="{{last_name}}" name="last_name" id="last_name" class="form-control" />
+          </div>
+          <div class="mb-3">
+              <label for="age" id="age_label">Edad</label>
+              <input type="text" value="{{age}}" name="age" id="age" class="form-control" />
+          </div>
+          <div class="mb-3">
+              <label for="email">Email</label>
+              <input type="email" value="{{email}}" name="email" id="email" class="form-control" autocomplete="off"/>
+          </div>
+      </div>
+        <div class="container">
+          <p class="text-center fs-4 fw-bold">Documentos de acreditación</p>
+        </div>
+          <div class="container d-flex">
+            <div class="container frame-container mb-3 dni">
+                <figure class="image-container my-1">
+                  {{#if dni_pic}}
+                    <button type="button" class="btn btn-danger elimina-doc" id="dni-delete" style="display:inline;"><i class="bi bi-x-circle"></i></button>
+                    <img src="/uploads/{{dni_pic}}" alt="Documento de identificación" id="dni-image" width="220" 
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image" />
+
+                    <figcaption class="my-1 d-none" id="dni-file-name">{{dni_pic}}</figcaption>
+                  {{else}}
+                    <button type="button" class="btn btn-danger elimina-doc" id="dni-delete" style="display:none;"><i class="bi bi-x-circle"></i></button>
+                    <img id="dni-image" 
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image" >
+                    <figcaption class="my-1 mt-4" id="dni-file-name">Pulsa el botón para subir tu imágen de tu documento de identidad</figcaption>
+                  {{/if}}
+                </figure>
+                <input class="input-file" type="file" id="dni-upload" name="document" accept="image/*" >
+                <label class="img-label mb-1" for="dni-upload">
+                    <i class="bi bi-cloud-upload"></i> &nbsp; Imágen del DNI
+                </label>
+            </div>
+
+            <div class="container frame-container mb-3 mx-1 domicilio">
+                <figure class="image-container my-1">
+                  {{#if domicilio_pic}}
+                    <button type="button" class="btn btn-danger elimina-doc px-2 py-1"  
+                      onclick="deleteDocument('domicilio')" id="domicilio-delete" style="display:inline;">
+                      <i class="bi bi-x-circle fs-5 fw-bold"></i>
+                    </button>
+                    <img src="/uploads/{{domicilio_pic}}" alt="Comprobante de domicilio" id="domicilio-image" width="220"
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image"  />
+                    <figcaption class="my-1 d-none" id="domicilio-file-name">{{domicilio_pic}}</figcaption>
+                  {{else}}
+                    <button type="button" class="btn btn-danger elimina-doc"   id="domicilio-delete" style="display:none;"><i class="bi bi-x-circle"></i></button>
+                    <img id="domicilio-image" 
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image">
+                    <figcaption class="my-1 mt-4" id="domicilio-file-name">Pulsa el botón para subir tu imágen de comprobante de domicilio</figcaption>
+                  {{/if}}
+                </figure>
+                <input class="input-file" type="file" id="domicilio-upload" name="document" accept="image/*" >
+                <label class="img-label mb-1" for="domicilio-upload" id="domicilio-label">
+                    <i class="bi bi-cloud-upload"></i> &nbsp; Comp. Domicilio
+                </label>
+            </div>
+
+            <div class="container frame-container mb-3 cuenta">
+                <figure class="image-container ">
+                  {{#if cta_pic}}
+                    <button type="button" class="btn btn-danger elimina-doc" id="cuenta-delete" style="display:inline;"><i class="bi bi-x-circle"></i></button>
+                    <img src="/uploads/{{cta_pic}}" alt="Comprobante de estado de cuenta" id="cuenta-image" width="220"
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image" />
+                    <figcaption class="my-1 d-none" id="cuenta-file-name">{{cta_pic}}</figcaption>
+                  {{else}}
+                    <button type="button" class="btn btn-danger elimina-doc" id="cuenta-delete" style="display:none;"><i class="bi bi-x-circle"></i></button>
+                    <img id="cuenta-image" 
+                    data-bs-toggle="modal" data-bs-target="#imageModal" class="img-thumbnail clickable-image">
+                    <figcaption class="my-1 mt-4" id="cuenta-file-name">Pulsa el botón para subir tu imágen de un estado de cuenta</figcaption>
+                  {{/if}}
+                </figure>
+                <input class="input-file" type="file" id="cuenta-upload" name="document" accept="image/*" >
+                <label class="img-label mb-1" for="cuenta-upload">
+                    <i class="bi bi-cloud-upload"></i> &nbsp;  Estado de cuenta
+                </label>
+            </div>
+
+          </div>
+
+        <div class="container d-flex justify-content-evenly">
+                <button class="btn btn-danger" type="button" onclick="goBackAndReload() ">Cancelar</button>
+
+                    {{#if requesterAdmin}}
+                      {{#if isPremium}}
+                        <button class="btn btn-secondary" id="promoter-btn" data-uid="{{userId}}"> Remover de Premium</button>
+                      {{else}}
+                        {{#if isAdmin}}
+                        {{else}}
+                        <button class="btn btn-warning" id="promoter-btn" data-uid="{{userId}}">  Promover a Premium</button>
+                      {{/if}} 
+                      {{/if}} 
+                    {{/if}}
+                <button class="btn btn-primary" type="submit">  Guardar</button>
+        </div>
+    </form>
+    </div>
+
+
+    {{#if message}}
+        <p>{{message}}</p>
+    {{/if}}
+
+    <!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Imagen Ampliada</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="Imagen ampliada" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+<script src="/js/updateUser.js"></script>

@@ -27,6 +27,13 @@ Handlebarshlp.registerHelper('ifOr', function(v1, v2, options) {
   return options.inverse(this);
 });
 
+Handlebarshlp.registerHelper('hasDocument', function (docName, documents) {
+  if (!documents || !Array.isArray(documents)) {
+    return false;
+  }
+  return documents.some(doc => doc.name === docName);
+});
+
 module.exports = function(app) { 
   return handlebars.create({
     defaultLayout: "main",

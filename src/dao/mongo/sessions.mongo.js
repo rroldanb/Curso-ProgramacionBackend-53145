@@ -24,7 +24,8 @@ class SessionDaoMongo {
       cart_id: req.user.cart_id,
       admin: req.user.role === "admin",
       email: req.user.email,
-      role: req.user.role
+      role: req.user.role,
+      uid: req.user._id
     };
 
     return { status: "success", payload: req.session.user };

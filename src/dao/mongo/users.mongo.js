@@ -33,19 +33,11 @@ class UserDaoMongo {
 
 
   async updateUser(id, updateData) {
-      return  await this.userModel.findByIdAndUpdate(id, updateData, { new: true });
+    return await this.userModel.findByIdAndUpdate(id, updateData, { new: true });
   }
   
   async getUserByResetToken(token) {
-    try {
-      return await this.userModel.findOne({
-        resetPasswordToken: token,
-        // resetPasswordExpires: { $gt: Date.now() }
-      });
-    } catch (error) {
-      console.error('Error in getUserByResetToken:', error);
-      throw error;
-    }
+      return await this.userModel.findOne({resetPasswordToken: token});
   }
 }
 

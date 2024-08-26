@@ -21,8 +21,11 @@ const swaggerUiExpress = require("swagger-ui-express");
 // Inicialización de la aplicación Express
 const app = express();
 dotenv.config();
+
+//inicializa el logger
 app.use(addLogger);
 const port = objectConfig.port;
+
 // Configura CORS
 app.use(cors());
 

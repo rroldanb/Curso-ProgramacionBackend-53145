@@ -162,6 +162,7 @@ document.getElementById("profile-form").addEventListener("submit", async functio
 
 document.addEventListener('DOMContentLoaded', function () {
     const promoterBtn = document.getElementById("promoter-btn");
+    const deleteUserBtn = document.getElementById("deleteUser-btn");
     if (promoterBtn) {
         promoterBtn.addEventListener('click', async function(e) {
             e.preventDefault();
@@ -175,14 +176,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: 'success',
                         title: '¡Éxito!',
                         text: result.message,
+                        timer: 3000, 
                     })
-                    .then 
-        window.location.reload();
+                    .then(() => {
+                        window.location.reload();
+                    });
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: result.message,
+                        timer: 3000, 
                     });
                 }
             } catch (error) {
@@ -190,6 +194,42 @@ document.addEventListener('DOMContentLoaded', function () {
                     icon: 'error',
                     title: 'Error',
                     text: 'Hubo un problema al intentar cambiar el rol del usuario.',
+                    timer: 3000, 
+                });
+            }
+        });
+    }
+    if (deleteUserBtn){
+        deleteUserBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const uid = deleteUserBtn.getAttribute('data-uid');
+            try {
+                const response = await fetch(`/api/users/${uid}`, { method: 'DELETE' });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: result.message,
+                        timer: 3000, 
+                    }).then(() => {
+                        window.location.href = `${window.location.origin}/users`;
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: result.message,
+                        timer: 3000, 
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al intentar eliminar el usuario.',
+                    timer: 3000, 
                 });
             }
         });

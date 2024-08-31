@@ -242,6 +242,11 @@ input[type=file]::-webkit-file-upload-button{
   overflow: hidden;
 }
 
+.profile-img-btns{
+  margin-top: -1.5rem;
+}
+
+
 .accomplish-icon {
   font-size: 1.5rem;
 }

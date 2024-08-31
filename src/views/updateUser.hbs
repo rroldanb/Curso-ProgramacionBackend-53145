@@ -1,29 +1,60 @@
 <main>
-  <div class="container  d-flex flex-column"></div>
-    <h1 class="text-center">Perfil de Usuario</h1>
+  <div class="container  d-flex flex-column mt-4"></div>
     <div class="container">
 
-    <form id="profile-form" userId={{userId}} action="/api/users/{{userId}}/documents" class="bg-info p-4 rounded-3" method="POST" enctype="multipart/form-data">
+    <form id="profile-form" userId={{userId}} action="/api/users/{{userId}}/documents" 
+    class="bg-info p-4 rounded-3 mt-4 bg-gradient" method="POST" enctype="multipart/form-data">
+    <h1 class="text-center bg-warning mb-2 rounded-3 ">Perfil de Usuario</h1>
         
     <input type="text" class="d-none" name="userId" id="userId" value="{{userId}}">
-      <div class="upload container">
-        {{#if profile_pic}}
-          <img id="profile-preview" class="mx-auto w-150 img-thumbnail clickable-image" src="/uploads/{{profile_pic}}" alt="Imagen de perfil" 
-          data-bs-toggle="modal" data-bs-target="#imageModal"  />
-          <figcaption class="my-1 d-none" id="profile-file-name">{{profile_pic}}</figcaption>
-          <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 "  id="profile-delete" ><i class="bi bi-x-circle"></i></button>
-        {{else}}
-          <img id="profile-preview" class="mx-auto img-thumbnail clickable-image" src="/noprofil.jpg" alt="imagen de perfil"
-          data-bs-toggle="modal" data-bs-target="#imageModal" >
-          <figcaption class="my-1 d-none" id="profile-file-name">profile-image</figcaption>
-        {{/if}}
-          <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 " style="display: none;" id="profile-delete" ><i class="bi bi-x-circle"></i></button>
-        <div class="round conatiner d-flex">
-          <input class="input-file" type="file" id="profile-upload"  name="profile" accept="image/*" >
-          <label class="img-profile-label my-auto mx-auto" for="profile-upload" ><i class="bi bi-cloud-upload"  style = "color: #fff;"> </i> 
-          </label>
+      <div class="d-flex container mt-4">
+        <div class="profile-img-cont upload  ">
+          {{#if profile_pic}}
+            <img id="profile-preview" class="mx-auto  clickable-image border-2" src="/uploads/{{profile_pic}}" alt="Imagen de perfil" 
+            data-bs-toggle="modal" data-bs-target="#imageModal"  />
+            <figcaption class="my-1 d-none" id="profile-file-name">{{profile_pic}}</figcaption>
+            <div class="container d-flex justify-content-between profile-img-btns">
+
+            <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 border border-white border-2"  id="profile-delete" ><i class="bi bi-x-circle"></i></button>
+            <div class="round d-flex border border-white border-2">
+              <input class="input-file" type="file" id="profile-upload"  name="profile" accept="image/*" >
+              <label class="img-profile-label my-auto mx-auto " for="profile-upload" ><i class="bi bi-cloud-upload"  
+              style = "color: #fff;"> </i> </label>
+            </div>          
+            </div>
+          {{else}}
+            <img id="profile-preview" class="mx-auto  clickable-image border border-white border-2" src="/noprofil.jpg" alt="imagen de perfil"
+            data-bs-toggle="modal" data-bs-target="#imageModal" >
+            <figcaption class="my-1 d-none" id="profile-file-name">profile-image</figcaption>
+            <div class="container d-flex justify-content-between profile-img-btns">
+            <button type="button"  class="img-profile-delete btn btn-danger rounded-circle mb-0 border border-white border-2" style="display: none;" id="profile-delete" ><i class="bi bi-x-circle"></i></button>
+            <div class="round d-flex border border-white border-2">
+              <input class="input-file" type="file" id="profile-upload"  name="profile" accept="image/*" >
+              <label class="img-profile-label my-auto mx-auto" for="profile-upload" ><i class="bi bi-cloud-upload"  style = "color: #fff;"> </i> 
+              </label>
+            </div>
+            </div>
+          {{/if}}
+
         </div>
+        {{#if requesterAdmin}}
+        <div class="admin-actions d-flex flex-column my-auto mx-auto bg-secondary  border border-white px-4 py-2 rounded-4">
+        <h4 class="text-white">Acciones para el usuario</h4>
+        <p class="text-white">Ùltima conexión:  <strong>{{last_connection}}</strong>  </p>
+          {{#if isPremium}}
+            <button class="btn btn-dark my-2" id="promoter-btn" data-uid="{{userId}}">Remover de Premium <i class="bi bi-shield-slash"></i> </button>
+          {{else}}
+              {{#if isAdmin}}
+              {{else}}
+                <button class="btn btn-warning my-2" id="promoter-btn" data-uid="{{userId}}">Promover a Premium <i class="bi bi-shield-check"></i> </button>
+              {{/if}} 
+          {{/if}} 
+            <button class="btn btn-danger my-2" id="deleteUser-btn" data-uid="{{userId}}">Remover el usuario <i class="bi bi-person-dash"></i>  </button>
+        </div>
+        {{/if}}
+
       </div>
+
 
       <div class="text-fields">
 
@@ -44,7 +75,7 @@
               <input type="email" value="{{email}}" name="email" id="email" class="form-control" autocomplete="off"/>
           </div>
       </div>
-        <div class="container">
+        <div class="container acred-docs">
           <p class="text-center fs-4 fw-bold">Documentos de acreditación</p>
         </div>
           <div class="container d-flex">
@@ -117,16 +148,7 @@
         <div class="container d-flex justify-content-evenly">
                 <button class="btn btn-danger" type="button" onclick="goBackAndReload() ">Cancelar</button>
 
-                    {{#if requesterAdmin}}
-                      {{#if isPremium}}
-                        <button class="btn btn-secondary" id="promoter-btn" data-uid="{{userId}}"> Remover de Premium</button>
-                      {{else}}
-                        {{#if isAdmin}}
-                        {{else}}
-                        <button class="btn btn-warning" id="promoter-btn" data-uid="{{userId}}">  Promover a Premium</button>
-                      {{/if}} 
-                      {{/if}} 
-                    {{/if}}
+
                 <button class="btn btn-primary" type="submit">  Guardar</button>
         </div>
     </form>

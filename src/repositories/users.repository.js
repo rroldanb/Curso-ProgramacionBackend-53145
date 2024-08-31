@@ -4,32 +4,35 @@ class UserRepository {
   constructor(userDao) {
     this.userDao = userDao;
   }
-  async getUsers({ limit = 10, numPage = 1 }) {
+  getUsers = async ({ limit = 10, numPage = 1 }) =>{
     return await this.userDao.getUsers({ limit, numPage });
   }
-
-  async getUserBy(filter) {
+  getUserBy = async (filter) =>{
     return await this.userDao.getUserBy(filter);
   }
-  async getUserByEmail(email) {
+  getUserByEmail = async (email) =>{
     return await this.userDao.getUserByEmail(email);
   }
-  async getUser(filter) {
+  deleteById = async (uid) =>{
+    return await this.userDao.deleteById(uid)
+  }
+  getUser = async (filter) =>{
     return await this.userDao.getBy(filter);
   }
-  async createUser(user) {
+  createUser = async (user) =>{
     const newUser = new UserDto(user);
     return await this.userDao.create(newUser);
   }
-  async updateUserRole(id, newRole) {
+  updateUserRole = async (id, newRole) =>{
     return await this.userDao.updateRole(id, newRole);
   }
-  async updateUser(uid, userToUpdate) {
+  updateUser = async (uid, userToUpdate) =>{
     return await this.userDao.updateUser(uid, userToUpdate);
   }
-  async deleteUser(uid) {
+  deleteUser = async (uid) =>{
     return await this.userDao.delete(uid);
   }
 }
 
 module.exports = UserRepository;
+

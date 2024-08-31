@@ -12,11 +12,22 @@ class UsersViewsController {
     if (!user) {
       return res.status(404).render('updateUser', { message: 'Usuario no encontrado' });
     }
-
+    const formatDate = (date) => {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+  
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+      return `${day}/${month}/${year}, ${hours}:${minutes}`;
+  };
+  const formattedDate = formatDate(user.last_connection);
     res.render('updateUser', {
       userId: userId,
       first_name: user.first_name,
       last_name: user.last_name,
+      last_connection: formattedDate,
       age: user.age,
       email: user.email,
       profile_pic: user.documents.find(doc => doc.name === 'profile')?.reference || '',
@@ -83,7 +94,6 @@ class UsersViewsController {
       });
     }
   };
-
 
 
   renderChat = async (req, res) => {

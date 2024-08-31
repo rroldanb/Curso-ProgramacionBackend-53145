@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { createHash, isValidPassword } = require("../utils/bcrypt.js");
 const uploader = require("../middlewares/uploader.js");
 const path = require("path");
-const { status } = require("./sessions.controller.js");
+// const { status } = require("./sessions.controller.js");
 
 class UsersController {
   constructor() {
@@ -67,12 +67,12 @@ class UsersController {
 
       return res.status(200).send({
         status: "success",
-        message: `Usuario promovido con exito`,
+        message: `Rol del usuario actualizado con éxito`,
         payload: updatedUser
       });
     } catch (error) {
-      console.error("Error switching user's role:", error);
-      res.status(500).json({ error: "Error switching user's role" });
+      console.error("Error actualizando el rol del usuario:", error);
+      res.status(500).json({ error: "Error actualizando el rol del usuario" });
     }
   };
 
@@ -83,11 +83,11 @@ class UsersController {
       if (user) {
         res.send({ status: "success", payload: user });
       } else {
-        res.status(404).json({ error: "User not found" });
+        res.status(404).json({ error: "Usuario no encontrado" });
       }
     } catch (error) {
-      console.error("Error getting user by filter:", error);
-      res.status(500).json({ error: "Error getting user by filter" });
+      console.error("Error obteniendo el usuario con el filtro otorgado:", error);
+      res.status(500).json({ error: "Error obteniendo el usuario con el filtro otorgado" });
     }
   };
 
@@ -95,17 +95,17 @@ class UsersController {
     try {
       const email = req.query;
       if (!email) {
-        throw new Error("Email is required");
+        throw new Error("El email es requerido");
       }
       const user = await this.usersService.getUserByEmail(email);
       if (user) {
         res.send({ status: "success", payload: user });
       } else {
-        res.status(404).json({ error: "User not found" });
+        res.status(404).json({ error: "Usuario no encontrado" });
       }
     } catch (error) {
-      console.error("Error getting user by email:", error);
-      res.status(500).json({ error: "Error getting user by email" });
+      console.error("Error obteniendo el usuario con el email entregado:", error);
+      res.status(500).json({ error: "Error obteniendo el usuario con el email entregado" });
     }
   };
 
@@ -203,7 +203,6 @@ class UsersController {
     }
   };
 
-
   updateUserProfile = async (req, res) => {
     const userId = req.params.uid;
 
@@ -266,6 +265,53 @@ class UsersController {
     }
 };
 
+  deleteUserById = async (req,res)=>{
+    try {
+      // uid = req.query
+      const { uid } = req.params;
+
+      if (!uid) {
+        throw new Error ('No se ingresó un uid');
+      }
+      const user = await this.usersService.getUserBy({_id:uid})
+      if (!user){
+        throw new Error('No se encontró el usuario')
+      }
+
+      const twoDaysAgo = new Date();
+      twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+      
+      if (user.last_connection < twoDaysAgo) {
+          
+      }
+      
+      const thirtyMinutesAgo = new Date();
+      thirtyMinutesAgo.setMinutes(thirtyMinutesAgo.getMinutes() - 30);
+      
+      if (user.last_connection < thirtyMinutesAgo) {
+        try {
+            const response = await this.usersService.deleteById(uid);
+            // console.log(response);
+            res.send({ status: "success", message: "Usuario eliminado correctamente" });
+        } catch (error) {
+            console.error('Error al eliminar el usuario:', error);
+            res.status(500).send({ status: "error", message: "No se pudo eliminar el usuario" });
+        }
+    } else {
+      const now = new Date();
+          const timeDifferenceMs = now - user.last_connection; 
+          const minutesSinceLastConnection = Math.floor(timeDifferenceMs / (1000 * 60)); 
+      
+          console.log(`No se puede eliminar el usuario, La última conexión fue hace ${minutesSinceLastConnection} minuto(s)`);
+
+        res.status(400).send({ status: "fail", message: `Usuario activo hace ${minutesSinceLastConnection} minuto(s)` });
+    }
+
+    } catch (error) {
+      console.error("Error eliminando el usuario:", error);
+      res.status(500).json({ error: "Error eliminando el usuario" });
+    }
+  }
 
 
   

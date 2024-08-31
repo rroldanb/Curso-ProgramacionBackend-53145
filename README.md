@@ -1,25 +1,27 @@
-# Rubén Roldán - Desafio complementario #5 Práctica de integración sobre tu ecommerce
+# Rubén Roldán - Proyecto Final - Backend de una aplicación ecommerce
 Curso CoderHouse Programación Backend, Comisión 53145
 
 ## Descripción de la entrega
 
 ### Consigna
-- Con base en el proyecto que venimos desarrollando, toca solidificar algunos procesos
+- Conseguir una experiencia de compra completa
+- Cerrar detalles administrativos con los roles.
 
 ### Aspectos a incluir:
-- Mover la ruta suelta /api/users/premium/:uid a un router específico para usuarios en /api/users/
-- Modificar el modelo de User para que cuente con una nueva propiedad “documents” el cual será un array que contenga los objetos con las siguientes propiedades
-    - name: String (Nombre del documento).
-    - reference: String (link al documento).
-No es necesario crear un nuevo modelo de Mongoose para éste.
-- Además, agregar una propiedad al usuario llamada “last_connection”, la cual deberá modificarse cada vez que el usuario realice un proceso de login y logout
-- Crear un endpoint en el router de usuarios api/users/:uid/documents con el método POST que permita subir uno o múltiples archivos. Utilizar el middleware de Multer para poder recibir los documentos que se carguen y actualizar en el usuario su status para hacer saber que ya subió algún documento en particular.
-- El middleware de multer deberá estar modificado para que pueda guardar en diferentes carpetas los diferentes archivos que se suban.
-    - Si se sube una imagen de perfil, deberá guardarlo en una carpeta profiles, en caso de recibir la imagen de un producto, deberá guardarlo en una carpeta products, mientras que ahora al cargar un documento, multer los guardará en una carpeta documents.
-- Modificar el endpoint /api/users/premium/:uid para que sólo actualice al usuario a premium si ya ha cargado los siguientes documentos:
-    - Identificación, Comprobante de domicilio, Comprobante de estado de cuenta
-- En caso de llamar al endpoint, si no se ha terminado de cargar la documentación, devolver un error indicando que el usuario no ha terminado de procesar su documentación. (Sólo si quiere pasar de user a premium, no al revés)
+- Desde el router de /api/users, crear tres rutas:
+    - GET / deberá obtener todos los usuarios, éste sólo debe devolver los datos principales como
+nombre, correo, tipo de cuenta (rol)
+    - DELETE / deberá limpiar a todos los usuarios que no hayan tenido conexión en los últimos 2 días. (puedes hacer pruebas con los últimos 30 minutos, por ejemplo). Deberá enviarse un correo indicando al usuario que su cuenta ha sido eliminada por inactividad
 
+- Crear una vista para poder visualizar, modificar el rol y eliminar un usuario. Esta vista únicamente será accesible para el administrador del ecommerce
+
+- Modificar el endpoint que elimina productos, para que, en caso de que el producto pertenezca a un usuario premium, le envíe un correo indicándole que el producto fue eliminado.
+
+- Finalizar las vistas pendientes para la realización de flujo completo de compra. NO ES NECESARIO tener una estructura específica de vistas, sólo las que tú consideres necesarias para poder llevar a cabo el proceso de compra.
+
+- No es necesario desarrollar vistas para módulos que no influyan en el proceso de compra (Como vistas de usuarios premium para crear productos, o vistas de panel de admin para updates de productos, etc)
+
+- Realizar el despliegue de tu aplicativo en la plataforma de tu elección (Preferentemente Railway.app, pues es la abarcada en el curso) y corroborar que se puede llevar a cabo un proceso de compra completo.
 
 ## Instalación y ejecución desde la terminal
 - Para descargar el código se recomienda clonar el repositorio desde una linea de comandos ejecutando: `git clone https://github.com/rroldanb/Curso-ProgramacionBakend-53145.git `

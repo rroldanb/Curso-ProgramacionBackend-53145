@@ -32,7 +32,6 @@ router.get("/current", authorization(["user", "admin"]), currentUser);
 router.get("/login", authorization(["public"]), (req, res) => {res.render("login");});
 router.get("/register", authorization(["public"]), (req, res) => {res.render("register");});
 
-
 module.exports = {
   router,
 };

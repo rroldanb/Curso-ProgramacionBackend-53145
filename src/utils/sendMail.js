@@ -32,7 +32,7 @@ const testEmail = async () => {
     });
 };
 
-const sendResetEmail = async (userEmail, token) => {
+const resetEmail = async (userEmail, token) => {
     const resetUrl = `http://localhost:8080/reset-password?token=${token}`;
     return await transport.sendMail({
       from: 'RR_Ecommerce <ruben.roldan.b@gmail.com>',
@@ -47,4 +47,30 @@ const sendResetEmail = async (userEmail, token) => {
     });
   };
 
-module.exports = { transport, testEmail, sendResetEmail };
+  const deleteProductEmail = async (userEmail, product) => {
+    return await transport.sendMail({
+      from: 'RR_Ecommerce <ruben.roldan.b@gmail.com>',
+      to: userEmail,
+      subject: 'Producto Eliminado',
+      html: `
+        <div>
+          <h1 style="color: blue;">Notificación de eliminación de producto</h1>
+          <p >
+          El administrador del ecommerce ha eliminado un producto del cual eras el propietario</p>
+          <p >
+          El producto eliminado fue el siguiente:</p>
+          <h3 >
+          <strong style="color: green;">Nombre:</strong> ${product.title}</h3>
+          <p >
+          <strong style="color: green;">Descripción:</strong> ${product.description}</p>
+          <p >
+          <strong style="color: green;">Código:</strong> ${product.code}</p>
+          <p >
+          <strong style="color: green;">Categoría:</strong> ${product.category}</p>
+        </div>
+      `,
+    });
+  };
+  
+
+module.exports = { transport, testEmail, resetEmail , deleteProductEmail};

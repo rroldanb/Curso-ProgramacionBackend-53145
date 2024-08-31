@@ -42,4 +42,5 @@ class ProductDaoMongo {
 
 //metodos de clase definidos como propiedades de clase usando la sintaxis de funciones flecha
 
+
 module.exports = ProductDaoMongo;

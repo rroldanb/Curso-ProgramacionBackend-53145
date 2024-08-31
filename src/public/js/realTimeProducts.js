@@ -272,21 +272,37 @@ const renderProductUI = (product) => {
   return productCard; 
 };
 
-function deleteProduct(pid) {
-  fetch(`/api/products/${pid}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Error al eliminar el producto");
-      }
-      return response.json();
-    })
-    
-    .catch((error) => {
-      console.error("Error:", error);
+async function deleteProduct(pid) {
+  try {
+    const response = await fetch(`/api/products/${pid}`, {
+      method: "DELETE",
     });
+
+    if (!response.ok) {
+      throw new Error("Error al eliminar el producto");
+    }
+
+    const result = await response.json(); 
+
+    Swal.fire({
+      icon: 'success',
+      title: '¡Éxito!',
+      text: result.message, 
+      timer: 4000,
+    });
+
+  } catch (error) {
+    console.error("Error:", error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: `Hubo un problema al intentar eliminar el producto: ${error}`,
+      timer: 4000,
+    });
+  }
 }
+
 
 function getProductToEdit(pid) {
   obtenerProductoPorId(pid).then((productoObtenido) => {

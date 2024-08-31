@@ -6,6 +6,7 @@ const mailRouter = Router();
 
 mailRouter.get("/testemail", authorization(["admin"]), mailcontroller.sendTest);
 
-mailRouter.post("/recoverpass",authorization(["public"]), mailcontroller.resetEmail );
+mailRouter.post("/recoverpass",authorization(["public"]), mailcontroller.sendResetEmail);
+mailRouter.post("/deleteproduct",authorization(["public"]), mailcontroller.sendDeleteProductEmail);
 
 module.exports = mailRouter;

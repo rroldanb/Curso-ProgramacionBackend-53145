@@ -5,6 +5,10 @@ const EErrors = require("../utils/errors/enums");
 const { logger } = require("../utils/loggers");
 const {generateUsers,generateProducts} = require("../utils/generateMocks");
 
+
+const { deleteProductEmail } = require("../utils/sendMail");
+
+
 function generatePaginationLinks(pagLinksParams) {
   let { urlParam, totalPages, nextPage, prevPage, hasNextPage, hasPrevPage } =
     pagLinksParams;
@@ -325,22 +329,29 @@ updateProduct = async (req, res) => {
 
 deleteProduct = async (req, res) => {
   const { pid } = req.params;
-
+  const user = req.user
+  let noticacionEnviada = ''
   try {
-    const existeId = await this.productsService.validateId(pid);
-    if (!existeId) {
+    const product = await this.productsService.getProductById(pid);
+    if (!product) {
       return res
         .status(400)
         .json({ error: `No existe un producto con id: ${pid}` });
     }
 
-    await this.productsService.deleteProduct(pid);
-
+     await this.productsService.deleteProduct(pid);
+    if (product) {
+      const userEmail = product.owner
+      if (userEmail && userEmail !== 'admin') {
+          await deleteProductEmail(product.owner, product);
+          noticacionEnviada = ` y notificación enviada a ${product.owner}`
+      }
+    }
     req.io.emit("Server:removeProduct", (pid));
+    const mensaje = `Producto con ID ${pid} eliminado correctamente${noticacionEnviada}`
+    console.log(mensaje)
+    res.status(200).json({ message: mensaje, product });
 
-    res
-      .status(200)
-      .json({ message: `Producto con ID ${pid} eliminado correctamente` });
   } catch (error) {
     console.error("Error al eliminar el producto:", error);
     res.status(500).json({ error: "Error al eliminar el producto" });

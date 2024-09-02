@@ -4,25 +4,25 @@ class TicketDaoMongo {
   constructor() {
     this.ticketModel = ticketModel;
   }
-  async createTicket(ticket) {
+  createTicket = async (ticket) =>{
     const result =  await this.ticketModel.create(ticket);
     return result
   }
 
-  async getTickets() {
+  getTickets = async () =>{
     return await this.ticketModel.find();
   }
   
-  async getTicketBy(filter) {
+  getTicketBy = async (filter) =>{
     return await this.ticketModel.findOne(filter);
   }
 
-  async getTicketsByEmail(email) {
+  getTicketsByEmail = async (email) =>{
     const tickets = await this.ticketModel.find({purchaser: email});
     return tickets
   }
   
-  async delete(ticket) {
+  delete = async (ticket) =>{
     const result = await this.ticketModel.deleteOne({ _id: ticket });
     return result;
   }

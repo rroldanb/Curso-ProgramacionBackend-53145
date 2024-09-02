@@ -267,7 +267,6 @@ class UsersController {
 
   deleteUserById = async (req,res)=>{
     try {
-      // uid = req.query
       const { uid } = req.params;
 
       if (!uid) {
@@ -281,30 +280,39 @@ class UsersController {
       const twoDaysAgo = new Date();
       twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
       
-      if (user.last_connection < twoDaysAgo) {
-          
-      }
-      
       const thirtyMinutesAgo = new Date();
       thirtyMinutesAgo.setMinutes(thirtyMinutesAgo.getMinutes() - 30);
       
-      if (user.last_connection < thirtyMinutesAgo) {
+    //   if (user.last_connection < thirtyMinutesAgo) {
+    //     try {
+    //         const response = await this.usersService.deleteById(uid);
+    //         res.send({ status: "success", message: "Usuario eliminado correctamente" });
+    //     } catch (error) {
+    //         console.error('Error al eliminar el usuario:', error);
+    //         res.status(500).send({ status: "error", message: "No se pudo eliminar el usuario" });
+    //     }
+    // } 
+      if (user.last_connection < twoDaysAgo) {
         try {
-            const response = await this.usersService.deleteById(uid);
-            // console.log(response);
-            res.send({ status: "success", message: "Usuario eliminado correctamente" });
-        } catch (error) {
-            console.error('Error al eliminar el usuario:', error);
-            res.status(500).send({ status: "error", message: "No se pudo eliminar el usuario" });
-        }
-    } else {
+          const response = await this.usersService.deleteById(uid);
+          res.send({ status: "success", message: "Usuario eliminado correctamente" });
+      } catch (error) {
+          console.error('Error al eliminar el usuario:', error);
+          res.status(500).send({ status: "error", message: "No se pudo eliminar el usuario" });
+      }
+      }
+      
+      
+    else {
       const now = new Date();
           const timeDifferenceMs = now - user.last_connection; 
-          const minutesSinceLastConnection = Math.floor(timeDifferenceMs / (1000 * 60)); 
+          // const minutesSinceLastConnection = Math.floor(timeDifferenceMs / (1000 * 60)); 
+          // const hoursSinceLastConnection = Math.floor(timeDifferenceMs / (1000 * 60 * 60)); 
+          const daysSinceLastConnection = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24)); 
       
-          console.log(`No se puede eliminar el usuario, La última conexión fue hace ${minutesSinceLastConnection} minuto(s)`);
+          console.log(`No se puede eliminar el usuario, La última conexión fue hace ${daysSinceLastConnection} minuto(s)`);
 
-        res.status(400).send({ status: "fail", message: `Usuario activo hace ${minutesSinceLastConnection} minuto(s)` });
+        res.status(400).send({ status: "fail", message: `Usuario activo hace ${daysSinceLastConnection} minuto(s)` });
     }
 
     } catch (error) {

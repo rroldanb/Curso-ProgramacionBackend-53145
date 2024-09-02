@@ -10,7 +10,7 @@ class UsersViewsController {
 
     const user = await usersManager.getUserBy({_id:userId})
     if (!user) {
-      return res.status(404).render('updateUser', { message: 'Usuario no encontrado' });
+      return res.status(404).render('userProfile', { message: 'Usuario no encontrado' });
     }
     const formatDate = (date) => {
       const day = String(date.getDate()).padStart(2, '0');
@@ -23,7 +23,7 @@ class UsersViewsController {
       return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
   const formattedDate = formatDate(user.last_connection);
-    res.render('updateUser', {
+    res.render('userProfile', {
       userId: userId,
       first_name: user.first_name,
       last_name: user.last_name,

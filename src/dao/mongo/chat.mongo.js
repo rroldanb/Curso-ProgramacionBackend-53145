@@ -5,14 +5,12 @@ class ChattDaoMongo {
     this.chatModel = chatModel;
   }
 
-
-    async getChats() {
+    getChats = async () =>{
       return await this.chatDao.find();
     }
-    async postMessage(newMessage){
+    postMessage = async (newMessage)=>{
       return await this.chatDao.create(newMessage)
     }
-  
     
   }
   

@@ -5,23 +5,23 @@ class CartsManager {
     this.model = cartsModel;
   }
 
-  async getCartByEmail(email) {
+  getCartByEmail = async (email) =>{
     return await this.model.findOne({ email }).lean();
   }
 
-  async createCartForUser(userId) {
+  createCartForUser = async (userId) =>{
     return await this.model.create({ userId });
   }
 
-  async getCartById(cid) {
+  getCartById = async (cid) =>{
     return await this.model.findById(cid).lean();
   }
 
-  async createCart() {
+  createCart = async () =>{
     return await this.model.create({ products: [] });
   }
 
-  async updateCartWithUserId(cartId, userId) {
+  updateCartWithUserId = async (cartId, userId) =>{
     return await this.model.findByIdAndUpdate(
       cartId,
       { userId },
@@ -29,39 +29,39 @@ class CartsManager {
     );
   }
 
-  async addProductToCart(cid, productId, quantity) {
+  addProductToCart = async (cid, productId, quantity) =>{
     return await this.model.updateOne(
       { _id: cid, "products.pid": productId },
       { $inc: { "products.$.quantity": quantity } }
     );
   }
 
-  async pushProductToCart(cid, pid) {
+  pushProductToCart = async (cid, pid) =>{
     return await this.model.updateOne(
       { _id: cid },
       { $push: { products: { pid, quantity: 1 } } }
     );
   }
 
-  async emptyCart(cid) {
+  emptyCart = async (cid) =>{
     return await this.model.updateOne({ _id: cid }, { $set: { products: [] } });
   }
 
-  async deleteProductFromCart(cid, pid) {
+  deleteProductFromCart = async (cid, pid) =>{
     return await this.model.updateOne(
       { _id: cid },
       { $pull: { products: { pid } } }
     );
   }
 
-  async addProductsToCart(cid, newProducts) {
+  addProductsToCart = async (cid, newProducts) =>{
     return await this.model.updateOne(
       { _id: cid },
       { $set: { products: newProducts } }
     );
   }
 
-  async updateProductQuantity(cid, pid, newQuantity) {
+  updateProductQuantity = async (cid, pid, newQuantity) =>{
     return await this.model.updateOne(
       { _id: cid, "products.pid": pid },
       { $set: { "products.$.quantity": newQuantity } }

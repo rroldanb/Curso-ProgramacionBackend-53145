@@ -69,7 +69,7 @@ class UsersViewsController {
 
     try {
 
-      const user = await usersManager.getUserByResetToken(token);
+      const user = await usersManager.getUserBy({resetPasswordToken:token});
       if (!user) {
         inValidToken = true
         console.log('no user found')

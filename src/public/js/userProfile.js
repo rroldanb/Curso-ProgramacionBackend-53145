@@ -154,7 +154,6 @@ document.getElementById("profile-form").addEventListener("submit", async functio
             title: "Error",
             position: "top",
             icon: "error",
-            showConfirmButton: false,
             timer: 2500,
           });
     }
@@ -175,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: 'success',
                         title: '¡Éxito!',
+                        position: "top",
                         text: result.message,
                         timer: 3000, 
                     })
@@ -185,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
+                        position: "top",
                         text: result.message,
                         timer: 3000, 
                     });
@@ -193,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
+                    position: "top",
                     text: 'Hubo un problema al intentar cambiar el rol del usuario.',
                     timer: 3000, 
                 });
@@ -212,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: 'success',
                         title: '¡Éxito!',
                         text: result.message,
+                        position: "top",
                         timer: 3000, 
                     }).then(() => {
                         window.location.href = `${window.location.origin}/users`;
@@ -221,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         icon: 'error',
                         title: 'Error',
                         text: result.message,
+                        position: "top",
                         timer: 3000, 
                     });
                 }
@@ -228,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
+                    position: "top",
                     text: 'Hubo un problema al intentar eliminar el usuario.',
                     timer: 3000, 
                 });

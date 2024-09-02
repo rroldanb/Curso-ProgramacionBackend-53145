@@ -63,7 +63,7 @@ class UsersController {
       }
 
       const newRole = user.role === "user" ? "premium" : "user";
-      const updatedUser = await this.usersService.updateUserRole(uid, newRole);
+      const updatedUser = await this.usersService.updateUser(uid, {role:newRole});
 
       return res.status(200).send({
         status: "success",
@@ -93,21 +93,22 @@ class UsersController {
 
   getUserByEmail = async (req, res) => {
     try {
-      const email = req.query;
-      if (!email) {
-        throw new Error("El email es requerido");
-      }
-      const user = await this.usersService.getUserByEmail(email);
-      if (user) {
-        res.send({ status: "success", payload: user });
-      } else {
-        res.status(404).json({ error: "Usuario no encontrado" });
-      }
+        const { email } = req.query; 
+        if (!email) {
+            throw new Error("El email es requerido");
+        }
+        const user = await this.usersService.getUserBy({ email }); 
+        if (user) {
+            res.send({ status: "success", payload: user });
+        } else {
+            res.status(404).json({ error: "Usuario no encontrado" });
+        }
     } catch (error) {
-      console.error("Error obteniendo el usuario con el email entregado:", error);
-      res.status(500).json({ error: "Error obteniendo el usuario con el email entregado" });
+        console.error("Error obteniendo el usuario con el email entregado:", error);
+        res.status(500).json({ error: "Error obteniendo el usuario con el email entregado" });
     }
-  };
+};
+
 
   resetPassword = async (req, res) => {
     const { token } = req.query;

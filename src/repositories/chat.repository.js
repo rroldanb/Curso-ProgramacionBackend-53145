@@ -1,15 +1,14 @@
 class ChatRepository {
-    constructor(ChattDao) {
-      this.chatDao = ChattDao;
+    constructor(ChatDao) {
+      this.chatDao = ChatDao;
     }
 
-    async getChats() {
-      return await this.chatDao.getChats();
+    getChats = async () =>{
+      return await this.chatDao.find();
     }
-    async postMessage(newMessage){
-      return await this.chatDao.postMessage(newMessage)
+    postMessage = async (newMessage)=>{
+      return await this.chatDao.create(newMessage)
     }
-  
     
   }
   

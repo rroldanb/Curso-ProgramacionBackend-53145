@@ -82,7 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
           title: '¡Gracias por tu compra!',
           text: `El Código de tu ticket es: ${tCode}.`,
           icon: 'success',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
+          position: "top",
+          timer: 3000,
+
         }).then(() => {
           window.location.href = "/products";
         });

@@ -1,8 +1,8 @@
 const passport = require("passport");
 const local = require("passport-local");
 const UserDaoMongo = require("../dao/mongo/users.mongo.js");
-const CartsManager = require("../dao/mongo/carts.mongo.js");
-const cartsManager = new CartsManager();
+const CartsDaoMongo = require("../dao/mongo/carts.mongo.js");
+const cartsManager = new CartsDaoMongo();
 
 const { createHash, isValidPassword } = require("../utils/bcrypt.js");
 const { toCapital } = require("../public/js/renderUtils.js");

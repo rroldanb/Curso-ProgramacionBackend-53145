@@ -1,4 +1,4 @@
-const { testEmail, sendResetEmail, deleteProductEmail } = require("../utils/sendMail");
+const { testEmail, resetEmail, deleteProductEmail } = require("../utils/sendMail");
 const crypto = require("crypto");
 const UsersManager = require("../dao/mongo/users.mongo");
 const usersManager = new UsersManager();
@@ -21,7 +21,7 @@ class MailController {
       try {
 
     
-        const user = await usersManager.getUserByEmail({ email });
+        const user = await usersManager.getUserBy({ email });
         if (!user) {
           return res.status(404).send("Usuario no encontrado");
         }
@@ -51,7 +51,7 @@ class MailController {
   sendDeleteProductEmail = async (req, res) => {
     const { email, product } = req.body;
     try {
-      const user = await usersManager.getUserByEmail({ email });
+      const user = await usersManager.getUserBy({ email });
       if (!user) {
         return res.status(404).send("Usuario no encontrado");
       }

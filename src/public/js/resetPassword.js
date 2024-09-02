@@ -27,6 +27,8 @@ document
         icon: "error",
         title: "Oops...",
         text: "Las contraseñas no coinciden. Por favor, intente nuevamente.",
+        position: "top",
+        timer:2500,
         confirmButtonText: "Aceptar",
       });
       return;
@@ -52,6 +54,8 @@ document
           icon: "success",
           title: "Éxito",
           text: result.message,
+          position: "top",
+          timer:2500,
           confirmButtonText: "Aceptar",
         }).then(() => {
           window.location.href = "/";
@@ -63,6 +67,8 @@ document
           icon: "error",
           title: "Error",
           text: result.message,
+          position: "top",
+          timer:2500,
           confirmButtonText: "Aceptar",
         });
       }
@@ -73,6 +79,8 @@ document
         title: "Error",
         text: "Hubo un problema al intentar restablecer la contraseña. Por favor, intenta de nuevo más tarde.",
         confirmButtonText: "Aceptar",
+        position: "top",
+        timer:2500,
       });
     }
   });

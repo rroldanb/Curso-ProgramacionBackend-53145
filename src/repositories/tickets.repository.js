@@ -3,23 +3,21 @@ class TicketRepository {
   constructor(TicketDao) {
     this.ticketDao = TicketDao;
   }
-  async createTicket(ticket) {
+  
+  createTicket = async (ticket) =>{
     return await this.ticketDao.createTicket(ticket);
   }
 
-  async getTickets() {
-    return await this.ticketDao.getTickets();
-  }
-  async getTicketsBy(filter){
-    return await this.ticketDao.getTicketBy(filter)
+  getTicketsBy = async (filter)=>{
+    return await this.ticketDao.getTicketsBy(filter)
   }
 
-  async getTicketsByEmail(email) {
-    return await this.ticketDao.getTicketsByEmail( email);
+  getTicketBy = async (filter) =>{
+    return await this.ticketDao.getTicketBy(filter);
   }
 
-  async delete(ticket) {
-    const result = await this.ticketDao.deleteOne({ _id: ticket });
+  deleteTicket = async (ticket) =>{
+    const result = await this.ticketDao.deleteTicket({ _id: ticket });
     return result;
   }
   

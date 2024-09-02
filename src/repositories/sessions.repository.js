@@ -3,31 +3,31 @@ class SessionRepository {
     this.sessionDao =  SessionDao;
   }
 
-  async register(req) {
+  register = async (req) =>{
     return await this.sessionDao.register(req);
   }
 
-  async failRegister() {
+  failRegister = async () =>{
     return await this.sessionDao.failRegister();
   }
 
-  async login(req) {
+  login = async (req) =>{
     return await this.sessionDao.login(req);
   }
 
-  async failLogin() {
+  failLogin = async () =>{
     return await this.sessionDao.failLogin();
   }
 
-  async currentUser(req) {
+  currentUser = async (req) =>{
     return await this.sessionDao.currentUser(req);
   }
 
-  async logout(req) {
+  logout = async (req) =>{
     return await this.sessionDao.logout(req);
   }
 
-  async status(req) {
+  status = async (req) =>{
     return await this.sessionDao.status(req);
   }
 }

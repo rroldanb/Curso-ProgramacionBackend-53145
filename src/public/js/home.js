@@ -68,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
               position: "top",
               icon: "success",
               title: "Éxito",
-              showConfirmButton: false,
               timer: 1500,
             });
           })
@@ -79,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
               title: "Error",
               position: "top",
               icon: "error",
-              showConfirmButton: false,
               timer: 1500,
             });
           });
@@ -163,7 +161,6 @@ function register(event) {
           position: "top",
           icon: "success",
           title: "Éxito",
-          showConfirmButton: false,
           timer: 1500,
         });
         form.reset();
@@ -342,7 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
           title: "Oops...",
           position: "top",
           icon: "error",
-          showConfirmButton: false,
           timer: 1500,
         });
         // alert('Por favor, ingresa tu correo electrónico.');
@@ -364,7 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
             position: "top",
             icon: "success",
             title: "Éxito",
-            showConfirmButton: false,
             timer: 2000,
           }).then(() => {
             emailInput.value = "";
@@ -380,9 +375,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error al enviar el correo de recuperación:", error);
         Swal.fire({
           icon: "error",
+          position: "top",
           title: "Oops...",
           text: "Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.",
           confirmButtonText: "Aceptar",
+          timer: 3000,
         });
         // alert('Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.');
       }

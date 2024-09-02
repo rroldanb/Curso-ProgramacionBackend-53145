@@ -1,51 +1,72 @@
 class CartRepository {
   constructor(CartDao) {
-    this.cartsManager =  CartDao;
+    this.cartDao =  CartDao;
   }
 
 
-  async getCartByEmail(email) {
-    return await this.cartsManager.getCartByEmail(email);
+  getCartByEmail = async (email) =>{
+    return await this.cartDao.findOne({ email }).lean();
   }
 
-  async createCartForUser(userId) {
-    return await this.cartsManager.createCartForUser(userId);
+  createCartForUser = async (userId) =>{
+    return await this.cartDao.create({ userId });
   }
 
-  async getCartById(cid) {
-    return await this.cartsManager.getCartById(cid);
+  getCartById = async (cid) =>{
+    return await this.cartDao.findById(cid).lean();
   }
 
-  async createCart() {
-    return await this.cartsManager.createCart();
+  createCart = async () =>{
+    return await this.cartDao.create({ products: [] });
   }
 
-  async updateCartWithUserId(cartId, userId) {
-    return await this.cartsManager.updateCartWithUserId(cartId, userId);
+  updateCartWithUserId = async (cartId, userId) =>{
+    return await this.cartDao.findByIdAndUpdate(
+      cartId,
+      { userId },
+      { new: true }
+    );
   }
 
-  async addProductToCart(cid, productId, quantity) {
-    return await this.cartsManager.addProductToCart(cid, productId, quantity);
+  addProductToCart = async (cid, productId, quantity) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid, "products.pid": productId },
+      { $inc: { "products.$.quantity": quantity } }
+    );
   }
 
-  async pushProductToCart(cid, pid) {
-    return await this.cartsManager.pushProductToCart(cid, pid);
+  pushProductToCart = async (cid, pid) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid },
+      { $push: { products: { pid, quantity: 1 } } }
+    );
   }
 
-  async emptyCart(cid) {
-    return await this.cartsManager.emptyCart(cid);
+  emptyCart = async (cid) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid }, 
+      { $set: { products: [] } });
   }
 
-  async deleteProductFromCart(cid, pid) {
-    return await this.cartsManager.deleteProductFromCart(cid, pid);
+  deleteProductFromCart = async (cid, pid) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid },
+      { $pull: { products: { pid } } }
+    );
   }
 
-  async addProductsToCart(cid, newProducts) {
-    return await this.cartsManager.addProductsToCart(cid, newProducts);
+  addProductsToCart = async (cid, newProducts) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid },
+      { $set: { products: newProducts } }
+    );
   }
 
-  async updateProductQuantity(cid, pid, newQuantity) {
-    return await this.cartsManager.updateProductQuantity(cid, pid, newQuantity);
+  updateProductQuantity = async (cid, pid, newQuantity) =>{
+    return await this.cartDao.updateOne(
+      { _id: cid, "products.pid": pid },
+      { $set: { "products.$.quantity": newQuantity } }
+    );
   }
 }
 

@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
               position: 'top',
               icon: 'success',
               title: 'Éxito',
-              showConfirmButton: false,
               timer: 1500
             }).then(() => {
               location.reload();
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
               title:'Error',
               position: 'top',
               icon: 'error',
-              showConfirmButton: false,
               timer: 1500
             });
           }
@@ -47,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             title:'Error',
             position: 'top',
             icon: 'error',
-            showConfirmButton: false,
             timer: 1500
           });
         }
@@ -72,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             title:'Éxito',
             position: 'top',
             icon: 'success',
-            showConfirmButton: false,
             timer: 1500
           }).then(() => {
             location.reload();
@@ -83,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
             title:'Error',
             position: 'top',
             icon: 'error',
-            showConfirmButton: false,
             timer: 1500
           });
         }
@@ -93,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
           title:'Error',
           position: 'top',
           icon: 'error',
-          showConfirmButton: false,
           timer: 1500
         });
       }
@@ -157,10 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         actualizarTotal();
 
-        Swal.fire({title: `Cantidad de ${productName} actualizada a ${nuevaCantidad}`,
+        Swal.fire({text: `Cantidad de ${productName} actualizada a ${nuevaCantidad}`,
+          title: 'Éxito',
           position: 'top',
           icon: 'success',
-          showConfirmButton: false,
           timer: 1500
         });
       } else {

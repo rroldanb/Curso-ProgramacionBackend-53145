@@ -1,8 +1,8 @@
-const CartsManager = require("../../dao/mongo/carts.mongo.js");
+const CartsDaoMongo = require("../../dao/mongo/carts.mongo.js");
 const ProductsManager = require("../../dao/mongo/products.mongo.js");
 const TicketsManager = require("../../dao/mongo/tickets.mongo.js");
 
-const cartsManager = new CartsManager();
+const cartsManager = new CartsDaoMongo();
 const productsManager = new ProductsManager();
 const ticketsManager = new TicketsManager();
 
@@ -136,7 +136,7 @@ class CartsViewsController {
         styles: "homeStyles.css",
       });
     } catch (error) {
-      console.error("Error processing purchase:", error);
+      console.error("Error procesando la compra:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
@@ -148,11 +148,11 @@ class CartsViewsController {
       const ticket = await ticketsManager.getTicketBy({ code: tCode });
 
       if (!cart) {
-        return res.status(404).json({ error: "Cart not found" });
+        return res.status(404).json({ error: "Carrito no encontrado" });
       }
 
       if (!ticket) {
-        return res.status(404).json({ error: "Ticket not found" });
+        return res.status(404).json({ error: "Ticket no encontrado" });
       }
 
       for (const item of ticket.purchase) {
@@ -166,11 +166,11 @@ class CartsViewsController {
       await cartsManager.emptyCart(cid);
       await cartsManager.addProductsToCart(cid, updatedCart);
 
-      await ticketsManager.delete(ticket._id);
+      await ticketsManager.deleteTicket(ticket._id);
 
       return res.json({ success: true });
     } catch (error) {
-      console.error("Error processing cancel:", error);
+      console.error("Error al cancelar:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
@@ -182,7 +182,7 @@ class CartsViewsController {
       if (user.user) {
         user = user.user;
       }
-      const tickets = await ticketsManager.getTicketsByEmail(user.email);
+      const tickets = await ticketsManager.getTicketsBy({purchaser: user.email});
 
       res.render("ticket", {
         tickets,
@@ -195,7 +195,7 @@ class CartsViewsController {
         styles: "homeStyles.css",
       });
     } catch (error) {
-      logger.error(error);
+      console.error(error);
     }
   };
 }

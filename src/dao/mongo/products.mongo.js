@@ -1,8 +1,8 @@
-const { productsModel } = require("./models/products.model.js");
+const { ProductsModel } = require("./models/products.model.js");
 
 class ProductDaoMongo {
   constructor() {
-    this.productsModel = productsModel;
+    this.productsModel = ProductsModel;
   }
 
   validateCode = async (code) => {

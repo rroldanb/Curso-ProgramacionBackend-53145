@@ -288,6 +288,7 @@ async function deleteProduct(pid) {
       icon: 'success',
       title: '¡Éxito!',
       text: result.message, 
+      position: "top",
       timer: 4000,
     });
 
@@ -298,6 +299,7 @@ async function deleteProduct(pid) {
       icon: 'error',
       title: 'Error',
       text: `Hubo un problema al intentar eliminar el producto: ${error}`,
+      position: "top",
       timer: 4000,
     });
   }

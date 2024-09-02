@@ -3,36 +3,38 @@ class ProductRepository {
         this.productDao = ProductDao
     }
   
-    async validateCode(code) {
-      return await this.productDao.validateCode(code);
+    validateCode = async (code) => {
+      const product = await this.productDao.findOne({ code: code });
+      return !!product;
     }
   
-    async validateId(pid) {
-      return await this.productDao.validateId(pid);
+    validateId = async (pid) => {
+      const product = await this.productDao.findById(pid);
+      return !!product;
     }
   
-    async getCategories() {
-      return await this.productDao.getCategories();
+    getCategories = async () => {
+      return await this.productDao.distinct("category");
     }
   
-    async getProducts(filter, options) {
-      return await this.productDao.getProducts(filter, options);
+    getProducts = async (filter, options) => {
+      return await this.productDao.paginate(filter, options);
     }
   
-    async getProductById(pid) {
-      return await this.productDao.getProductById(pid);
+    getProductById = async (pid) => {
+      return await this.productDao.findById(pid);
     }
   
-    async addProduct(product) {
-      return await this.productDao.addProduct(product);
+    addProduct = async (product) => {
+      return await this.productDao.create(product);
     }
   
-    async updateProduct(pid, updatedFields) {
-      return await this.productDao.updateProduct(pid, updatedFields);
+    updateProduct = async (pid, updatedFields) => {
+      return await this.productDao.updateOne({ _id: pid }, updatedFields);
     }
   
-    async deleteProduct(pid) {
-      return await this.productDao.deleteProduct(pid);
+    deleteProduct = async (pid) => {
+      return await this.productDao.deleteOne({ _id: pid });
     }
   }
   

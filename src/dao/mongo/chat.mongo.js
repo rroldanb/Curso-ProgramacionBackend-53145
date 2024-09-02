@@ -1,17 +1,17 @@
 const { chatModel } = require("./models/chat.model.js");
 
-class ChattDaoMongo {
+class ChatDaoMongo {
   constructor() {
     this.chatModel = chatModel;
   }
 
     getChats = async () =>{
-      return await this.chatDao.find();
+      return await this.chatModel.find();
     }
     postMessage = async (newMessage)=>{
-      return await this.chatDao.create(newMessage)
+      return await this.chatModel.create(newMessage)
     }
     
   }
   
-  module.exports = ChattDaoMongo;
+  module.exports = ChatDaoMongo;

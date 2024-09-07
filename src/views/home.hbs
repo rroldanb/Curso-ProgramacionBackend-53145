@@ -7,25 +7,51 @@
 
 
     <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
-    <div class="container d-flex justify-content-between mt-4">
-      <div class="flex">
-      <a href="/chat" class="btn btn-primary" id="btn-chat">Ir al chat <i class="bi bi-chat-text"></i></a>
-      <a href="/realtimeproducts" class="btn btn-dark d-none" id="btn-rtp">Ir a Real Time Products</a>
-      <a href="/users" class="btn btn-success d-none" id="btn-users">Administrar usuarios</a>
+    <div class="container d-flex justify-content-between mt-4 mx-2 pt-4 rounded-top-4" style="background-color: rgb(193, 193, 193);">
+      <div class="flex ">
+      {{#if admin}}
+      <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
+      <a href="/users" class="btn btn-success " id="btn-users">Administrar usuarios</a>
+      {{else}}
+      {{#if premium}}
+      <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
+      <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
+      {{else}}
+      {{#if uid}}
+      <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
+      {{/if}}
+      {{/if}}
+      {{/if}}
       </div>
-      <div class="flex">
-        <a href="/{{uid}}/profile" class="btn btn-warning" id="btn-profile">Mi perfil <i class="bi bi-person-circle"></i></a>
+      <div class="flex mx-2">
+      {{#if admin}}
+        <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
+      {{else}}
+      {{#if premium}}
+        <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
+        <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
+        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+      {{else}}
+      {{#if uid}}
+        <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
+        <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
+        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+      {{/if}}
+      {{/if}}
+      {{/if}}
 
-        {{!-- <button class="btn btn-warning" id="btn-profile" onclick="redirectToProfile()">Mi perfil <i class="bi bi-person-circle"></i></button> --}}
-        <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()">Ver mis compras anteriores <i class="bi bi-person-lines-fill"></i></button>
-        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Ir al carrito <i class="bi bi-cart"></i></button>
+        {{!-- <button class="btn btn-warning" id="btn-profile" onclick="redirectToProfile()"><i class="bi bi-person-circle me-2"></i>Mi perfil </button> --}}
 
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login">Login <i class="bi bi-person"></i></a>
-      <button class="btn btn-danger d-none" onclick="logout()" id="btn-logout">LogOut <i class="bi bi-person-lock"></i></button>
+      <a href="#" class="btn btn-warning mx-1" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register"><i class="bi bi-person-plus me-2"></i>Registrarse </a>
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"><i class="bi bi-person me-2"></i>Login </a>
+      <button class="btn btn-danger d-none" onclick="logout()" id="btn-logout"><i class="bi bi-door-closed me-2"></i>LogOut </button>
+
+
+
       </div>
     </div>
   </div>
-  <div class="container">
+  <div class="container rounded-bottom-4" style="background-color: rgb(193, 193, 193);">
     {{>filters}}
 {{!-- Despliega Productos --}}
     {{#each products}}
@@ -50,17 +76,19 @@
         <p class="d-none owner" id="owner">{{this.owner}}</p>
         {{#if this.status }}
         <button class="btn btn-warning add-to-cart-btn"  data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
-  Agregar al carrito <i class="bi bi-cart-plus"></i>
+  <i class="bi bi-cart-plus me-2"></i> Agregar al carrito 
 </button>
         
 
         {{else}}
-        <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}">Agregar al carrito </button>
+        <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
         {{/if}}
       </div>
     {{/each}}
+<div class="container">
 
     {{>paginator}}
+</div>
   </div>
 
 <!-- Modal Login-->
@@ -68,17 +96,17 @@
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content bg-primary-subtle">
       <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <h5 class="modal-title fw-bold" id="loginModalLabel">Login</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="loginForm" class="form-group" onsubmit="login(event)">
           <div class="mb-3">
-            <label for="emailLogin" class="form-label">Email</label>
+            <label for="emailLogin" class="form-label fw-bold">Email</label>
             <input type="email" placeholder="correo" name="emailLogin" id="emailLogin" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="passwordLogin" class="form-label">Password</label>
+            <label for="passwordLogin" class="form-label fw-bold">Password</label>
             <div class="input-group">
               <input type="password" placeholder="Contraseña" name="passwordLogin" id="passwordLogin" class="form-control toggle-password" required>
               <button class="btn btn-outline-secondary toggle-password-btn" type="button">
@@ -86,12 +114,10 @@
               </button>
             </div>
           </div>
-          <button type="submit" class="btn btn-outline-primary w-100 mt-3">Ingresar <i class="bi bi-person-check"></i></button>
-          <a href="#" class="btn btn-outline-success w-100 mt-2" data-bs-toggle="modal" data-bs-target="#restoreModal" id="btn-restore">Restablecer Contraseña <i class="bi bi-envelope-at"></i></a>
-          {{!-- <button class="btn btn-outline-success w-100 mt-3">Restablecer Contraseña <i class="bi bi-envelope-at"></i></button> --}}
-          <a href="/sessions/github" class="btn btn-outline-dark w-100 mt-3">Github <i class="bi bi-github"></i></a>
-          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#registerModal" id="btn-register">Registrarse <i class="bi bi-person-plus"></i></a>
-          <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+          <button type="submit" class="btn btn-outline-primary w-100 mt-3"><i class="bi bi-person-check me-2"></i>Ingresar </button>
+          <a href="#" class="btn btn-outline-success w-100 mt-2" data-bs-toggle="modal" data-bs-target="#restoreModal" id="btn-restore"><i class="bi bi-envelope-at me-2"></i>Restablecer Contraseña </a>
+          <button type="button" class="btn btn-outline-danger w-100 mt-3 d-none" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+          <a href="/sessions/github" class="btn btn-outline-dark w-100 mt-4"><i class="bi bi-github me-2"></i>Ingresar con Github </a>
         </form>
       </div>
     </div>
@@ -103,39 +129,54 @@
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content bg-primary-subtle">
       <div class="modal-header">
-        <h5 class="modal-title" id="registerModalLabel">Nuevo usuario</h5>
+        <h5 class="modal-title fw-bold" id="registerModalLabel">Nuevo usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="registerForm" class="form-group" onsubmit="register(event)">
           <div class="mb-3">
-            <label for="first_name">Nombre</label>
-            <input type="text" placeholder="Nombre" name="first_name" class="form-control" />
+            <label for="first_name" class="fw-bold">Nombre</label>
+            <input type="text" placeholder="Nombre" name="first_name" class="form-control" required/>
           </div>
           <div class="mb-3">
-            <label for="last_name">Apellido</label>
+            <label for="last_name" class="fw-bold">Apellido</label>
             <input type="text" placeholder="Apellido" name="last_name" class="form-control" />
           </div>
-          <div class="mb-3">
-            <label for="age">Edad</label>
-            <input type="text" placeholder="Edad" name="age" class="form-control" />
+          <div class="mb-3 d-flex justify-content-between ">
+            <div class="">
+              <label for="birthDate" class="fw-bold" id="birthDate_label">Fecha de nacimiento</label>
+              <input type="date" name="birthDate" id="birthDate" class="form-control" required/>
+            </div>
+            <div class="mx-2">
+              <label for="age"  id="age_label">Edad</label>
+              <input type="text"   name="age" id="age" class="form-control" disabled /> 
+            </div>
           </div>
           <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" placeholder="correo" name="email" class="form-control" />
+            <label for="email" class="fw-bold">Email</label>
+            <input type="email" placeholder="correo" name="email" class="form-control" required/>
           </div>
           <div class="mb-3">
-            <label for="password">Password</label>
+            <label for="password" class="fw-bold">Password</label>
             <div class="input-group">
-              <input type="password" class="form-control toggle-password" id="password" name="password" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="mostrar-ocultar-password">
+              <input type="password" class="form-control toggle-password" id="password" name="password" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="mostrar-ocultar-password" required>
               <button class="btn btn-outline-secondary toggle-password-btn" type="button">
                 <i class="bi bi-eye"></i>
               </button>
             </div>
           </div>
-          <button class="btn btn-outline-primary w-100 mt-3">Guardar <i class="bi bi-person-plus"></i></button>
-          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a>
-          <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+          <div class=" mb-3">
+            <label for="confirmPassword" class="fw-bold">Confirmar Nueva Contraseña</label>
+            <div class="input-group">
+            <input type="password" class="form-control toggle-password" id="confirmPassword" name="confirmPassword"  placeholder="Contraseña" aria-label="Confirmar contraseña" aria-describedby="mostrar-ocultar-password"  required>
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+            </div>
+          <button class="btn btn-outline-primary w-100 mt-3"><i class="bi bi-person-plus me-2"></i>Registrarse </button>
+          {{!-- <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a> --}}
+          {{!-- <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button> --}}
         </form>
       </div>
     </div>
@@ -147,18 +188,18 @@
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content bg-primary-subtle">
       <div class="modal-header">
-        <h5 class="modal-title" id="restoreModalLabel">Restablecer Contraseña</h5>
+        <h5 class="modal-title fw-bold" id="restoreModalLabel">Restablecer Contraseña</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="restoreForm" class="form-group">
           <div class="mb-3">
-            <label for="email">Email</label>
+            <label for="email" class="fw-bold mb-2">Email</label>
             <input type="email" placeholder="correo" name="email" class="form-control" />
           </div>
-          <button type="submit" class="btn btn-outline-primary w-100 mt-3">Enviar Correo para restablecer contraseña <i class="bi bi-envelope-at"></i></button>
-          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a>
-          <button type="button" class="btn btn-outline-danger w-100 mt-3" id="cierraModal" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button>
+          <button type="submit" class="btn btn-outline-primary w-100 mt-3"><i class="bi bi-envelope-at me-2"></i> Enviar Correo para restablecer contraseña </button>
+          <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> <i class="bi bi-person me-2"></i>Volver al Login </a>
+          {{!-- <button type="button" class="btn btn-outline-danger w-100 mt-3" id="cierraModal" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button> --}}
         </form>
       </div>
     </div>

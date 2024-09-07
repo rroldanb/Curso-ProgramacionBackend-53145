@@ -11,8 +11,7 @@ class UserRepository {
   }
 
   createUser = async (user) =>{
-    const newUser = new UserDto(user);
-    return await this.userDao.create(newUser);
+    return await this.userDao.create(user);
   }
 
   deleteById = async (uid) =>{

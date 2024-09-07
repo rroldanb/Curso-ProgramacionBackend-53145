@@ -171,50 +171,36 @@ function register(event) {
     .catch((error) => console.error("Error:", error));
 }
 
-function checkAuthStatus() {
-  return fetch("/sessions/status", {
+
+ function  checkAuthStatus () {
+  return  fetch("/sessions/status", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   })
+   
     .then((response) => response.json())
     .then((data) => {
-      // console.log('data home.js L 183', data)
       let notMocking = document.getElementById("notMocking");
       notMocking = notMocking.innerText;
       const btnLogin = document.getElementById("btn-login");
+      const btnRegister = document.getElementById("btn-register");
       const btnLogout = document.getElementById("btn-logout");
-      const btnCart = document.getElementById("btn-cart");
-      const btnChat = document.getElementById("btn-chat");
-      const btnRTP = document.getElementById("btn-rtp");
-      const btnTickets = document.getElementById("btn-tickets");
-      const btnProfile = document.getElementById("btn-profile");
-      const btnUsers = document.getElementById("btn-users");
-      const addToCartButtons =
-        document.getElementsByClassName("add-to-cart-btn");
+      const addToCartButtons = document.getElementsByClassName("add-to-cart-btn");
       const owners = document.getElementsByClassName("owner");
       const username = data.username;
 
       if (data.isAuthenticated) {
         btnLogin.classList.add("d-none");
+        btnRegister.classList.add("d-none");
         btnLogout.classList.remove("d-none");
-        btnProfile.classList.remove("d-none")
         if (data.isAdmin) {
-          btnRTP.classList.remove("d-none");
-          btnUsers.classList.remove("d-none");
-          btnCart.classList.add("d-none");
-          btnChat.classList.add("d-none");
-          btnTickets.classList.add("d-none");
           Array.from(addToCartButtons).forEach((button) => {
             button.classList.add("d-none");
           });
         } else {
           if (data.isPremium) {
-            btnRTP.classList.remove("d-none");
-            btnCart.classList.remove("d-none");
-            btnChat.classList.remove("d-none");
-            btnTickets.classList.remove("d-none");
             Array.from(addToCartButtons).forEach((button, index) => {
               button.classList.remove("d-none");
               const owner = owners[index].innerText.trim();
@@ -227,10 +213,6 @@ function checkAuthStatus() {
               }
             });
           } else {
-            btnChat.classList.remove("d-none");
-            btnCart.classList.remove("d-none");
-            btnTickets.classList.remove("d-none");
-            btnRTP.classList.add("d-none");
             Array.from(addToCartButtons).forEach((button) => {
               button.classList.remove("d-none");
               if (notMocking === "false") button.disabled = true;
@@ -241,17 +223,14 @@ function checkAuthStatus() {
         return true;
       } else {
         btnLogin.classList.remove("d-none");
+        btnRegister.classList.remove("d-none");
         btnLogout.classList.add("d-none");
-        btnCart.classList.add("d-none");
-        btnChat.classList.add("d-none");
-        btnTickets.classList.add("d-none");
-        btnProfile.classList.add("d-none");
-        btnUsers.classList.add("d-none");
         return false;
       }
     })
     .catch((error) => {
       console.error("Error:", error);
+  
       return false;
     });
 }

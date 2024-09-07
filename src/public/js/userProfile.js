@@ -88,6 +88,7 @@ document.getElementById("profile-form").addEventListener("submit", async functio
     // Append user information
     formData.append("first_name", form.first_name.value);
     formData.append("last_name", form.last_name.value);
+    formData.append("birthDate", form.birthDate.value);
     formData.append("age", form.age.value);
     formData.append("email", form.email.value);
     const userId = document.getElementById("userId");
@@ -129,7 +130,6 @@ document.getElementById("profile-form").addEventListener("submit", async functio
 
         const result = await response.json();
         if (response.ok) {
-            // console.log("Documentos subidos con éxito:", result);
             Swal.fire({
                 text: `Perfil actualizado correctamente`,
                 position: "top",
@@ -238,5 +238,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
         });
+    }
+});
+
+const calculateAge = (birthDate) => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    
+    let age = today.getFullYear() - birth.getFullYear();
+    let monthDiff = today.getMonth() - birth.getMonth();
+    let dayDiff = today.getDate() - birth.getDate();
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+        monthDiff += 12; 
+    }
+    if (dayDiff < 0) {
+        monthDiff--;
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        dayDiff += lastMonth.getDate(); 
+    }
+
+    return `${age} años ${monthDiff} meses ${dayDiff-1} días`;
+};
+
+document.getElementById("birthDate").addEventListener("change", function() {
+    const birthDateValue = this.value;
+    
+    if (birthDateValue) {
+        const age = calculateAge(birthDateValue);
+        document.getElementById("age").value = age;
+    } else {
+        document.getElementById("age").value = "";
     }
 });

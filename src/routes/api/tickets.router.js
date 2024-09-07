@@ -7,7 +7,8 @@ const {getUserTickets} = new TicketsController()
 const ticketsRouter = Router();
 
 
-ticketsRouter.get("/", authorization(['user']), getUserTickets);
+ticketsRouter.get("/", authorization(['user', 'premium']), getUserTickets);
+// ticketsRouter.post("/purchaseticket", authorization(['user', 'premium']), purchaseCart);
 
 module.exports = ticketsRouter;
 

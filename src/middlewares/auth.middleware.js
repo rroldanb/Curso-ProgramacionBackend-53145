@@ -9,7 +9,6 @@
 
 const authorization =  (roles) => {
     return async (req, res, next) => {
-
         if (roles.includes('public')) return next();
         if (!req.user) return res.status(401).send({ status: 'error', error: 'Unauthorized' });
         const userRole = req.user.role.toLowerCase();
@@ -25,7 +24,6 @@ const authorization =  (roles) => {
 
 
 function isLoggedIn(req, res, next) {
-    
     if (req.session?.user?.user) {
         req.user = req.session.user.user; 
         return next();

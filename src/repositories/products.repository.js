@@ -4,37 +4,35 @@ class ProductRepository {
     }
   
     validateCode = async (code) => {
-      const product = await this.productDao.findOne({ code: code });
-      return !!product;
+      return await this.productDao.validateCode(code);
     }
   
     validateId = async (pid) => {
-      const product = await this.productDao.findById(pid);
-      return !!product;
+      return await this.productDao.validateId(pid);
     }
   
     getCategories = async () => {
-      return await this.productDao.distinct("category");
+      return await this.productDao.getCategories();
     }
   
     getProducts = async (filter, options) => {
-      return await this.productDao.paginate(filter, options);
+      return await this.productDao.getProducts(filter, options);
     }
   
     getProductById = async (pid) => {
-      return await this.productDao.findById(pid);
+      return await this.productDao.getProductById(pid);
     }
   
     addProduct = async (product) => {
-      return await this.productDao.create(product);
+      return await this.productDao.addProduct(product);
     }
   
     updateProduct = async (pid, updatedFields) => {
-      return await this.productDao.updateOne({ _id: pid }, updatedFields);
+      return await this.productDao.updateProduct(pid, updatedFields);
     }
   
     deleteProduct = async (pid) => {
-      return await this.productDao.deleteOne({ _id: pid });
+      return await this.productDao.deleteProduct(pid);
     }
   }
   

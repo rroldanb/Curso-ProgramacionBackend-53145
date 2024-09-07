@@ -349,7 +349,6 @@ deleteProduct = async (req, res) => {
     }
     req.io.emit("Server:removeProduct", (pid));
     const mensaje = `Producto con ID ${pid} eliminado correctamente${noticacionEnviada}`
-    console.log(mensaje)
     res.status(200).json({ message: mensaje, product });
 
   } catch (error) {

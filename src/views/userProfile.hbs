@@ -59,19 +59,27 @@
       <div class="text-fields">
 
           <div class="mb-3">
-              <label for="first_name" id="first_name_label">Nombre</label>
-              <input type="text" value="{{first_name}}" name="first_name" id="first_name" class="form-control" autocomplete="off"/>
+              <label for="first_name" class="fw-bold" id="first_name_label">Nombre</label>
+              <input type="text" value="{{first_name}}" name="first_name" id="first_name" class="form-control " autocomplete="off"/>
           </div>
           <div class="mb-3">
-              <label for="last_name" id="last_name_label">Apellido</label>
+              <label for="last_name" class="fw-bold" id="last_name_label">Apellido</label>
               <input type="text" value="{{last_name}}" name="last_name" id="last_name" class="form-control" />
           </div>
-          <div class="mb-3">
-              <label for="age" id="age_label">Edad</label>
-              <input type="text" value="{{age}}" name="age" id="age" class="form-control" />
+          <div class="mb-3 d-flex justify-content-between ">
+            <div class="">
+              <label for="birthDate" class="fw-bold" id="birthDate_label">Fecha de nacimiento</label>
+              <input type="date" value="{{birthDate}}" name="birthDate" id="birthDate" class="form-control" />
+            </div>
+            <div class="mx-2">
+              <label for="age" class="" id="age_label">Edad</label>
+              <input type="text" value="{{age}}"  name="age" id="age" class="form-control w-full" disabled /> 
+            </div>
           </div>
           <div class="mb-3">
-              <label for="email">Email</label>
+          </div>
+          <div class="mb-3">
+              <label for="email" class="fw-bold" >Email</label>
               <input type="email" value="{{email}}" name="email" id="email" class="form-control" autocomplete="off"/>
           </div>
       </div>
@@ -146,10 +154,10 @@
           </div>
 
         <div class="container d-flex justify-content-evenly">
-                <button class="btn btn-danger" type="button" onclick="goBackAndReload() ">Cancelar</button>
+                <button class="btn btn-danger" type="button" onclick="goBackAndReload() "><i class="bi bi-arrow-counterclockwise me-2"></i>Volver</button>
 
 
-                <button class="btn btn-primary" type="submit">  Guardar</button>
+                <button class="btn btn-primary" type="submit"> <i class="bi bi-floppy me-2"></i> Guardar</button>
         </div>
     </form>
     </div>

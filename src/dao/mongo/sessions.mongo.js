@@ -1,19 +1,20 @@
-const passport = require("passport");
-const logger = require('../../utils/loggers')
-
 class SessionDaoMongo {
+
+  constructor() {
+}
+
   register = async (req) =>{
-    return { status: "success", message: "User Registered" };
+    return { status: "success", message: "Usuario registrado" };
   }
 
   failRegister = async () =>{
-    console.error("falló la estrategia");
+    console.error("Falló la estrategia");
     return { error: "Register failed" };
   }
 
   login = async (req) =>{
     if (!req.user) {
-      return { status: "error", error: "credenciales invalidas" };
+      return { status: "error", error: "Credenciales inválidas" };
     }
 
     req.session.user = {

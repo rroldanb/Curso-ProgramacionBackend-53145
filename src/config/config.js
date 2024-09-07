@@ -14,7 +14,10 @@ exports.objectConfig = {
   gmail_user: process.env.GMAIL_USER,
   gmail_pass: process.env.GMAIL_PASS,
   persistence: process.env.PERSISTENCE || 'MONGO',
-  execMode: mode
-
+  execMode: mode,
+  api_url: process.env.API_URL,
+  app_url: process.env.APP_URL,
+  git_hub_id: process.env.GITHUB_CLIENT_ID,
+  git_hub_secret: process.env.GITHUB_CLIENT_SECRET,
 };
 

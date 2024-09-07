@@ -3,6 +3,7 @@ class SessionRepository {
     this.sessionDao =  SessionDao;
   }
 
+  
   register = async (req) =>{
     return await this.sessionDao.register(req);
   }

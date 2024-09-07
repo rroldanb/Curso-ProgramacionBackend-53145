@@ -17,7 +17,7 @@ class TicketRepository {
   }
 
   deleteTicket = async (ticket) =>{
-    const result = await this.ticketDao.deleteTicket({ _id: ticket });
+    const result = await this.ticketDao.deleteTicket(ticket);
     return result;
   }
   

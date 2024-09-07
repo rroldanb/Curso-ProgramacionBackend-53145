@@ -20,6 +20,18 @@ Handlebarshlp.registerHelper('calculateTotal', function(products) {
   return total.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
 });
 
+Handlebarshlp.registerHelper('calculateQtty', function(products) {
+  let total = 0;
+  products.forEach(product => {
+    total +=  product.quantity;
+  });
+  return total
+});
+
+Handlebarshlp.registerHelper('toPesos', function(monto) {
+  return monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+});
+
 Handlebarshlp.registerHelper('ifOr', function(v1, v2, options) {
   if(v1 || v2) {
     return options.fn(this);
@@ -32,6 +44,17 @@ Handlebarshlp.registerHelper('hasDocument', function (docName, documents) {
     return false;
   }
   return documents.some(doc => doc.name === docName);
+});
+
+Handlebarshlp.registerHelper('formatDate', function (date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${day}/${month}/${year}, ${hours}:${minutes}`;
 });
 
 module.exports = function(app) { 

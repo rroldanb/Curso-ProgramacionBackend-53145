@@ -1,11 +1,14 @@
 const UsersViewsController = require("../controllers/views/users.views.controller.js");
 const ProductsViewsController = require("../controllers/views/products.views.controller.js");
 const CartsViewsController = require("../controllers/views/carts.views.controller.js");
+const SessionsController  = require("../controllers/sessions.controller.js");
+
 const { isLoggedIn,authorization } = require("../middlewares/auth.middleware.js");
 
 const usersviewsController = new UsersViewsController();
 const productsViewsController = new ProductsViewsController();
 const cartsViewsController = new CartsViewsController();
+const sessionsController = new SessionsController();
 
 const { Router } = require("express");
 const router = Router();
@@ -19,15 +22,15 @@ router.get("/carts",authorization(["user", "premium"]),isLoggedIn,cartsViewsCont
 router.get("/carts/:cid",authorization(["user", "premium"]),isLoggedIn,cartsViewsController.renderCart);
 router.get("/carts/:cid/purchase",authorization(["user", "premium"]),cartsViewsController.purchase);
 router.get("/carts/:cid/cancel/:tCode",authorization(["user", "premium"]),cartsViewsController.cancelPurchase);
-router.get("/carts/:cid/tickets",authorization(["user", "premium"]),cartsViewsController.renderTicket);
+router.get("/carts/:cid/tickets",authorization(["user", "premium"]),cartsViewsController.renderTickets);
+router.get("/carts/:cid/tickets/:tid",authorization(["user", "premium"]),cartsViewsController.renderTickets);
 
 router.get("/reset-password", authorization(["public"]), usersviewsController.resetPassword);
 router.get("/chat", authorization(["user", "premium"]), isLoggedIn, usersviewsController.renderChat);
-router.get('/:uid/profile', authorization(['user', 'premium', 'admin']), usersviewsController.userProfile);
+router.get('/profile/:uid', authorization(['user', 'premium', 'admin']), usersviewsController.userProfile);
 router.get('/users', authorization(['admin']), usersviewsController.listUsers);
 
-const { currentUser } = require("../controllers/sessions.controller");
-router.get("/current", authorization(["user", "admin"]), currentUser);
+router.get("/current", authorization(["user", "admin"]), sessionsController.currentUser);
 
 router.get("/login", authorization(["public"]), (req, res) => {res.render("login");});
 router.get("/register", authorization(["public"]), (req, res) => {res.render("register");});

@@ -33,16 +33,19 @@ const testEmail = async () => {
 };
 
 const resetEmail = async (userEmail, token) => {
-    const resetUrl = `http://localhost:8080/reset-password?token=${token}`;
+    const resetUrl = `${objectConfig.app_url}/reset-password?token=${token}`;
+
     return await transport.sendMail({
       from: 'RR_Ecommerce <ruben.roldan.b@gmail.com>',
       to: userEmail,
       subject: 'Restablecimiento de Contraseña',
       html: `<div>
-        <h1>Restablecimiento de Contraseña</h1>
-        <p>Haga clic en el siguiente enlace para restablecer su contraseña:</p>
+        <h1 style="color: blue;">Restablecimiento de Contraseña</h1>
+        <p>Hemos recibido tu solicitud de restablecimiento de contraseña</p>
+        <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
         <a href="${resetUrl}">Restablecer Contraseña</a>
-        <p>Este enlace expirará en 1 hora.</p>
+        <p style="color: red;">Este enlace expirará en 1 hora.</p>
+        <p>Si ya no necesitas restablecer tu contraseña o no lo solicitaste puedes ignorar este mensaje</p>
       </div>`,
     });
   };
@@ -71,6 +74,40 @@ const resetEmail = async (userEmail, token) => {
       `,
     });
   };
+
+  const purchaseSuccess = async (userEmail, ticket) => {
+    return await transport.sendMail({
+      from: 'RR_Ecommerce <ruben.roldan.b@gmail.com>',
+      to: userEmail,
+      subject: 'Compra exitosa',
+      html: `
+        <div>
+          <h1 style="color: blue;">Felicitaciones por tu compra en nuestro e-commerce</h1>
+          <p >A continucaión el detalle de tu compra</p>
+          <h3 >
+          <strong style="color: green;">Código del ticket:</strong> 
+          ${ticket.code}</h3>
+          //aqui deberia agregar un for each, pero en html? como hago para inyectarle js aqui?
+          <p >
+          <strong style="color: green;">Nombre:</strong> 
+          ${product.title}</p>
+          <p >
+          <strong style="color: green;">Descripción:</strong> 
+          ${product.description}</p>
+          <p >
+          <strong style="color: green;">Código:</strong> 
+          ${product.code}</p>
+          <p >
+          <strong style="color: green;">Categoría:</strong> 
+          ${product.category}</p>
+          <h3 >
+          <strong style="color: green;">Total de tu compra:</strong> 
+          ${ticket.amount}</h3>
+        </div>
+      `,
+    });
+  };
+  
   
 
-module.exports = { transport, testEmail, resetEmail , deleteProductEmail};
+module.exports = { transport, testEmail, resetEmail , deleteProductEmail, purchaseSuccess};

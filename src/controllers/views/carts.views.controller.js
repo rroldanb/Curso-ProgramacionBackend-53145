@@ -175,7 +175,7 @@ class CartsViewsController {
     }
   };
 
-  renderTicket = async (req, res) => {
+  renderTickets = async (req, res) => {
     try {
       const cid = req.params.cid;
       const user = req.user;
@@ -184,7 +184,7 @@ class CartsViewsController {
       }
       const tickets = await ticketsManager.getTicketsBy({purchaser: user.email});
 
-      res.render("ticket", {
+      res.render("ticketsHistory", {
         tickets,
         cid,
         title: "carrito || Gago",
@@ -199,5 +199,6 @@ class CartsViewsController {
     }
   };
 }
+
 
 module.exports = CartsViewsController;

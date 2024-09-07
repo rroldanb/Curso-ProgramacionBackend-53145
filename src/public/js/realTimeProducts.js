@@ -1,5 +1,3 @@
-// const { logger } = require("../../utils/loggers");
-
 let savedId = "";
 const productForm = document.getElementById("productForm");
 const newProdTitle = document.getElementById("newProdTitle");
@@ -14,30 +12,68 @@ const newProdFileNames = document.getElementById("newProdFileNames");
 const productsArea = document.getElementById("realTimeProductsArea");
 const h3 = document.querySelector("#newProdDetails h3");
 const prodDetails = document.querySelector("#newProdDetails");
-const username = document.getElementById("username").innerText
-const isPremium = document.getElementById("isPremium").innerText
+const username = document.getElementById("username").innerText;
+const isPremiumText = document.getElementById("isPremium").innerText.trim();
+const isPremium = isPremiumText === "true"; 
+const isAdminTextRR = document.getElementById("isAdminText").innerText.trim();
+const isAdmin= isAdminTextRR === "true"; 
 
+const formContainer = document.getElementById('form-container');
+const btnNewProduct = document.getElementById('btn-new-product')
 const saveButton = document.querySelector(".btn-save");
 saveButton.disabled = true;
-const cancelButton = document.querySelector(".btn-cancel");
+const cancelButton = document.getElementById("btn-cancel");
+
+btnNewProduct.addEventListener('click', toggleFormVisibility);
 
 const formFields = document.querySelectorAll(
   "#productForm input, #productForm textarea"
 );
 formFields.forEach((field) => {
   field.addEventListener("input", () => {
-    cancelButton.style.display = "block";
+    // cancelButton.style.display = "block";
     saveButton.disabled = false;
   });
 });
 
-cancelButton.addEventListener("click", () => {
+function toggleFormVisibility() {
+  const formContainer = document.getElementById('form-container');
+  const requiredFields = document.querySelectorAll('#form-container [required]');
+  
+  if (formContainer.classList.contains('d-none')) {
+    formContainer.classList.remove('d-none');
+
+  } else {
+    // Limpiar el formulario antes de ocultarlo
+    cleanProductsForm();
+    // Eliminar el atributo required de los campos antes de ocultarlos
+    requiredFields.forEach(field => field.removeAttribute('required'));
+    formContainer.classList.add('d-none');
+  }
+}
+
+function toggleFormVisibilityRR() {
+
+  
+  if (formContainer.classList.contains('d-none')) {
+      formContainer.classList.remove('d-none');
+  } else {
+    formContainer.classList.add('d-none');
+  }
+}
+
+
+
+cancelButton.addEventListener("click", (event) => {
+  event.preventDefault()
   h3.textContent = "Agregar nuevo producto";
   prodDetails.style.backgroundColor = "rgb(143, 167, 191)";
   productForm.reset();
-  cancelButton.style.display = "none";
+  // cancelButton.style.display = "none";
   saveButton.disabled = true;
-  newProdTitle.focus();
+  productsArea.focus();
+  cleanProductsForm()
+  toggleFormVisibility()
 });
 
 productForm.addEventListener("submit", (e) => {
@@ -75,16 +111,17 @@ productForm.addEventListener("submit", (e) => {
     updateProduct(savedId, newProduct);
     h3.textContent = "Agregar nuevo producto";
     prodDetails.style.backgroundColor = "rgb(143, 167, 191)";
+
   } else {
   
     saveNewProduct(newProduct);
+
   }
 
-  cancelButton.style.display = "none";
   saveButton.disabled = true;
 
   cleanProductsForm();
-  newProdTitle.focus();
+  // newProdTitle.focus();
 });
 
 function saveNewProduct(newProduct) {
@@ -99,6 +136,10 @@ function saveNewProduct(newProduct) {
       if (!response.ok) {
         throw new Error("Error agregando el producto");
       }
+
+      toggleFormVisibility()
+
+
       return response.json();
     })
     .then((data) => {
@@ -124,6 +165,8 @@ async function updateProduct(pid, newProduct) {
       throw new Error("Error al actualizar el producto");
     }
 
+  toggleFormVisibility()
+
     const data = await response.json();
   } catch (error) {
     console.error("Error:", error);
@@ -131,6 +174,7 @@ async function updateProduct(pid, newProduct) {
 }
 
 function cleanProductsForm() {
+  // document.getElementById('productForm').reset();
   newProdTitle.value = "";
   newProdDescription.value = "";
   newProdCode.value = "";
@@ -143,6 +187,8 @@ function cleanProductsForm() {
   }
   newProdFileNames.value = "";
 }
+
+
 
 function formateaProducto(product) {
   product.price = toPesos(product.price);
@@ -199,6 +245,8 @@ function updateProductCard(productId, updatedProduct) {
 }
 
 const renderProductUI = (product) => {
+
+
   const productCard = document.createElement("div");
   productCard.classList.add("card");
   productCard.style.minWidth = "250px";
@@ -232,44 +280,47 @@ const renderProductUI = (product) => {
   productCard.appendChild(thumbnailsDiv);
 
   const details = document.createElement("div");
-  details.innerHTML = `
-      <h3 class="text-center">${product.title}</h3>
-      <span><strong>Descripción:</strong> </span>
-      <p> ${product.description}</p>
-      <p><strong>Código:</strong> ${product.code}</p>
-      <p><strong>Precio:</strong> ${product.price}</p>
-      <p>
-      <strong>Estado:</strong> 
 
-        <span style="color: ${product.status ? "green" : "red"}">
-        ${product.status ? "Disponible" : "No disponible"}</span>
-      </p>
 
-      <p><strong>Stock:</strong> ${product.stock}</p>
-      <p><strong>Categoría:</strong> ${product.category}</p>
+    details.innerHTML = `
+        <h3 class="text-center">${product.title}</h3>
+        <span><strong>Descripción:</strong> </span>
+        <p> ${product.description}</p>
+        <p><strong>Código:</strong> ${product.code}</p>
+        <p><strong>Precio:</strong> ${product.price}</p>
+        <p>
+        <strong>Estado:</strong> 
+  
+          <span style="color: ${product.status ? "green" : "red"}">
+          ${product.status ? "Disponible" : "No disponible"}</span>
+        </p>
+  
+        <p><strong>Stock:</strong> ${product.stock}</p>
+        <p><strong>Categoría:</strong> ${product.category}</p>
         <p><strong>Propietario:</strong> ${product.owner}</p>
-
-      <div class="container-fluid d-flex justify-content-evenly">
-        <button class="btn btn-danger delete" data-id="${
-          product._id
-        }">Eliminar</button>
-        <button class="btn btn-secondary update" data-id="${
-          product._id
-        }">Editar</button>
-      </div>
-    `;
-  const btnDelete = details.querySelector(".delete");
-  const btnUpdate = details.querySelector(".update");
-  btnDelete.addEventListener("click", () =>
-    deleteProduct(btnDelete.dataset.id)
-  );
-  btnUpdate.addEventListener("click", () =>
-    getProductToEdit(btnUpdate.dataset.id)
-  );
-
-  productCard.appendChild(details);
-
-  return productCard; 
+  
+        <div class=" d-flex justify-content-between mb-0 mt-4">
+          <button class="btn btn-danger delete" data-id="${
+            product._id
+          }"><i class="bi bi-trash3 me-2"></i>Eliminar</button>
+          <button class="btn btn-secondary update" data-id="${
+            product._id
+          }"><i class="bi bi-pencil me-2"></i>Editar</button>
+        </div>
+      `;
+    const btnDelete = details.querySelector(".delete");
+    const btnUpdate = details.querySelector(".update");
+    btnDelete.addEventListener("click", () =>
+      deleteProduct(btnDelete.dataset.id)
+    );
+    btnUpdate.addEventListener("click", () =>
+      getProductToEdit(btnUpdate.dataset.id)
+    );
+  
+    productCard.appendChild(details);
+  
+    return productCard; 
+  
 };
 
 async function deleteProduct(pid) {
@@ -277,7 +328,6 @@ async function deleteProduct(pid) {
     const response = await fetch(`/api/products/${pid}`, {
       method: "DELETE",
     });
-
     if (!response.ok) {
       throw new Error("Error al eliminar el producto");
     }
@@ -306,8 +356,11 @@ async function deleteProduct(pid) {
 }
 
 
+
+
 function getProductToEdit(pid) {
   obtenerProductoPorId(pid).then((productoObtenido) => {
+    toggleFormVisibility()
     renderProductsForm(productoObtenido);
   });
 }
@@ -349,8 +402,13 @@ let obtenerProductoPorId = (pid) => {
 const renderProducts = (products) => {
   productsArea.innerHTML = "";
   products.forEach((product) => {
-    const productUI = renderProductUI(product);
-    productsArea.appendChild(productUI);
+  const isOwner = product.owner.trim() === username.trim()
+  // console.log('socket auth', socket.auth.username)
+    if (isAdmin || (isPremium && isOwner)) {
+      const productUI = renderProductUI(product);
+      productsArea.appendChild(productUI);
+    }
+   
   });
 };
 
@@ -375,11 +433,11 @@ const socket = io({
 
 
 socket.on("Server:addProduct", (data) => {
-  console.log(`recibiendo datos del nuevo producto: ${data}`);
+  // console.log(`recibiendo datos del nuevo producto: ${data}`);
   appendProduct(data);
 });
 socket.on("Server:removeProduct", (pid) => {
-  console.log(`Eliminando el producto: ${pid}`);
+  // console.log(`Eliminando el producto: ${pid}`);
   removeProduct(pid);
 });
 socket.on("Server:loadProducts", (data) => {

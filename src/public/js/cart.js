@@ -171,15 +171,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function actualizarTotal() {
     const cartProducts = document.querySelectorAll('.carrito-producto');
     let totalCalculado = 0;
+    let cantidadCalculado = 0
 
     cartProducts.forEach((product) => {
       const cantidad = parseInt(product.querySelector('.carrito-producto-cantidad-input').value);
       const precio = parseFloat(product.querySelector('.carrito-producto-precio h4').innerText.replace('$', '').replace('.',''));
       totalCalculado += cantidad * precio;
+      cantidadCalculado += cantidad
     });
 
     const totalElement = document.getElementById('total');
+    const cantidadElement = document.getElementById('cantidad-total');
     totalElement.innerText = totalCalculado.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+    cantidadElement.innerText = cantidadCalculado;
   }
   toggleEmptyCartButton();
 });

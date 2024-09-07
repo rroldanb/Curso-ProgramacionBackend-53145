@@ -22,7 +22,7 @@ describe("Tests Bcrypt utilidad", () => {
 
     const password = '123456'
     const hashPassword = await createHash(password)
-    console.log(hashPassword)
+    // console.log(hashPassword)
     expect(hashPassword).to.not.equal(password)
 });
 it('El hasheo debe compararse efectivamente con el pwd original' , async () =>{

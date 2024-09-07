@@ -1,67 +1,85 @@
 <main>
-  <div class="bienvenida">
+  <div class="bienvenida container text-center">
     <h1>Hola {{username}} Bienvenido a nuestro e-commerce</h1>
     {{#if admin}}
-      <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos</h2>
+      <h2> {{nombre}} {{apellido}} Aquí se pueden editar los productos y los cambios se verán reflejados en tiempo real</h2>
     {{else}}
-      <h2> {{nombre}} {{apellido}} Aquí puedes editar tus productos</h2>
+      <h2> {{nombre}} {{apellido}} Aquí puedes editar tus productos y los cambios se verán reflejados en tiempo real</h2>
     {{/if}}
 
     <p class="d-none" id="username"> {{username}}</p>
-    <p class="d-none" id="isPremium"> {{premium}}</p>
+    <p class="d-none" id="isPremium">{{#if premium}}true{{else}}false{{/if}}</p>
+    <p class="d-none" id="isAdminText">{{#if admin}}true{{else}}false{{/if}}</p>
+
     <p class="d-none" id="isAdmin"> {{admin}}</p>
-
-    <div class="container d-flex justify-content-between">
-
-  <a href="/products" class="btn btn-dark">Ir a la vista de productos</a>
-  {{!-- <button class="btn btn-danger " id="rtp-btn-logout" >Desconectarse</button> --}}
- 
-      <button class="btn btn-danger" onclick="logout()" id="btn-logout">LogOut</button>
-
-    </div>
-
+    
   </div>
     {{#ifOr admin premium }}
-      <div class="container-fluid h-100 mx-auto">
-  {{>filters}}
-
-        <div class="row h-100 container-fluid mx-auto ">
-
-          <div class="ml-2 py-3 col-3 d-flex justify-content-center">
-              <form id="productForm" class="rounded-0" >
-                  <div class="card" id="newProdDetails" style="min-width: 380px;">
-                    <h3 id="editBoxTitle" class="mx-auto">Agregar nuevo producto</h3>
-                      <p class="detail-item" >Title: <input type="text" id="newProdTitle" required></p>
-                      <p class="detail-item">Descripción: 
-                        <textarea name="newProdDescription" id="newProdDescription" rows="6" required></textarea>
-                        </p>
-                      <p class="detail-item">Código: <input type="text" id="newProdCode" required></p>
-                      <p class="detail-item">Precio: <input type="text" id="newProdPrice" required></p>
-                      <p class="detail-item chk-boton">Activo: <input type="checkbox" id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
-                      <p class="detail-item">Stock: <input type="text" id="newProdStock" required></p>
-                      <p class="detail-item">Categoría: <input type="text" id="newProdCategory" required></p>
-                      {{#if admin}}
-                      <p class="detail-item">Propietario: <input type="text" id="newProdOwner" ></p>
-                      {{/if}}
-                      {{#if premium}}
-                      <p class="detail-item d-none">Propietario: <input type="text" id="newProdOwner" value="{{username}}"></p>
-                      {{/if}}
-                      <p class="detail-item">Rutas de Imagenes, separadas por coma (,)   </p>
-                      <textarea rows="6" id="newProdFileNames"></textarea> 
-
-                      <button class="btn btn-dark btn-save rounded-0" >Guardar</button>
-                      <button class="btn btn-warning mt-2 btn-cancel rounded-0" style="display: none;">Cancelar</button>
-                  </div>
-              </form>
-          </div>
-          <div class=" px-3 py-3 col-9 d-flex flex-wrap container-fluid" id="realTimeProductsArea">
-          {{!-- <div class=" px-3 py-3 col-1 d-flex flex-wrap container" id="fakeArea"> --}}
-
-
-          </div>
+<div class="container-fluid h-100 mx-auto" >
+  <div class="row h-100 rounded-4 mx-2" >
+    <!-- Columna izquierda: Formulario -->
+    <div class="col-3 my-5 mx-auto rounded-4 d-none" id="form-container" >
+      <form id="productForm" class="rounded-4 ">
+        <div class="card p-4" id="newProdDetails" style="min-width: 400px;">
+          <h3 id="editBoxTitle" class="mx-auto">Agregar nuevo producto</h3>
+          <p class="detail-item">Title: <input type="text" id="newProdTitle" required></p>
+          <p class="detail-item">Descripción: 
+            <textarea name="newProdDescription" id="newProdDescription" rows="6" required></textarea>
+          </p>
+          <p class="detail-item">Código: <input type="text" id="newProdCode" required></p>
+          <p class="detail-item">Precio: <input type="text" id="newProdPrice" required></p>
+          <p class="detail-item chk-boton">Activo: <input type="checkbox" id="btn-switch"><label for="btn-switch" class="lbl-switch"></label></p>
+          <p class="detail-item">Stock: <input type="text" id="newProdStock" required></p>
+          <p class="detail-item">Categoría: <input type="text" id="newProdCategory" required></p>
+          
+          {{#if admin}}
+          <p class="detail-item">Propietario: <input type="text" id="newProdOwner"></p>
+          {{/if}}
+          {{#if premium}}
+          <p class="detail-item d-none">Propietario: <input type="text" id="newProdOwner" value="{{username}}"></p>
+          {{/if}}
+          
+          <p class="detail-item">Rutas de Imágenes, separadas por coma (,)</p>
+          <textarea rows="6" id="newProdFileNames"></textarea>
+          
+          <button class="btn btn-dark btn-save rounded-0"><i class="bi bi-floppy me-2"></i>Guardar</button>
+          <button class="btn btn-warning mt-2 btn-cancel rounded-0" id="btn-cancel"><i class="bi bi-arrow-counterclockwise me-2"></i>Cancelar</button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Columna derecha: Botones, filtros, productos y paginador -->
+    <div class=" container col-8  d-flex flex-column mx-auto rounded-4 border border-white border-1" style="background-color: rgb(193, 193, 193);">
+      <!-- Fila de botones -->
+      <div class="d-flex justify-content-between mt-2 mx-5 pt-2 container">
+        <a href="/products" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+        <button class="btn btn-success" id="btn-new-product"><i class="bi bi-plus-square me-2"></i> Agregar nuevo producto</button>
+        <button class="btn btn-danger" onclick="logout()" id="btn-logout"><i class="bi bi-door-closed me-2"></i>LogOut</button>
+      </div>
+      
+      <!-- Fila de filtros -->
+      <div class="mb-0 container">
+        {{>filters}}
+      </div>
+      
+      <!-- Fila del paginador -->
+      <div class="mt-0 container">
+        {{>paginator}}
+      </div>
+      <!-- Fila de cards de productos -->
+      <div class="flex-grow-1 px-3 py-0 d-flex flex-wrap container" id="realTimeProductsArea">
+        <div class="col">
+          <!-- Aquí irán las tarjetas de productos renderizadas -->
         </div>
       </div>
-  {{>paginator}}
+      
+   
+    </div>
+  
+  </div>
+</div>
+
+
 
     {{else}}
     <div class="container">

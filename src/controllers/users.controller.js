@@ -1,9 +1,6 @@
 const { UsersService } = require("../services/index");
-const bcrypt = require("bcrypt");
 const { createHash, isValidPassword } = require("../utils/bcrypt.js");
-const uploader = require("../middlewares/uploader.js");
 const path = require("path");
-// const { status } = require("./sessions.controller.js");
 
 class UsersController {
   constructor() {
@@ -125,7 +122,7 @@ class UsersController {
         expired = true;
         return res.status(400).send("Token de restablecimiento expirado");
       }
-      res.render("reset-password", { token, expired });
+      res.render("resetPassword", { token, expired });
     } catch (error) {
       console.error(error);
       res.status(500).send("Error en la solicitud");
@@ -157,7 +154,8 @@ class UsersController {
           message: "La nueva contraseña no puede ser la misma que la anterior",
         });
       }
-      user.password = createHash(newPassword); // await bcrypt.hash(newPassword, 10);
+      user.password = createHash(newPassword); 
+      // await bcrypt.hash(newPassword, 10);
       // user.resetPasswordExpires = (new Date()-3600);
       // await this.usersService.updateUser(user._id, {...user, resetPasswordToken : undefined , resetPasswordExpires: undefined});
       await this.usersService.updateUser(user._id, {
@@ -208,7 +206,7 @@ class UsersController {
     const userId = req.params.uid;
 
     try {
-        const { first_name, last_name, age, email, documentsToDelete } = req.body;
+        const { first_name, last_name,birthDate, email, documentsToDelete } = req.body;
         const files = req.files;
 
         if (email) {
@@ -217,11 +215,13 @@ class UsersController {
               return res.status(400).json({ message: "El correo electrónico ya está en uso por otro usuario." });
           }
       }
+      const formattedBirthDate = new Date(birthDate);
+
 
         const updateData = {
             first_name,
             last_name,
-            age,
+            birthDate:formattedBirthDate,
             email,
             documents: []
         };
@@ -322,8 +322,6 @@ class UsersController {
     }
   }
 
-
-  
 }
 
 module.exports = { UsersController };

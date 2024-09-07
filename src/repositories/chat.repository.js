@@ -4,10 +4,10 @@ class ChatRepository {
     }
 
     getChats = async () =>{
-      return await this.chatDao.find();
+      return await this.chatDao.getChats();
     }
     postMessage = async (newMessage)=>{
-      return await this.chatDao.create(newMessage)
+      return await this.chatDao.postMessage(newMessage)
     }
     
   }

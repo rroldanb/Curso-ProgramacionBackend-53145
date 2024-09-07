@@ -1,7 +1,7 @@
-<div class="container filterContainer mt-2 py-2 gx-4" style="background-color: rgb(193, 193, 193);">
+<div class="container filterContainer mt-2 py-2 gx-4 d-flex justify-content-evenly rounded-top-3" style="background-color: rgb(193, 193, 193);">
     <div class="d-flex flex-column p-2 mx-1 ">
 
-  <label for="category">  Filtrar por Categoría:</label>
+  <label for="category" class="fw-bold">  Filtrar por Categoría:</label>
   <select id="category" name="category">
     <option value="todas">Todas</option>
     {{#each categoryArray}}
@@ -10,7 +10,7 @@
   </select>
     </div>
     <div class="d-flex flex-column p-2 mx-1">
-  <label for="disponibilidad">Filtrar por Disponibilidad:</label>
+  <label for="disponibilidad" class="fw-bold">Filtrar por Disponibilidad:</label>
   <select id="disponibilidad" name="disponibilidad">
     <option value="todas">Todas</option>
     <option value=true>Disponibles</option>
@@ -18,7 +18,7 @@
   </select>
     </div>
     <div class="d-flex flex-column p-2 mx-1">
-  <label  for="orden">Ordenar por precio:</label>
+  <label  for="orden" class="fw-bold">Ordenar por precio:</label>
   <select id="orden" name="orden">
     <option value="todas">Sin orden</option>
     <option value=1>Ascendente</option>
@@ -26,7 +26,7 @@
   </select>
     </div>
     <div class="d-flex flex-column p-2 mx-1">
-        <label for="productsPPage">Productos por página:</label>
+        <label for="productsPPage" class="fw-bold">Productos por página:</label>
           <select id="productsPPage" name="productsPPage">
     <option value="4">4</option>
     <option value="10">10</option>

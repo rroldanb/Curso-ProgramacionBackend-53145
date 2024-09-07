@@ -9,15 +9,18 @@ const { toCapital } = require("../public/js/renderUtils.js");
 
 const GithubStrategy = require("passport-github2");
 const { logger } = require("../utils/loggers.js");
+const { objectConfig } = require("./config.js");
 
 const LocalStrategy = local.Strategy;
 const userService = new UserDaoMongo();
+
+
 const initializePassport = () => {
   passport.use("github", new GithubStrategy(
       {
-        clientID: "Iv23li83uP1Agf1X6oSm",
-        clientSecret: "ef057de83cfae601f9aaa3e9052c45fe9622ca5c",
-        callbackURL: "http://localhost:8080/sessions/githubcallback",
+        clientID: objectConfig.git_hub_id,
+        clientSecret: objectConfig.git_hub_secret,
+        callbackURL: `${objectConfig.app_url}sessions/githubcallback`,
         scope: ["user:email"],
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -36,16 +39,16 @@ const initializePassport = () => {
                 }
               );
               if (!response.ok) {
-                throw new Error("Failed to fetch emails from GitHub");
+                throw new Error("Error agregando emails de GitHub");
               }
               const emails = await response.json();
               if (emails && emails.length > 0) {
                 email = emails.find((emailObj) => emailObj.primary).email;
               } else {
-                throw new Error("No primary email found");
+                throw new Error("No se encontró email primario");
               }
             } catch (error) {
-              throw new Error(`Error fetching email: ${error.message}`);
+              throw new Error(`Error obteniendo email: ${error.message}`);
             }
           }
 
@@ -55,7 +58,7 @@ const initializePassport = () => {
             try {
               cart_id = await cartsManager.createCart();
             } catch (error) {
-              throw new Error(`Error creating cart: ${error.message}`);
+              throw new Error(`Error creando el carrito: ${error.message}`);
             }
             let newUser = {
               first_name: profile._json.name,
@@ -71,12 +74,13 @@ const initializePassport = () => {
                 await cartsManager.updateCartWithUserId(cart_id, result._id);
               } catch (error) {
                 throw new Error(
-                  `Error updating cart with user ID: ${error.message}`
+                  `Error actualizando el carrrito con user ID: ${error.message}`
                 );
               }
             } catch (error) {
-              throw new Error(`Error creating user: ${error.message}`);
+              throw new Error(`Error creando el usuario: ${error.message}`);
             }
+            
             done(null, result);
           } else {
             done(null, user);
@@ -92,36 +96,35 @@ const initializePassport = () => {
   // middleware -> estrategia -> local -> username(email), password
   passport.use("register",new LocalStrategy(
       {
-        passReqToCallback: true, // req -> body -> passport -> obj Req
+        passReqToCallback: true, 
         usernameField: "email",
       },
       async (req, username, password, done) => {
         const { first_name, last_name, age } = req.body;
         try {
-          if (isNaN(age)) {
-            logger.error("La edad debe ser un número");
-            return done(null, false);
-          }
-          // verificar si existe el usuario
+          //debo voler aqui para validadr la fecha de la edad
+          // if (isNaN(age)) {
+          //   logger.error("La edad debe ser un número");
+          //   return done(null, false);
+          // }
           let userFound = await userService.getUserBy({ email: username });
           if (userFound) {
-            logger.error("el usuario ya existe");
+            logger.error("El usuario ya existe");
             return done(null, false);
           }
 
-          // crear el carrito
           let cart_id;
           try {
             cart_id = await cartsManager.createCart();
           } catch (error) {
-            throw new Error(`Error creating cart: ${error.message}`);
+            throw new Error(`Error creando el carrito: ${error.message}`);
           }
 
-          // crear el usuario
           let newUser = {
             first_name: toCapital(first_name),
             last_name: toCapital(last_name),
             age,
+            //aqui debo agregar la fecha
             email: username.toLowerCase(),
             password: createHash(password),
             cart_id,
@@ -130,20 +133,19 @@ const initializePassport = () => {
           try {
             result = await userService.createUser(newUser);
 
-            // actualizar el carrito con el ID de usuario
             try {
               await cartsManager.updateCartWithUserId(cart_id, result._id);
             } catch (error) {
               throw new Error(
-                `Error updating cart with user ID: ${error.message}`
+                `Error actualizando el carrito cpara el user ID: ${error.message}`
               );
             }
           } catch (error) {
-            throw new Error(`Error creating user: ${error.message}`);
+            throw new Error(`Error creando el usuario: ${error.message}`);
           }
           return done(null, result);
         } catch (error) {
-          return done("error al registrar el usuario " + error);
+          return done("Error al registrar el usuario " + error);
         }
       }
     )
@@ -159,7 +161,7 @@ const initializePassport = () => {
             email: username.toLowerCase(),
           });
           if (!user) {
-            logger.error("usuario no encontrado");
+            logger.error("Usuario no encontrado");
             return done(null, false);
           }
           const validPassword = isValidPassword(password, {

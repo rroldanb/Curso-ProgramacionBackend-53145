@@ -216,6 +216,7 @@ async function RenderView(req, res, urlFrom) {
           : user.first_name + " " + user.last_name;
       const isPremium = req.user.role.toLowerCase() === "premium";
 
+      
       res.render(`${urlFrom}`, {
         user: JSON.stringify(user),
         uid: user.uid,

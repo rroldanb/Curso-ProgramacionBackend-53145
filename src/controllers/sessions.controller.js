@@ -1,66 +1,103 @@
-const passport = require("passport");
 const { SessionsService } = require("../services/index");
 const UserDTO = require("../dtos/users.dto");
 
-const sessionsService =  SessionsService;
 
-const githubAuth = (req, res) => {};
+class SessionsController {
+  constructor() {
+    this.sessionsService =  SessionsService;
+  }
 
-const githubCallback = (req, res) => {
+  githubAuth = (req, res) => {
+  };
+
+//   githubCallback = (req, res) => {
+    
+//     try {
+//       const user = req.user;
+//       const admin = req.user.role === "admin";
+
+//     req.session.user = { user };
+//     req.session.user.admin = { admin };
+
+//     res.redirect("/");
+//   } catch (error) {
+//     res.status(500).send({ error: 'Error interno del Servidor registrando el usuario con GitHub' });
+//   }
+// };
+
+githubCallback = (req, res) => {
   try {
     const user = req.user;
-    const admin = req.user.role === "admin";
+    
+    if (!user) {
+      console.log('No se pudo autenticar al usuario.' )
+      return res.status(401).send({ error: 'No se pudo autenticar al usuario.' });
+    }
+    const isAdmin = user.role === "admin";  
 
-    req.session.user = { user };
-    req.session.user.admin = { admin };
+    req.session.user = {
+      uid: user._id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.first_name,
+      role: user.role,
+      admin: isAdmin,
+      cart_id: user.cart_id,
 
-    res.redirect("/");
+
+
+
+    };
+
+    res.redirect("/"); 
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    console.error('Error en el callback de GitHub:', error);
+    res.status(500).send({ error: 'Error interno del servidor al registrar al usuario con GitHub' });
   }
 };
 
-const register = async (req, res) => {
+
+
+  register = async (req, res) => {
   try {
-    const result = await sessionsService.register(req);
+    const result = await this.sessionsService.register(req);
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'Error interno del Servidor registrando el usuario' });
   }
 };
 
-const failRegister = async (req, res) => {
+  failRegister = async (req, res) => {
   try {
-    const result = await sessionsService.failRegister();
+    const result = await this.sessionsService.failRegister();
     res.send(result);
   } catch (error) {
     
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'FailRegister: Error interno del Servidor registrando el usuario' });
   }
 };
 
-const login = async (req, res) => {
+  login = async (req, res) => {
   try {
-    const result = await sessionsService.login(req);
+    const result = await this.sessionsService.login(req);
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'Error interno del Servidor al intentar loguear al usuario' });
   }
 };
 
-const failLogin = (req, res) => {
+  failLogin = (req, res) => {
   try {
-    const result = sessionsService.failLogin();
+    const result = this.sessionsService.failLogin();
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'FailLogin: Error interno del Servidor al intentar loguear al usuario' });
   }
 };
 
-const currentUser = async (req, res) => {
+  currentUser = async (req, res) => {
   try {
-    
-    const result = await sessionsService.currentUser(req);
+    const result = await this.sessionsService.currentUser(req);
     if (result.status === "success") {
       const newUser = new UserDTO (result.payload)
       res.status(200).json(newUser);
@@ -68,36 +105,27 @@ const currentUser = async (req, res) => {
       res.status(401).json(result);
     }
   } catch (error) {
-    res.status(500).send({ error: `Internal Server Error` });
+    res.status(500).send({ error: `Error interno del Servidor inetntando obtener el CurrentUser` });
   }
 };
 
-const logout = async (req, res) => {
+  logout = async (req, res) => {
   try {
-    const redirectUrl = await sessionsService.logout(req);
+    const redirectUrl = await this.sessionsService.logout(req);
     res.redirect(redirectUrl);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'Error interno del Servidor al intentar cerrar la sesión' });
   }
 };
 
-const status = async (req, res) => {
+  status = async (req, res) => {
   try {
-    const result = await sessionsService.status(req);
+    const result = await this.sessionsService.status(req);
     res.json(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: 'Error interno del Servidor al intentar obtener el UserStatus' });
   }
 };
- 
-module.exports = {
-  githubAuth,
-  githubCallback,
-  register,
-  failRegister,
-  login,
-  failLogin,
-  currentUser,
-  logout,
-  status,
-};
+
+} 
+module.exports =  SessionsController ;

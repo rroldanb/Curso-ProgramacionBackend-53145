@@ -12,7 +12,8 @@ class UsersViewsController {
     if (!user) {
       return res.status(404).render('userProfile', { message: 'Usuario no encontrado' });
     }
-    const formatDate = (date) => {
+    const formatDateHour = (date) => {
+      if (!date){return ''}
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
@@ -22,13 +23,41 @@ class UsersViewsController {
   
       return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
-  const formattedDate = formatDate(user.last_connection);
+    const formatDate = (date) => {
+      if (!date){return ''}
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()+1).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+  };
+  const formattedDate = formatDate(user.birthDate);
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    
+    let age = today.getFullYear() - birth.getFullYear();
+    let monthDiff = today.getMonth() - birth.getMonth();
+    let dayDiff = today.getDate() - birth.getDate();
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+        monthDiff += 12; 
+    }
+    if (dayDiff < 0) {
+        monthDiff--;
+        const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        dayDiff += lastMonth.getDate(); 
+    }
+
+    return `${age} años ${monthDiff} meses ${dayDiff-1} días`;
+};
+  const formattedDateHour = formatDateHour(user.last_connection);
     res.render('userProfile', {
       userId: userId,
       first_name: user.first_name,
       last_name: user.last_name,
-      last_connection: formattedDate,
-      age: user.age,
+      last_connection: formattedDateHour,
+      age: user.birthDate? calculateAge(user.birthDate):'',
+      birthDate:formattedDate,
       email: user.email,
       profile_pic: user.documents.find(doc => doc.name === 'profile')?.reference || '',
       dni_pic: user.documents.find(doc => doc.name === 'dni')?.reference || '',
@@ -41,6 +70,7 @@ class UsersViewsController {
       requesterAdmin:requester.role==='admin',
     });
   };
+
 
   listUsers = async(req, res) =>{
     try {
@@ -79,7 +109,7 @@ class UsersViewsController {
         console.log("token expirado")
         expired = true
       }
-      res.render("reset-password", {
+      res.render("resetPassword", {
         title: "Restablecer Contraseña",
         styles: "homeStyles.css",
         token: token,

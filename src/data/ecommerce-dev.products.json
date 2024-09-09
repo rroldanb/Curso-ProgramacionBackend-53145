@@ -1,0 +1,334 @@
+[{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef8"
+  },
+  "id": 3,
+  "title": "producto prueba 3",
+  "description": "Este es el producto prueba 3",
+  "code": "abc03",
+  "price": 333,
+  "status": true,
+  "stock": 313,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_03_imagen_1.jpg",
+    "/images/producto-prueba_03_imagen_2.jpg",
+    "/images/producto-prueba_03_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6635f2bd344022dd21bb5228"
+  },
+  "title": "mario",
+  "description": "Mario",
+  "code": "mario",
+  "price": 1234,
+  "status": false,
+  "stock": 4321,
+  "category": "mario",
+  "thumbnails": [
+    "https://mario.nintendo.com/static/d783068682f98d6cfec666c747a27793/d6e64/mario.png"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6635f709a43085326b51a1a0"
+  },
+  "title": "negan",
+  "description": "Negan",
+  "code": "Negan",
+  "price": 2345,
+  "status": false,
+  "stock": 0,
+  "category": "Negan",
+  "thumbnails": [
+    "https://vader.news/__export/1643078393822/sites/gadgets/img/2022/01/24/the_walking_dead_s10c_ep17_jeffrey_dean_morgan.jpg_193134664.jpg"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef7"
+  },
+  "id": 2,
+  "title": "producto prueba 2",
+  "description": "Este es el producto prueba 2",
+  "code": "abc02",
+  "price": 2222,
+  "status": true,
+  "stock": 2196,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_02_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef6"
+  },
+  "id": 1,
+  "title": "producto prueba 1",
+  "description": "Este es el producto prueba 1",
+  "code": "abc01",
+  "price": 1111,
+  "status": true,
+  "stock": 1111,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_01_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef9"
+  },
+  "id": 4,
+  "title": "producto prueba 4",
+  "description": "Este es el producto prueba 4",
+  "code": "abc04",
+  "price": 44,
+  "status": true,
+  "stock": 3,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_04_imagen_1.jpg",
+    "/images/producto-prueba_04_imagen_2.jpg",
+    "/images/producto-prueba_04_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefd"
+  },
+  "id": 8,
+  "title": "producto prueba 8",
+  "description": "Este es el producto prueba 8",
+  "code": "abc08",
+  "price": 88,
+  "status": true,
+  "stock": 5,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_08_imagen_1.jpg",
+    "/images/producto-prueba_08_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6638377195f9e8c1519dcf00"
+  },
+  "id": 10,
+  "title": "producto prueba 10",
+  "description": "Este es el producto prueba 10",
+  "code": "abc10",
+  "price": 1010,
+  "status": true,
+  "stock": 1002,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_10_imagen_1.jpg",
+    "/images/producto-prueba_10_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefc"
+  },
+  "id": 7,
+  "title": "producto prueba 7",
+  "description": "Este es el producto prueba 7",
+  "code": "abc07",
+  "price": 77,
+  "status": true,
+  "stock": 7,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_07_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefe"
+  },
+  "id": 9,
+  "title": "producto prueba 9",
+  "description": "Este es el producto prueba 9",
+  "code": "abc09",
+  "price": 99,
+  "status": true,
+  "stock": 9,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_09_imagen_1.jpg",
+    "/images/producto-prueba_09_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "66384451f745d3571776f6e1"
+  },
+  "title": "Slayer",
+  "description": "Slayer",
+  "code": "slayer",
+  "price": 666,
+  "status": false,
+  "stock": 666,
+  "category": "Slayer",
+  "thumbnails": [
+    "https://i.pinimg.com/736x/e5/23/cd/e523cd8f6aad5ba872bd7bcd154ee255.jpg"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "66711aa986c6338e5166609b"
+  },
+  "title": "Ferrari F8",
+  "description": "Ferrari F8",
+  "code": "FF8",
+  "price": 8000000,
+  "status": false,
+  "stock": 8,
+  "category": "Cars",
+  "thumbnails": [
+    "https://acnews.blob.core.windows.net/imgnews/large/NAZ_d3d9acde019e4b2fabde7168094f8de9.jpg"
+  ],
+  "__v": 0,
+  "owner": "premiumuser@coder.com"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefa"
+  },
+  "id": 5,
+  "title": "producto prueba 5",
+  "description": "Este es el producto prueba 5",
+  "code": "abc05",
+  "price": 55,
+  "status": true,
+  "stock": 5,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_05_imagen_1.jpg",
+    "/images/producto-prueba_05_imagen_2.jpg",
+    "/images/producto-prueba_05_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefb"
+  },
+  "id": 6,
+  "title": "producto prueba 6",
+  "description": "Este es el producto prueba 6",
+  "code": "abc06",
+  "price": 66,
+  "status": true,
+  "stock": 6,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_06_imagen_1.jpg",
+    "/images/producto-prueba_06_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6695de85c96c6db3e4e8bbef"
+  },
+  "title": "Rezvani Tank",
+  "description": "Rezvani Tank",
+  "code": "RT2025",
+  "price": 175000,
+  "status": true,
+  "stock": 5,
+  "category": "Cars",
+  "thumbnails": [
+    "https://images.squarespace-cdn.com/content/v1/5704138a37013bbe44e74f7e/1619124296174-SF5O97HX1GDLZJJ1OB1M/all_black.jpg",
+    "https://images.squarespace-cdn.com/content/v1/5704138a37013bbe44e74f7e/1565575164931-7VHYZAS44T4FRFQTOBCZ/rezvani_tank_new.jpg"
+  ],
+  "__v": 0,
+  "owner": "premiumuser@coder.com"
+},
+{
+  "_id": {
+    "$oid": "66a616383cca455dc54a8380"
+  },
+  "title": "Ferrari PuroSangre",
+  "description": "Ferrari PuroSangre",
+  "code": "FPS1",
+  "price": 234567,
+  "status": true,
+  "stock": 7,
+  "category": "Cars",
+  "thumbnails": [
+    "https://news.indigoautogroup.com/wp-content/uploads/2023/07/Ferrari_002-jpg.webp"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61a6524002729778d3813"
+  },
+  "title": "Lamborghini  Urus",
+  "description": "Lamborghini  Urus",
+  "code": "urus",
+  "price": 234569,
+  "status": true,
+  "stock": 6,
+  "category": "Cars",
+  "thumbnails": [
+    "https://imgd.aeplcdn.com/600x337/cw/ec/32147/Lamborghini-Urus-114028.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61bd324002729778d3863"
+  },
+  "title": "BMW X6",
+  "description": "BMW X6",
+  "code": "X6",
+  "price": 123456,
+  "status": false,
+  "stock": 6,
+  "category": "Cars",
+  "thumbnails": [
+    "https://media.ed.edmunds-media.com/bmw/x6-m/2025/oem/2025_bmw_x6-m_4dr-suv_competition_fq_oem_1_1280.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61ca024002729778d3871"
+  },
+  "title": "Maserati Levante",
+  "description": "Maserati Levante",
+  "code": "Levante",
+  "price": 345678,
+  "status": false,
+  "stock": 5,
+  "category": "Cars",
+  "thumbnails": [
+    "https://www.carscoops.com/wp-content/uploads/2023/01/maserati_levante_main.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+}]

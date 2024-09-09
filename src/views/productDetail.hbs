@@ -1,0 +1,92 @@
+
+    <header class="bienvenida">
+                <h1 class="titulo">{{greeting}}</h1>
+        <h2>{{message}}</h2>
+    </header>
+      <!-- Fila de botones -->
+
+    <section class="ItemDetailContainer container text-center">
+    <h3 class="cart_id  d-none" id="cart_id" >cart id {{cart_id}} </h3>
+    <h3 class="username  d-none" id="username" >{{username}} </h3>
+
+        <div class="d-flex justify-content-between my-2 mx-5 pt-2 container">
+            <a href="/products" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+            <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+        </div>
+        <div class="row justify-content-evenly container ">
+            <h3 class="mt-4 text-center product-detail-title">{{capitalize producto.title}}</h3>
+            <h3 class="text-white mb-4">Detalles del producto:</h3>
+            <div class="col-6 details-left container">
+                <div class="itemDetailContainer">
+                <!-- Imagen principal grande -->
+                <div class="detail-main-image">
+                    <img src="{{producto.thumbnails.[0]}}" alt="{{producto.title}}" 
+                    title="{{producto.title}}" />
+                </div>
+
+            </div>
+                <!-- Fila de miniaturas -->
+                <div class="thumbnail-row " style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                    {{#each producto.thumbnails}}
+                        <img src="{{this}}" alt="{{../producto.title}}" 
+                        title="{{../producto.title}}" style="border-radius: 1rem; width: 80px; cursor: pointer;" />
+                    {{/each}}
+                </div>
+
+            </div>
+
+            <div class="col-6 mt-4">
+                <div class="descripcionDetail  " id="descripcionDetail">
+                    {{#if producto.unidad}}
+                        <p class="product-detail-item"><strong style="color: orange;" class="me-3">Presentación:</strong> {{producto.unidad}}</p>
+                    {{/if}}
+                    <p class="product-detail-item"><strong style="color: orange;" class="me-3">Precio:</strong> {{toPesos producto.price}}</p>
+                    <p class="product-detail-item"><strong style="color: orange;" class="me-3">Stock:</strong> {{producto.stock}}</p>
+                    {{#if producto.precioxkilo}}
+                        <p class="product-detail-item"><strong style="color: orange;" class="me-3">Precio por Kilo:</strong> {{toPesos producto.precioxkilo}}</p>
+                    {{/if}}
+                </div>
+
+                {{#if producto.description}}
+                    <div class="product-description">
+                        <p><strong style="color: orange;" class="me-3">Descripción:</strong> {{producto.description}}</p>
+                    </div>
+                {{/if}}
+                <div class="descripcionDetail">
+                    <p>
+
+                    <strong style="color: orange;" class="product-detail-item">Vendido por:</strong>
+                    </p>
+                        <p class="product-detail-item mb-2" id="owner"> {{producto.owner}}</p>
+                    </div>
+            {{#if producto.caracteristicas}}
+                <div class="caracteristicasDetail" id="caracteristicasDetail" style="color: white; text-align: left;">
+                    <h3 style="text-decoration: underline; margin: 2rem 0;">Características:</h3>
+                    <ul style="text-align: left; padding-left: 0; list-style-type: none;">
+                        {{#each producto.caracteristicas}}
+                            <li class="caracteristicasDetails">
+                                <strong style="color: orange;">{{@key}}:</strong> {{this}}
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+
+
+
+                <div>
+                    {{#if producto.status}}
+                        <button class="btn btn-warning add-to-cart-btn w-100" id="add-to-cart-btn" data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
+                    {{else}}
+                        <button class="btn btn-warning add-to-cart-btn w-100" id="add-to-cart-btn" disabled data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </section>
+<script src="/js/productDetail.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    checkAuthStatus();
+  });
+</script>

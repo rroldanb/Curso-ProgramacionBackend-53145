@@ -57,6 +57,28 @@ Handlebarshlp.registerHelper('formatDate', function (date) {
   return `${day}/${month}/${year}, ${hours}:${minutes}`;
 });
 
+
+Handlebarshlp.registerHelper('toPesosRR', function(precio) {
+  return `$${precio.toLocaleString('es-CL')}`;
+});
+
+Handlebarshlp.registerHelper('capitalize', function(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+});
+
+Handlebarshlp.registerHelper('gt', function(a, b, options) {
+  if (a > b) {
+    return options.fn(this)
+  }
+    return options.inverse(this);
+});
+
+
+Handlebarshlp.registerHelper('objectEntries', function(context) {
+  return Object.entries(context);
+});
+
+
 module.exports = function(app) { 
   return handlebars.create({
     defaultLayout: "main",

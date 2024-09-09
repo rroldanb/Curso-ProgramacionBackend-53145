@@ -7,37 +7,37 @@
 
 
     <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
-    <div class="container d-flex justify-content-between mt-4 mx-2 pt-4 rounded-top-4" style="background-color: rgb(193, 193, 193);">
+    <div class="container d-flex justify-content-between mt-4 mx-2 pt-4 rounded-top-4" style="background-color: #213547;">
       <div class="flex ">
       {{#if admin}}
-      <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
-      <a href="/users" class="btn btn-success " id="btn-users">Administrar usuarios</a>
+        <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
+        <a href="/users" class="btn btn-success " id="btn-users">Administrar usuarios</a>
       {{else}}
-      {{#if premium}}
-      <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
-      <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
-      {{else}}
-      {{#if uid}}
-      <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
-      {{/if}}
-      {{/if}}
+        {{#if premium}}
+          <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
+          <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
+        {{else}}
+          {{#if uid}}
+            <a href="/chat" class="btn btn-primary" id="btn-chat"><i class="bi bi-chat-text me-2"></i>Ir al chat </a>
+          {{/if}}
+        {{/if}}
       {{/if}}
       </div>
       <div class="flex mx-2">
       {{#if admin}}
         <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
       {{else}}
-      {{#if premium}}
-        <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
-        <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
-        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
-      {{else}}
-      {{#if uid}}
-        <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
-        <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
-        <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
-      {{/if}}
-      {{/if}}
+        {{#if uid}}
+          <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
+          <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
+          <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+        {{else}}
+          {{!-- {{#if premium}}
+            <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
+            <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
+            <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+          {{/if}} --}}
+        {{/if}}
       {{/if}}
 
         {{!-- <button class="btn btn-warning" id="btn-profile" onclick="redirectToProfile()"><i class="bi bi-person-circle me-2"></i>Mi perfil </button> --}}
@@ -51,38 +51,44 @@
       </div>
     </div>
   </div>
-  <div class="container rounded-bottom-4" style="background-color: rgb(193, 193, 193);">
+  <div class="container rounded-bottom-4" style="background-color: #213547;">
     {{>filters}}
 {{!-- Despliega Productos --}}
     {{#each products}}
-      <div class="card" id="product-{{_id}}">
-        <div class="thumbnail-display-area">
-          <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+      <div class="card bg-dark text-white" id="product-{{_id}}">
+        <a href="/products/{{_id}}">
+        <div class="thumbnail-display-area align-content-center">
+          <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto" >
         </div>
+        </a>
         <div class="thumbnails">
           {{#each this.thumbnails}}
             <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
           {{/each}}
         </div>
-        <h3 class="text-center prodName">{{this.title}}</h3>
-        <p><strong>Precio:</strong> {{ this.price}}</p>
-        <p>
+        <h3 class="text-center prodName text-white">{{this.title}}</h3>
+        <p class="text-white card-price text-center">{{ this.price}}</p>
+        <p class="text-white">
           <strong>Estado:</strong>
           <span class="status-span">
             {{#if this.status}} Disponible {{else}} No disponible {{/if}}
           </span>
         </p>
-        <p><strong>Categoría:</strong> {{this.category}}</p>
+        <p class="text-white"><strong>Categoría:</strong> {{this.category}}</p>
         <p class="d-none owner" id="owner">{{this.owner}}</p>
-        {{#if this.status }}
-        <button class="btn btn-warning add-to-cart-btn"  data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
-  <i class="bi bi-cart-plus me-2"></i> Agregar al carrito 
-</button>
-        
+        <div class="container-fluid d-flex justify-content-around">
 
+        <a href="/products/{{_id}}" class="btn btn-warning details-btn"><i class="bi bi-eyeglasses me-2"></i>Detalles</a>
+        {{#if this.status }}
+          <button class="btn btn-warning add-to-cart-btn"  data-cart-id="{{cart_id}}" data-product-id="{{_id}}">
+            <i class="bi bi-cart-plus me-2"></i> Agregar
+          </button>
         {{else}}
-        <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
+          <button class="btn btn-warning add-to-cart-btn" disabled  data-product-id="{{_id}}"><i class="bi bi-cart-plus me-2"></i> Agregar</button>
         {{/if}}
+        </div>
+
+
       </div>
     {{/each}}
 <div class="container">
@@ -213,6 +219,4 @@
   document.addEventListener('DOMContentLoaded', function() {
     checkAuthStatus();
   });
-
-  
 </script>

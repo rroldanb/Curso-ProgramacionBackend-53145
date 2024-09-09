@@ -1,5 +1,6 @@
 body{
-    background-color:cadetblue;
+    /* background-color:cadetblue; */
+    background-color: #213547;
 }
 h1 {
     color: blue
@@ -43,13 +44,20 @@ p{
   }
   
   .card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #3f3f3f;
+    border-radius: 1rem;
     padding: 10px;
     margin: 10px;
     width: 300px;
   }
-  
+  .prodName{
+    height: 3rem;
+    font-size: 1.25rem;
+  }
+  .card-price{
+    font-size: 1.5rem;
+    justify-content: center;
+  }
 .lbl-switch{
   display: inline-block;
   width: 55px;
@@ -79,6 +87,22 @@ p{
 
 #btn-switch:checked~ .lbl-switch::after{
 left: 28px;
+}
+
+
+
+.edit-detail-title{
+  height: 3.5rem;
+}
+
+
+.main-image{
+    border-top-left-radius: 1rem;
+    border-top-right-radius : 1rem;
+    max-height: 270px;
+    min-height: 270px;
+    /* width: 100%; */
+    /* object-fit:cover */
 }
 
   .thumbnail-display-area {
@@ -311,7 +335,6 @@ td:nth-child(3){
   height: auto;
 }
 
-/* Estilos específicos para la tabla de tickets */
 .table-tickets {
   width: 80%;
   border-collapse: collapse;
@@ -349,4 +372,70 @@ td:nth-child(3){
 .table-tickets td:nth-child(2) {
   font-weight: bold;
   text-transform: uppercase;
+}
+
+
+
+.details-left {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  color: silver;
+}
+
+.itemDetailImg img {
+  object-fit: contain;
+  display: flex;
+  align-self: center;
+  width: 99%;
+  height: 99%;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.detail-main-image{
+  height: 500px;
+  border: #decbb0 1px solid;
+  align-content: center;
+
+}
+
+.detail-main-image, .detail-main-image img{
+  border-radius: 2rem;
+  max-width: 500px;
+  max-height: 500px;
+}
+
+.btn-secondary {
+  border: none;
+  margin-right: 2px;
+}
+
+.btnDetailToCart {
+  background-color: orange;
+}
+
+.btnDetailToCart:hover {
+  background-color: rgb(254, 180, 44);
+}
+
+.descripcionDetail h2, .descripcionDetail p, .caracteristicasDetail h3, .catacteristicasDetails {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  color: white;
+}
+
+.product-description p, .product-detail-item{
+  font-size: 1.2rem;
+  text-align: left;
+  color: white;
+  justify-content: left;
+}
+
+
+
+.product-detail-title{
+  color: orange;
+  font-size: 4rem;
+  font-family: 'Times New Roman', Times, serif;
 }

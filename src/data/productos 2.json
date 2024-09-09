@@ -1,0 +1,533 @@
+[  
+{
+  "code": "carne-01",
+  "title": "Asado",
+  "price": 17250,
+  "stock": 10,
+  "unidad": "Paquete 1.15 kg",
+  "precioxkilo":15000,
+  "thumbnails": [ "/img/asado.webp"],
+  "description":"Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes",
+  "caracteristicas":{
+    "Corte": "Asado de Tira Trozado Premium",
+    "Ancho":"4cm.",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1.15 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+},
+
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-02",
+  "title": "Lomo Vetado Premium",
+  "price": 22000,
+  "stock": 10,
+  "unidad": "Paquete 1 kg",
+  "precioxkilo":22000,
+  "thumbnails": [ "/img/bife-angus.webp"],
+  "description":"Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes",
+  "caracteristicas":{
+    "Corte": "Lomo Vetado Premium",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-03",
+  "title": "Colita de Cuadril",
+  "price": 13000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [ "/img/colita-de-cuadril.webp"],
+  "description":"Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes",
+  "caracteristicas":{
+    "Corte": "Colita de Cuadril Premium",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-04",
+  "title": "Entraña",
+  "price": 14000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [ "/img/entrana.webp"],
+  "description":"Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-05",
+  "title": "Tomahawk",
+  "price": 15000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [ "/img/tomahawk.webp"],
+  "description":"Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-06",
+  "title": "Entrecot",
+  "price": 16000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [ "/img/entrecot.webp"],
+  "description":"Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status":true,
+  "category": "Carnes"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-011",
+  "title": "Asado de tira 8cm",
+  "price": 17250,
+  "stock": 10,
+  "unidad": "Paquete 1.15 kg",
+  "precioxkilo": 15000,
+  "thumbnails": [ "/img/asado.webp"],
+  "description": "Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Asado de Tira Trozado Premium",
+    "Ancho": "8cm.",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1.15 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-012",
+  "title": "Bife de Chorizo",
+  "price": 21600,
+  "stock": 8,
+  "unidad": "Paquete 1.2 kg",
+  "precioxkilo": 18000,
+  "thumbnails": [ "https://masonlineprod.vtexassets.com/arquivos/ids/171637-800-auto?v=637835145341070000&width=800&height=auto&aspect=true"],
+  "description": "Delicioso bife de chorizo, cortado y envasado al vacío. Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Bife de Chorizo",
+    "Envasado": "Al vacío",
+    "Presentación": "Formato de 1.2 kg aprox.",
+    "Origen": "Argentina",
+    "Productor": "Corte Criollo"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-013",
+  "title": "Pollo Entero",
+  "price": 12000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "precioxkilo": 10000,
+  "thumbnails": [ "https://www.procaren.cl/wp-content/uploads/2021/09/pollo-entero.jpg"],
+  "description": "Pollo entero fresco, ideal para asar o cocinar al horno.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Tipo": "Pollo Entero",
+    "Origen": "Local",
+    "Productor": "Granja del Valle"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-014",
+  "title": "Entraña",
+  "price": 14000,
+  "stock": 10,
+  "unidad": "Kg",
+  "precioxkilo": 12000,
+  "thumbnails": [ "/img/entrana.webp"],
+  "description": "Exquisita entraña premium para asar.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Entraña",
+    "Presentación": "Porción de 1 kg",
+    "Raza": "Angus",
+    "Origen": "Uruguay",
+    "Productor": "La Estancia"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-015",
+  "title": "Chuletas de Cordero",
+  "price": 25000,
+  "stock": 6,
+  "unidad": "Kg",
+  "precioxkilo": 22000,
+  "thumbnails": [ "https://www.organisk.cl/9398-thickbox_default/cordero-chuleta-francesa.jpg"],
+  "description": "Deliciosas chuletas de cordero, ideales para la parrilla o el horno.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Chuletas de Cordero",
+    "Origen": "Local",
+    "Productor": "Carnes Finas"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "carne-016",
+  "title": "Costillar de Cerdo",
+  "price": 18000,
+  "stock": 8,
+  "unidad": "Kg",
+  "precioxkilo": 16000,
+  "thumbnails": [ "https://www.ariztiaatucasa.cl/media/catalog/product/cache/3aa1df24426dbabd72ab974cf5ed84b3/c/o/costillar_de_cerdo_-_granel_1_.jpg"],
+  "description": "Sabroso costillar de cerdo, ideal para marinar y asar.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Costillar de Cerdo",
+    "Origen": "Local",
+    "Productor": "Carnicería del Valle"
+  }
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "parrilla-01",
+  "title": "Parrilla Portátil",
+  "price": 35000,
+  "stock": 5,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://aliss.com.pa/media/catalog/product/9/6/964ffb085fe1bd06194ff3b97a1eeb2423b57303_file.jpg?optimize=medium&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700"],
+  "description": "Práctica parrilla portátil de acero inoxidable, fácil de transportar y montar.",
+  "status": true,
+  "category": "Parrillas"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "parrilla-02",
+  "title": "Parrilla a Carbón medio tambor",
+  "price": 85000,
+  "stock": 10,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://http2.mlstatic.com/D_NQ_NP_2X_696949-MLC48283763391_112021-F.webp"],
+  "description": "Parrilla de medio tambor con altura regulable.",
+  "status": true,
+  "category": "Parrillas"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-07",
+  "title": "Cepillo de Limpieza",
+  "price": 5000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://cdnx.jumpseller.com/moggill/image/23651281/resize/1080/1080?1687892798"],
+  "description": "Cepillo de limpieza de parrilla con cerdas resistentes, ideal para mantener tu parrilla impecable.",
+  "status": true,
+  "category": "Accesorios"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "parrilla-04",
+  "title": "Parrilla a Carbón Circular,",
+  "price": 150000,
+  "stock": 12,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://m.media-amazon.com/images/I/61oBMFZtCgS._AC_UF350,350_QL80_.jpg"],
+  "description": "Asador de carbón y ahumador.",
+  "status": true,
+  "category": "Parrillas"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-08",
+  "title": "Cubierta para Parrilla",
+  "price": 20000,
+  "stock": 8,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://cdnx.jumpseller.com/mgm-importaciones/image/42186732/resize/480/480?1700159020"],
+  "description": "Cubierta protectora para parrilla, resistente al agua y los rayos UV.",
+  "status": true,
+  "category": "Accesorios"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "parrilla-06",
+  "title": "Parrilla a Gas de 2 quemadores",
+  "price": 150000,
+  "stock": 20,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://bbqgrill.cl/wp-content/uploads/2017/07/Parrilla-4-Quemadores-Quemador-Lateral-BBQ402GCQL-8.jpg"],
+  "description": "Parrilla a gas, fácil de usar y segura.",
+  "status": true,
+  "category": "Parrillas"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-01",
+  "title": "Sal de Mar",
+  "price": 3000,
+  "stock": 25,
+  "unidad": "Paquete 400g",
+  "thumbnails": [ "https://cdnx.jumpseller.com/tienda1234567891011121314/image/36476679/Sal_de_Mar_400_kilo.png?1686933604"],
+  "description": "Sal de mar gruesa, ideal para sazonar carnes y ensaladas.",
+  "status": true,
+  "category": "Condimentos"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-02",
+  "title": "Pimienta Negra",
+  "price": 2500,
+  "stock": 30,
+  "unidad": "Frasco 40g",
+  "thumbnails": [ "https://icbatunegocio.vteximg.com.br/arquivos/ids/158765/101310025.jpg?v=638145906390630000"],
+  "description": "Pimienta negra molida, aromática y sabrosa.",
+  "status": true,
+  "category": "Condimentos"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-03",
+  "title": "Paprika",
+  "price": 2000,
+  "stock": 20,
+  "unidad": "Bote 50g",
+  "thumbnails": [ "https://macaedwards.cl/cdn/shop/products/BA80213_1800x.jpg?v=1637160537"],
+  "description": "Paprika en polvo, ideal para dar un toque de color y sabor a tus platos.",
+  "status": true,
+  "category": "Condimentos"
+,
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-04",
+  "title": "Orégano Seco",
+  "price": 1500,
+  "stock": 35,
+  "unidad": "Bote 30g",
+  "thumbnails": [ "https://www.ubuy.cl/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODE1SVgxUUJoTFMuX1NMMTUwMF8uanBn.jpg"],
+  "description": "Orégano seco y molido, perfecto para pizzas, pastas y aderezos.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-05",
+  "title": "Ajo en Polvo",
+  "price": 2000,
+  "stock": 25,
+  "unidad": "Bote 155g",
+  "thumbnails": [ "https://macaedwards.cl/cdn/shop/products/BA60001_1800x.jpg?v=1637160417"],
+  "description": "Ajo en polvo, práctico y versátil para sazonar tus comidas.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "condimento-06",
+  "title": "Salsa BBQ",
+  "price": 5000,
+  "stock": 15,
+  "unidad": "Botella 500ml",
+  "thumbnails": [ "https://cdnx.jumpseller.com/cool-patty/image/29815822/BB400.webp?1669748476"],
+  "description": "Deliciosa salsa BBQ para acompañar tus asados y parrilladas.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-01",
+  "title": "Vino Don Melchor Cabernet Sauvignon",
+  "price": 215000,
+  "stock": 10,
+  "unidad": "Botella 750ml",
+  "thumbnails": [ "https://storage.googleapis.com/liquidos-public/products/large/1451353.png"],
+  "description": "Vino tinto reserva de calidad premium, ideal para maridar con carnes rojas.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-02",
+  "title": "Cerveza Artesanal +56 Growler Ámbar",
+  "price": 8990,
+  "stock": 20,
+  "unidad": "Barril 1 Lt",
+  "thumbnails": [ "https://jumbo.vtexassets.com/arquivos/ids/472585/Cerveza-artesanal-Growler-ambar-45%C2%B0-barril-1-L.jpg?v=637813057455500000"],
+  "description": "Cerveza artesanal elaborada con ingredientes naturales, refrescante y sabrosa.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-03",
+  "title": "Pisco Bou Barroeta Romanet 40º",
+  "price": 29990,
+  "stock": 15,
+  "unidad": "Botella 750cc",
+  "thumbnails": [ "https://tost.cl/cdn/shop/files/20PS1010_1200x.png?v=1700669179"],
+  "description": "Pisco Bou Barroeta Romanet 40° 750cc.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-04",
+  "title": "Pack Fernet Branca",
+  "price": 2500,
+  "stock": 18,
+  "unidad": "Pack 750cc + 3L",
+  "thumbnails": [ "https://cdnx.jumpseller.com/comercial-jp/image/36977327/resize/540/540?1687986398"],
+  "description": "Pack Fernet Branca 750cc + Coca Cola 3 L",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-05",
+  "title": "Jägermeister 1000cc",
+  "price": 16490,
+  "stock": 25,
+  "unidad": "Botella 1000ml",
+  "thumbnails": [ "https://desaonline.vteximg.com.br/arquivos/ids/156206-1000-850/LI45705.jpg?v=637306151394970000p"],
+  "description": "Oscuro, atrevido y lleno de sabor intenso, Jägermeister no se parece a ningún licor que hayas probado antes. Originalmente una bebida de celebración para los cazadores (de ahí el 'jäger'), es la bebida ideal para marcar cada gran victoria, o incluso un fin de semana bien merecido. Jäger tiene una prueba de 70, así que sabes que este licor va en serio. Un verdadero clásico, la receta de Jägermeister no ha cambiado desde que se hizo por primera vez en 1878 en Wolfenbüttel, Alemania. Este licor de color oscuro está elaborado con 56 hierbas y especias diferentes, que incluyen regaliz, anís, jengibre, bayas de enebro y cáscara de cítricos. La mezcla de hierbas y especias se sumerge en agua y alcohol y se envejece en barricas de roble durante un año. Luego se mezcla con azúcar y alcohol antes de embotellarlo y enviarlo directamente a la puerta de su casa. Incluso la botella de Jägermeister es personalizada. Según cuenta la historia, el destilador Curt Mast y sus amigos pasaban mucho tiempo cazando y necesitaban una botella que pudiera resistir su estilo de vida al aire libre. Mast hizo lo que cualquiera haría y dejó caer un montón de botellas al suelo hasta que encontró una forma que resistió sus pruebas. La forma más fácil de disfrutar de Jägermeister es en forma de un chupito helado, preferiblemente frío a cero grados. Pero si eres más aficionado a los cócteles, prueba un Jäger Tonic con agua tónica, ralladura de cítricos y hielo.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "bebida-06",
+  "title": "Café Molido",
+  "price": 15500,
+  "stock": 12,
+  "unidad": "Paquete 283g",
+  "thumbnails": [ "https://jumbo.vtexassets.com/arquivos/ids/426836/Cafe-grano-molido-balanceado-organico-283-g.jpg?v=637528066296500000"],
+  "description": "Café Juan Valdez Envase 283 g, Orgánico Molido, ideal para disfrutar en cualquier momento del día.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-01",
+  "title": "Set de Utensilios",
+  "price": 10000,
+  "stock": 10,
+  "unidad": "Set 10 herramientas parrilla + caja garras de oso",
+  "thumbnails": [ "https://http2.mlstatic.com/D_NQ_NP_2X_887956-MLC52463580985_112022-F.webp"],
+  "description": "Set parrillero con 10 herramientas y bolso para traslado, ideal para llevar contigo a todos los asados.",
+  "status": true,
+  "category": "Accesorios",
+  "caracteristicas":{
+    "Terminación": "Metal y madera",
+    "contenido":"2 Garras de oso, Espátula, Pinza, Pincel, Tenedor, Espadas y Pinchos",
+    "Incluye": "Bolso negro portátil hecho de poliéster 600D."
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-02",
+  "title": "Tabla de Picar",
+  "price": 8000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://magentaestudio.cl/store/wp-content/uploads/2020/07/tabla-rustica-para-asado-1-400x400.jpg"],
+  "description": "Tabla de picar de madera de raulí, ideal para cortar y preparar alimentos.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-03",
+  "title": "Termómetro para Carnes",
+  "price": 5000,
+  "stock": 20,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://sodimac.scene7.com/is/image/SodimacCL/2929244_21"],
+  "description": "Termómetro digital para cocina, preciso y fácil de usar.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-04",
+  "title": "Pinzas para asado",
+  "price": 3000,
+  "stock": 25,
+  "unidad": "Unidad",
+  "thumbnails": [ "https://http2.mlstatic.com/D_NQ_NP_684568-MLC49637094996_042022-O.webp"],
+  "description": "Pinzas de cocina de acero inoxidable, prácticas y resistentes.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-05",
+  "title": "Guantes para el asador",
+  "price": 6000,
+  "stock": 18,
+  "unidad": "Par",
+  "thumbnails": [ "https://www.casayquincho.cl/cdn/shop/products/D_734582-MLC49863708266_052022-O.jpg"],
+  "description": "Guantes resistentes al calor, ideales para manipular alimentos en la parrilla.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "code": "accesorio-06",
+  "title": "Cubiertos de Acero para asado",
+  "price": 12000,
+  "stock": 12,
+  "unidad": "Juego",
+  "thumbnails": [ "https://s3.amazonaws.com/satelital-resources/products/71965_1_0d421852-86f6-47b0-b2c8-fc64ba2c0a0e_Big.webp"],
+  "description": "Set de cubiertos de acero inoxidable, elegantes y duraderos.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+}
+]
+  

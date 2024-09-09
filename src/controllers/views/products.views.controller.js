@@ -288,6 +288,26 @@ class ProductsViewsController {
     await RenderView(req, res, "home");
   };
 
+  renderProduct = async (req, res) => {
+    const pid=req.params.pid
+    const user=req.session.user
+    const producto = await productsManager.getProductById(pid)
+    console.log(user)
+    const greeting = `Bienvenido a la tienda ${user.email}` ;
+    const message = 'Explora los detalles del producto';
+
+    res.render('productDetail', {
+      cart_id: user.cart_id,
+      username:user.email,
+        producto,
+        greeting,
+        message,
+        isAdded: false, 
+        cantidad: 1, 
+        styles: "homeStyles.css",
+    });
+  };
+
   mockingProducts = async (req, res) => {
     await RenderView(req, res, "mockingproducts");
   };

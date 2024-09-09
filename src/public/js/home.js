@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   statusSpans.forEach((span) => {
     const status = span.textContent.trim();
     if (status === "Disponible") {
-      span.style.color = "green";
+      span.style.color = "#4bc44e";
     } else {
       span.style.color = "red";
     }

@@ -3,6 +3,10 @@ const mongoosePaginate = require ("mongoose-paginate-v2")
 
 const productCollection = 'products';
 
+const caracteristica = {
+    key: String,
+    value: String
+}
 const ProductSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -16,6 +20,10 @@ const ProductSchema = new Schema({
         type: String,
         default: 'admin'
     },
+
+    unidad: {type: String},
+    precioxkilo: {type: Number},
+    caracteristicas: {type:Object, required:false}
 });
 
 ProductSchema.plugin(mongoosePaginate)

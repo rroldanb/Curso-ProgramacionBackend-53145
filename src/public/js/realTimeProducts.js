@@ -283,9 +283,10 @@ const renderProductUI = (product) => {
 
 
     details.innerHTML = `
-        <h3 class="text-center">${product.title}</h3>
+        <h3 class="text-center edit-detail-title">${product.title}</h3>
         <span><strong>Descripción:</strong> </span>
-        <p> ${product.description}</p>
+        <textarea name="newProdDescription" id="newProdDescription" class="w-100" rows="6" >${product.description}</textarea>
+       
         <p><strong>Código:</strong> ${product.code}</p>
         <p><strong>Precio:</strong> ${product.price}</p>
         <p>
@@ -297,6 +298,7 @@ const renderProductUI = (product) => {
   
         <p><strong>Stock:</strong> ${product.stock}</p>
         <p><strong>Categoría:</strong> ${product.category}</p>
+        
         <p><strong>Propietario:</strong> ${product.owner}</p>
   
         <div class=" d-flex justify-content-between mb-0 mt-4">

@@ -15,6 +15,7 @@ const router = Router();
 
 router.get("/", authorization(["public"]), isLoggedIn, productsViewsController.renderHome);
 router.get("/products", authorization(["user", "premium", "admin"]),isLoggedIn,productsViewsController.renderProducts);
+router.get("/products/:pid", authorization(["public"]),isLoggedIn,productsViewsController.renderProduct);
 router.get("/mockingproducts", authorization(["public"]), isLoggedIn, productsViewsController.mockingProducts);
 router.get("/realtimeproducts", authorization(["premium", "admin"]), isLoggedIn,productsViewsController.realTimeProducts);
 

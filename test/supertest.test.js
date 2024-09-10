@@ -1,14 +1,15 @@
 const chai = require("chai");
 const supertest = require("supertest");
+const { objectConfig } = require("../src/config/config");
 
 const expect = chai.expect;
-const requester = supertest("http://localhost:8080");
+const requester = supertest(objectConfig.app_url);
 
 describe("Test de mi ecommerce", () => {
   before(async function () {
     const loginCredentials = {
-      email: "adminCoder@coder.com",
-      password: "adminCod3r123",
+      email: objectConfig.admin_name,
+      password: objectConfig.admin_password,
     };
     const { headers } = await requester
       .post("/api/sessions/login")

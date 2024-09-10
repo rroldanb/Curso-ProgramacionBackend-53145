@@ -1,5 +1,5 @@
 const winston = require("winston");
-const { objectConfig } = require("../config/config");
+const { objectConfig } = require("./config");
 
 const execMode = objectConfig.execMode;
 
@@ -56,14 +56,13 @@ if (execMode === "development") {
   });
 }
 
-
 // middleware
-const addLogger = (req, res, next) => {
-  req.logger = logger;
-  req.logger.http(
-    `${req.method} en ${req.url} - ${new Date().toLocaleString()}`
-  );
-  next();
-};
+// const addLogger = (req, res, next) => {
+//   req.logger = logger;
+//   req.logger.http(
+//     `${req.method} en ${req.url} - ${new Date().toLocaleString()}`
+//   );
+//   next();
+// };
 
-module.exports = { logger, addLogger };
+module.exports = { logger };

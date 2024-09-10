@@ -8,19 +8,20 @@ const { createHash, isValidPassword } = require("../utils/bcrypt.js");
 const { toCapital } = require("../public/js/renderUtils.js");
 
 const GithubStrategy = require("passport-github2");
-const { logger } = require("../utils/loggers.js");
+const { logger } = require("./logger.config.js");
 const { objectConfig } = require("./config.js");
 
 const LocalStrategy = local.Strategy;
 const userService = new UserDaoMongo();
 
-
 const initializePassport = () => {
-  passport.use("github", new GithubStrategy(
+  passport.use(
+    "github",
+    new GithubStrategy(
       {
         clientID: objectConfig.git_hub_id,
         clientSecret: objectConfig.git_hub_secret,
-        callbackURL: `${objectConfig.app_url}sessions/githubcallback`,
+        callbackURL: `${objectConfig.app_url}/sessions/githubcallback`,
         scope: ["user:email"],
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -80,7 +81,7 @@ const initializePassport = () => {
             } catch (error) {
               throw new Error(`Error creando el usuario: ${error.message}`);
             }
-            
+
             done(null, result);
           } else {
             done(null, user);
@@ -94,9 +95,11 @@ const initializePassport = () => {
   );
 
   // middleware -> estrategia -> local -> username(email), password
-  passport.use("register",new LocalStrategy(
+  passport.use(
+    "register",
+    new LocalStrategy(
       {
-        passReqToCallback: true, 
+        passReqToCallback: true,
         usernameField: "email",
       },
       async (req, username, password, done) => {
@@ -151,7 +154,9 @@ const initializePassport = () => {
     )
   );
 
-  passport.use("login",new LocalStrategy(
+  passport.use(
+    "login",
+    new LocalStrategy(
       {
         usernameField: "email",
       },
@@ -168,10 +173,10 @@ const initializePassport = () => {
             password: user.password,
           });
           if (!validPassword) return done(null, false);
-          const uid = user._id
-          const newDate = new Date()
-          await userService.updateUser(uid, {last_connection:newDate})
-          return done(null, user); 
+          const uid = user._id;
+          const newDate = new Date();
+          await userService.updateUser(uid, { last_connection: newDate });
+          return done(null, user);
         } catch (error) {
           return done(error);
         }

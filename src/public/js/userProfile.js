@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const uid = promoterBtn.getAttribute('data-uid');
             try {
-                const response = await fetch(`/api/users/premium/${uid}`, { method: 'GET' });
+                const response = await fetch(`/api/users/premium/${uid}`, { method: 'POST' });
                 const result = await response.json();
 
                 if  (result.status === "success") {

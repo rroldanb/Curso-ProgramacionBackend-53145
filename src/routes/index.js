@@ -9,10 +9,12 @@ const usersRouter = require("./api/users.router.js");
 const ticketsRouter = require("./api/tickets.router.js");
 const mockingRouter = require("./api/mocking.router.js");
 const loggerRouter = require("./api/logger.router.js");
-// const chatRouter = require("./chat.router.js");
-// const authRouter = require("./api/auth.router.js");
+const swaggerUiExpress = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const { swaggerOptions } = require("../config/swagger.config.js");
 
 const router = Router();
+const specs = swaggerJsDoc(swaggerOptions);
 
 router.use("/", viewsRouter);
 router.use("/api/products", productsRouter);
@@ -25,8 +27,9 @@ router.use("/api/sessions", sessionsRouter);
 router.use('/api/mocking', mockingRouter)
 router.use('/api/loggertest', loggerRouter)
 router.use('/loggertest', loggerRouter)
-// router.use('/auth', authRouter)
-// router.use ("/api/chat", chatRouter)
+
+router.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+
 router.use("/sessions", sessionsRouter);
 router.use('/mail', mailRouter)
 

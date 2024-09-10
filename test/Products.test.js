@@ -16,7 +16,7 @@ describe("Test de productos en el Dao", () => {
     this.timeout(500);
   });
   it("El dao debe ontener los productos en formato arreglo", async function () {
-    // console.log(this.productDao)
+    // const result = await this.productDao.getProducts(); //-> get
     const result = await this.productDao.getProducts(); //-> get
     assert.strictEqual(Array.isArray(result.docs), true);
   });
@@ -35,8 +35,6 @@ describe("Test de productos en el Dao", () => {
       ],
     };
     const result = await this.productDao.addProduct(mockProduct); //->save
-    // console.log('RRresult', result)
-    // assert.ok(result._id);
     assert.deepStrictEqual(result.title, "Nuevo Producto" )
   });
 
@@ -57,7 +55,6 @@ it ('El dao puede buscar un producto por su id', async function () {
     const result = await this.productDao.addProduct(mockProduct); //->save
     const pid = result._id
     const product = await this.productDao.getProductById(pid) //->getBy
-    // assert.ok(product._id)
     assert.strict(typeof product, 'object')
 });
 

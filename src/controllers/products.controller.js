@@ -1,10 +1,6 @@
 const { ProductsService } = require("../services/index");
 const CustomError = require("../utils/errors/CustomErrors");
-const {
-  generateProductsErrorInfo,
-  camposObligatoriosErrorInfo,
-  campoNumericoErrorInfo,
-} = require("../utils/errors/info");
+const {generateProductsErrorInfo,camposObligatoriosErrorInfo,campoNumericoErrorInfo} = require("../utils/errors/info");
 const EErrors = require("../utils/errors/enums");
 const { logger } = require("../config/logger.config");
 const { generateUsers, generateProducts } = require("../utils/generateMocks");
@@ -116,8 +112,6 @@ class ProductsController {
 
     try {
       const result = await this.productsService.getProducts(filter, options);
-      // const urlParam = req.originalUrl;
-
       const pagLinksParams = {
         urlParam,
         totalPages: result.totalPages,

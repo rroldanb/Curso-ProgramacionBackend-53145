@@ -1,29 +1,45 @@
-<main class="bg-info container rounded-4 p-2 mt-4">
-    <div class="bienvenida mt-4">
-      <div class="container rounded-3 p-2 d-flex  justify-content-between align-items-center" style="background-color: rgb(193, 193, 193);">
-        <div>
-        <a href="/products" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
-
-        <button class="btn btn-danger empty-cart-btn me-4" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </button>
+<main>
+    <div class="bienvenida">
+      {{!-- hero --}}
+      <div class="container position-relative mt-4 bg-dark rounded-top-4 p-2">
+        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+          <a href="/">
+                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
         </div>
-        <div>
-        <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}"> <i class="bi bi-cash-coin me-2"></i>Finalizar Compra</button>
+        <div class="mensaje text-center">
+          <h1>Carrrito de compras</h1>
+          <h2>Contenido del Carrito de <strong>{{nombre}} {{apellido}}:</strong></h2>
+        </div>
+        <div class="position-absolute top-2 end-0 rounded-4 me-3">
+          <a href="/">
+                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
         </div>
       </div>
-      <h1>Hola {{username}}, este es tu carrito de compras actual</h1>
-      <h2>Contenido del Carrito de <strong>{{nombre}}</strong></h2>
+      {{!-- menu --}}
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary" style="background-color: #213547;">
+        <div class="flex ">
+          <a href="/" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+          <button class="btn btn-danger empty-cart-btn me-4" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </button>
+        </div>
+        <div class="flex mx-2">
+          <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}"> <i class="bi bi-cash-coin me-2"></i>Finalizar Compra</button>
+        </div>
+      </div>
         <p class="my-auto d-none" >CartID: <strong> {{cid}} </strong> </p>
     </div>
 
 
-<section class="w-75 mx-auto mt-4">
-  <div class="">
-    <div class="carrito-productos ">
+<section class="mx-auto">
+  <div class="container rounded-bottom-4 " style="background-color: #213547;">
+
+    <div class="carrito-productos my-4 ">
       {{#if products.length}}
         {{#each products}}
-          <div class="row carrito-producto bg-body mb-3 d-flex 
-          flex-nowrap flex-row rounded-3  mx-auto
-          align-items-center align-content-center"  id="product-{{@index}}">
+          <div class="row carrito-producto  mb-1 d-flex 
+          flex-nowrap flex-row  mx-auto rounded-2
+          align-items-center align-content-center" style="background-color: rgb(198, 198, 198);" id="product-{{@index}}">
             <div class="col-1 p-2">
               <img class="carrito-producto-imagen w-100" src="{{this.pid.thumbnails.[0]}}" alt="{{this.pid.title}}">
             </div>
@@ -69,26 +85,25 @@
       {{else}}
         <div class="carrito-vacio text-center">
           <h2 class="mx-auto">Su carrito está vacío <i class="bi bi-emoji-frown"></i></h2>
-        <a href="/products" class="btn btn-dark my-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
+        <a href="/" class="btn btn-dark my-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
         </div>
       {{/if}}
     </div>
 
     {{#if products.length}}
-      <div class="carrito-footer
-        mb-3 d-flex mx-auto
+      <div class="carrito-footer mb-3 d-flex mx-auto
           flex-row container rounded-3  
-          align-items-center justify-content-between" style="background-color: rgb(193, 193, 193);">
+          align-items-center justify-content-around bg-secondary" style="background-color: rgb(193, 193, 193);">
         <div class="">
         <button class="btn btn-lg btn-danger empty-cart-btn" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </i></button>
         </div>
           <div class="carrito-footer-cantidad d-flex flex-column align-items-center">
-            <p>Cantidad de artículos:</p>
-            <h4 id="cantidad-total">{{calculateQtty products}}</h4>
+            <p class="text-light">Cantidad de artículos:</p>
+            <h4 id="cantidad-total" class="text-warning">{{calculateQtty products}}</h4>
           </div>
           <div class="carrito-footer-total d-flex flex-column align-items-center">
-            <p>Total Carrito:</p>
-            <h3 id="total" >{{calculateTotal products}}</h3>
+            <p class=" text-light">Total Carrito:</p>
+            <h3 id="total" class="text-warning fw-bold">  {{calculateTotal products}}  </h3>
           </div>
         
         <button class="btn btn-lg btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
@@ -103,7 +118,7 @@
 
 
     <footer class="container">
-      <p class="texto-footer mx-auto text-light">© 2024 Gagolabs</p>
+      {{!-- <p class="texto-footer mx-auto text-light">@ Gagolabs 2024</p> --}}
     </footer>
   </div>
 </main>

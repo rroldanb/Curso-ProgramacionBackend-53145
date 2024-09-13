@@ -1,0 +1,1024 @@
+[{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef8"
+  },
+  "id": 3,
+  "title": "producto prueba 3",
+  "description": "Este es el producto prueba 3",
+  "code": "abc03",
+  "price": 333,
+  "status": true,
+  "stock": 313,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_03_imagen_1.jpg",
+    "/images/producto-prueba_03_imagen_2.jpg",
+    "/images/producto-prueba_03_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6635f2bd344022dd21bb5228"
+  },
+  "title": "mario",
+  "description": "Mario",
+  "code": "mario",
+  "price": 1234,
+  "status": false,
+  "stock": 4321,
+  "category": "Personajes",
+  "thumbnails": [
+    "https://mario.nintendo.com/static/d783068682f98d6cfec666c747a27793/d6e64/mario.png"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6635f709a43085326b51a1a0"
+  },
+  "title": "negan",
+  "description": "Negan",
+  "code": "Negan",
+  "price": 2345,
+  "status": false,
+  "stock": 0,
+  "category": "Personajes",
+  "thumbnails": [
+    "https://vader.news/__export/1643078393822/sites/gadgets/img/2022/01/24/the_walking_dead_s10c_ep17_jeffrey_dean_morgan.jpg_193134664.jpg"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef7"
+  },
+  "id": 2,
+  "title": "producto prueba 2",
+  "description": "Este es el producto prueba 2",
+  "code": "abc02",
+  "price": 2222,
+  "status": true,
+  "stock": 2196,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_02_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef6"
+  },
+  "id": 1,
+  "title": "producto prueba 1",
+  "description": "Este es el producto prueba 1",
+  "code": "abc01",
+  "price": 1111,
+  "status": true,
+  "stock": 1111,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_01_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcef9"
+  },
+  "id": 4,
+  "title": "producto prueba 4",
+  "description": "Este es el producto prueba 4",
+  "code": "abc04",
+  "price": 44,
+  "status": true,
+  "stock": 3,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_04_imagen_1.jpg",
+    "/images/producto-prueba_04_imagen_2.jpg",
+    "/images/producto-prueba_04_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefd"
+  },
+  "id": 8,
+  "title": "producto prueba 8",
+  "description": "Este es el producto prueba 8",
+  "code": "abc08",
+  "price": 88,
+  "status": true,
+  "stock": 5,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_08_imagen_1.jpg",
+    "/images/producto-prueba_08_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6638377195f9e8c1519dcf00"
+  },
+  "id": 10,
+  "title": "producto prueba 10",
+  "description": "Este es el producto prueba 10",
+  "code": "abc10",
+  "price": 1010,
+  "status": true,
+  "stock": 1002,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_10_imagen_1.jpg",
+    "/images/producto-prueba_10_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefc"
+  },
+  "id": 7,
+  "title": "producto prueba 7",
+  "description": "Este es el producto prueba 7",
+  "code": "abc07",
+  "price": 77,
+  "status": true,
+  "stock": 7,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_07_imagen_1.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefe"
+  },
+  "id": 9,
+  "title": "producto prueba 9",
+  "description": "Este es el producto prueba 9",
+  "code": "abc09",
+  "price": 99,
+  "status": true,
+  "stock": 9,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_09_imagen_1.jpg",
+    "/images/producto-prueba_09_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "66384451f745d3571776f6e1"
+  },
+  "title": "Slayer",
+  "description": "Slayer",
+  "code": "slayer",
+  "price": 666,
+  "status": false,
+  "stock": 666,
+  "category": "Personajes",
+  "thumbnails": [
+    "https://i.pinimg.com/736x/e5/23/cd/e523cd8f6aad5ba872bd7bcd154ee255.jpg"
+  ],
+  "__v": 0,
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "66711aa986c6338e5166609b"
+  },
+  "title": "Ferrari F8",
+  "description": "Ferrari F8",
+  "code": "FF8",
+  "price": 8000000,
+  "status": false,
+  "stock": 8,
+  "category": "Cars",
+  "thumbnails": [
+    "https://acnews.blob.core.windows.net/imgnews/large/NAZ_d3d9acde019e4b2fabde7168094f8de9.jpg"
+  ],
+  "__v": 0,
+  "owner": "premiumuser@coder.com"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefa"
+  },
+  "id": 5,
+  "title": "producto prueba 5",
+  "description": "Este es el producto prueba 5",
+  "code": "abc05",
+  "price": 55,
+  "status": true,
+  "stock": 5,
+  "category": "Categoría impar",
+  "thumbnails": [
+    "/images/producto-prueba_05_imagen_1.jpg",
+    "/images/producto-prueba_05_imagen_2.jpg",
+    "/images/producto-prueba_05_imagen_3.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "663836fe95f9e8c1519dcefb"
+  },
+  "id": 6,
+  "title": "producto prueba 6",
+  "description": "Este es el producto prueba 6",
+  "code": "abc06",
+  "price": 66,
+  "status": true,
+  "stock": 6,
+  "category": "Categoría Par",
+  "thumbnails": [
+    "/images/producto-prueba_06_imagen_1.jpg",
+    "/images/producto-prueba_06_imagen_2.jpg"
+  ],
+  "owner": "admin"
+},
+{
+  "_id": {
+    "$oid": "6695de85c96c6db3e4e8bbef"
+  },
+  "title": "Rezvani Tank",
+  "description": "Rezvani Tank",
+  "code": "RT2025",
+  "price": 175000,
+  "status": true,
+  "stock": 5,
+  "category": "Cars",
+  "thumbnails": [
+    "https://images.squarespace-cdn.com/content/v1/5704138a37013bbe44e74f7e/1619124296174-SF5O97HX1GDLZJJ1OB1M/all_black.jpg",
+    "https://images.squarespace-cdn.com/content/v1/5704138a37013bbe44e74f7e/1565575164931-7VHYZAS44T4FRFQTOBCZ/rezvani_tank_new.jpg"
+  ],
+  "__v": 0,
+  "owner": "premiumuser@coder.com"
+},
+{
+  "_id": {
+    "$oid": "66a616383cca455dc54a8380"
+  },
+  "title": "Ferrari PuroSangre",
+  "description": "Ferrari PuroSangre",
+  "code": "FPS1",
+  "price": 234567,
+  "status": true,
+  "stock": 7,
+  "category": "Cars",
+  "thumbnails": [
+    "https://news.indigoautogroup.com/wp-content/uploads/2023/07/Ferrari_002-jpg.webp"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61a6524002729778d3813"
+  },
+  "title": "Lamborghini  Urus",
+  "description": "Lamborghini  Urus",
+  "code": "urus",
+  "price": 234569,
+  "status": true,
+  "stock": 6,
+  "category": "Cars",
+  "thumbnails": [
+    "https://imgd.aeplcdn.com/600x337/cw/ec/32147/Lamborghini-Urus-114028.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61bd324002729778d3863"
+  },
+  "title": "BMW X6",
+  "description": "BMW X6",
+  "code": "X6",
+  "price": 123456,
+  "status": false,
+  "stock": 6,
+  "category": "Cars",
+  "thumbnails": [
+    "https://media.ed.edmunds-media.com/bmw/x6-m/2025/oem/2025_bmw_x6-m_4dr-suv_competition_fq_oem_1_1280.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a61ca024002729778d3871"
+  },
+  "title": "Maserati Levante",
+  "description": "Maserati Levante",
+  "code": "Levante",
+  "price": 345678,
+  "status": false,
+  "stock": 5,
+  "category": "Cars",
+  "thumbnails": [
+    "https://www.carscoops.com/wp-content/uploads/2023/01/maserati_levante_main.jpg"
+  ],
+  "owner": "premiumuser@coder.com",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c51"
+  },
+  "code": "carne-01",
+  "title": "Asado",
+  "price": 17250,
+  "stock": 10,
+  "unidad": "Paquete 1.15 kg",
+  "precioxkilo": 15000,
+  "thumbnails": [
+    "/img/asado.webp",
+    "https://www.carniceriademadrid.es/wp-content/uploads/2020/12/asado-de-tira.jpg"
+  ],
+  "description": "Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Asado de Tira Trozado Premium",
+    "Ancho": "4cm.",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1.15 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c52"
+  },
+  "code": "carne-02",
+  "title": "Lomo Vetado Premium",
+  "price": 22000,
+  "stock": 10,
+  "unidad": "Paquete 1 kg",
+  "precioxkilo": 22000,
+  "thumbnails": [
+    "/img/bife-angus.webp"
+  ],
+  "description": "Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Lomo Vetado Premium",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c53"
+  },
+  "code": "carne-03",
+  "title": "Colita de Cuadril",
+  "price": 13000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [
+    "/img/colita-de-cuadril.webp"
+  ],
+  "description": "Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Colita de Cuadril Premium",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c54"
+  },
+  "code": "carne-04",
+  "title": "Entraña",
+  "price": 14000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [
+    "/img/entrana.webp"
+  ],
+  "description": "Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c55"
+  },
+  "code": "carne-05",
+  "title": "Tomahawk",
+  "price": 15000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [
+    "/img/tomahawk.webp"
+  ],
+  "description": "Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c56"
+  },
+  "code": "carne-06",
+  "title": "Entrecot",
+  "price": 16000,
+  "stock": 10,
+  "unidad": "Kg",
+  "thumbnails": [
+    "/img/entrecot.webp"
+  ],
+  "description": "Este corte viene envasado en paquetes de 1kg. aprox. Cualquier diferencia en el peso del paquete a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c57"
+  },
+  "code": "carne-011",
+  "title": "Asado de tira 8cm",
+  "price": 17250,
+  "stock": 10,
+  "unidad": "Paquete 1.15 kg",
+  "precioxkilo": 15000,
+  "thumbnails": [
+    "/img/asado.webp"
+  ],
+  "description": "Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Asado de Tira Trozado Premium",
+    "Ancho": "8cm.",
+    "Envasado": "Al vacío, fresco sin congelar.",
+    "Presentación": "Formato de 1.15 kg aprox.",
+    "Raza": "Angus",
+    "Origen": "Osorno, Chile",
+    "Productor": "Corte Criollo"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c58"
+  },
+  "code": "carne-012",
+  "title": "Bife de Chorizo",
+  "price": 21600,
+  "stock": 8,
+  "unidad": "Paquete 1.2 kg",
+  "precioxkilo": 18000,
+  "thumbnails": [
+    "https://masonlineprod.vtexassets.com/arquivos/ids/171637-800-auto?v=637835145341070000&width=800&height=auto&aspect=true"
+  ],
+  "description": "Delicioso bife de chorizo, cortado y envasado al vacío. Este corte viene envasado en presentación de 1.15 kg. aprox. Cualquier diferencia en el peso del envase a favor del cliente será devuelta por el mismo medio de pago.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Bife de Chorizo",
+    "Envasado": "Al vacío",
+    "Presentación": "Formato de 1.2 kg aprox.",
+    "Origen": "Argentina",
+    "Productor": "Corte Criollo"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c59"
+  },
+  "code": "carne-013",
+  "title": "Pollo Entero",
+  "price": 12000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "precioxkilo": 10000,
+  "thumbnails": [
+    "https://www.procaren.cl/wp-content/uploads/2021/09/pollo-entero.jpg"
+  ],
+  "description": "Pollo entero fresco, ideal para asar o cocinar al horno.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Tipo": "Pollo Entero",
+    "Origen": "Local",
+    "Productor": "Granja del Valle"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5a"
+  },
+  "code": "carne-014",
+  "title": "Entraña",
+  "price": 14000,
+  "stock": 10,
+  "unidad": "Kg",
+  "precioxkilo": 12000,
+  "thumbnails": [
+    "/img/entrana.webp"
+  ],
+  "description": "Exquisita entraña premium para asar.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Entraña",
+    "Presentación": "Porción de 1 kg",
+    "Raza": "Angus",
+    "Origen": "Uruguay",
+    "Productor": "La Estancia"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5b"
+  },
+  "code": "carne-015",
+  "title": "Chuletas de Cordero",
+  "price": 25000,
+  "stock": 6,
+  "unidad": "Kg",
+  "precioxkilo": 22000,
+  "thumbnails": [
+    "https://cdnx.jumpseller.com/terracuario/image/37785079/chuleta-francesa.jpg",
+    "https://www.organisk.cl/9398-thickbox_default/cordero-chuleta-francesa.jpg"
+  ],
+  "description": "Deliciosas chuletas de cordero, ideales para la parrilla o el horno.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Chuletas de Cordero",
+    "Origen": "Local",
+    "Productor": "Carnes Finas"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5c"
+  },
+  "code": "carne-016",
+  "title": "Costillar de Cerdo",
+  "price": 18000,
+  "stock": 8,
+  "unidad": "Kg",
+  "precioxkilo": 16000,
+  "thumbnails": [
+    "https://www.ariztiaatucasa.cl/media/catalog/product/cache/3aa1df24426dbabd72ab974cf5ed84b3/c/o/costillar_de_cerdo_-_granel_1_.jpg"
+  ],
+  "description": "Sabroso costillar de cerdo, ideal para marinar y asar.",
+  "status": true,
+  "category": "Carnes",
+  "caracteristicas": {
+    "Corte": "Costillar de Cerdo",
+    "Origen": "Local",
+    "Productor": "Carnicería del Valle"
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5d"
+  },
+  "code": "parrilla-01",
+  "title": "Parrilla Portátil",
+  "price": 35000,
+  "stock": 5,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://globalatin.cl/wp-content/uploads/2023/10/49259392-7861-47b4-8c6b-63234a5affc9-2.jpg"
+  ],
+  "description": "Práctica parrilla portátil de acero inoxidable, fácil de transportar y montar.",
+  "status": true,
+  "category": "Parrillas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5e"
+  },
+  "code": "parrilla-02",
+  "title": "Parrilla a Carbón medio tambor",
+  "price": 85000,
+  "stock": 10,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://http2.mlstatic.com/D_NQ_NP_2X_696949-MLC48283763391_112021-F.webp"
+  ],
+  "description": "Parrilla de medio tambor con altura regulable.",
+  "status": true,
+  "category": "Parrillas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c5f"
+  },
+  "code": "accesorio-07",
+  "title": "Cepillo de Limpieza",
+  "price": 5000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://cdnx.jumpseller.com/moggill/image/23651281/resize/1080/1080?1687892798"
+  ],
+  "description": "Cepillo de limpieza de parrilla con cerdas resistentes, ideal para mantener tu parrilla impecable.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c60"
+  },
+  "code": "parrilla-04",
+  "title": "Parrilla a Carbón Circular,",
+  "price": 150000,
+  "stock": 12,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://m.media-amazon.com/images/I/61oBMFZtCgS._AC_UF350,350_QL80_.jpg"
+  ],
+  "description": "Asador de carbón y ahumador.",
+  "status": true,
+  "category": "Parrillas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c61"
+  },
+  "code": "accesorio-08",
+  "title": "Cubierta para Parrilla",
+  "price": 20000,
+  "stock": 8,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://cdnx.jumpseller.com/mgm-importaciones/image/42186732/resize/480/480?1700159020"
+  ],
+  "description": "Cubierta protectora para parrilla, resistente al agua y los rayos UV.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c62"
+  },
+  "code": "parrilla-06",
+  "title": "Parrilla a Gas de 2 quemadores",
+  "price": 150000,
+  "stock": 20,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://bbqgrill.cl/wp-content/uploads/2017/07/Parrilla-4-Quemadores-Quemador-Lateral-BBQ402GCQL-8.jpg"
+  ],
+  "description": "Parrilla a gas, fácil de usar y segura.",
+  "status": true,
+  "category": "Parrillas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c63"
+  },
+  "code": "condimento-01",
+  "title": "Sal de Mar",
+  "price": 3000,
+  "stock": 25,
+  "unidad": "Paquete 400g",
+  "thumbnails": [
+    "https://cdnx.jumpseller.com/tienda1234567891011121314/image/36476679/Sal_de_Mar_400_kilo.png?1686933604"
+  ],
+  "description": "Sal de mar gruesa, ideal para sazonar carnes y ensaladas.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c64"
+  },
+  "code": "condimento-02",
+  "title": "Pimienta Negra",
+  "price": 2500,
+  "stock": 30,
+  "unidad": "Frasco 40g",
+  "thumbnails": [
+    "https://icbatunegocio.vteximg.com.br/arquivos/ids/158765/101310025.jpg?v=638145906390630000"
+  ],
+  "description": "Pimienta negra molida, aromática y sabrosa.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c65"
+  },
+  "code": "condimento-03",
+  "title": "Paprika",
+  "price": 2000,
+  "stock": 20,
+  "unidad": "Bote 50g",
+  "thumbnails": [
+    "https://macaedwards.cl/cdn/shop/products/BA80213_1800x.jpg?v=1637160537"
+  ],
+  "description": "Paprika en polvo, ideal para dar un toque de color y sabor a tus platos.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c66"
+  },
+  "code": "condimento-04",
+  "title": "Orégano Seco",
+  "price": 1500,
+  "stock": 35,
+  "unidad": "Bote 30g",
+  "thumbnails": [
+    "https://www.ubuy.cl/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODE1SVgxUUJoTFMuX1NMMTUwMF8uanBn.jpg"
+  ],
+  "description": "Orégano seco y molido, perfecto para pizzas, pastas y aderezos.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c67"
+  },
+  "code": "condimento-05",
+  "title": "Ajo en Polvo",
+  "price": 2000,
+  "stock": 25,
+  "unidad": "Bote 155g",
+  "thumbnails": [
+    "https://macaedwards.cl/cdn/shop/products/BA60001_1800x.jpg?v=1637160417"
+  ],
+  "description": "Ajo en polvo, práctico y versátil para sazonar tus comidas.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c68"
+  },
+  "code": "condimento-06",
+  "title": "Salsa BBQ",
+  "price": 5000,
+  "stock": 15,
+  "unidad": "Botella 500ml",
+  "thumbnails": [
+    "https://cdnx.jumpseller.com/cool-patty/image/29815822/BB400.webp?1669748476"
+  ],
+  "description": "Deliciosa salsa BBQ para acompañar tus asados y parrilladas.",
+  "status": true,
+  "category": "Condimentos",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c69"
+  },
+  "code": "bebida-01",
+  "title": "Vino Don Melchor Cabernet Sauvignon",
+  "price": 215000,
+  "stock": 10,
+  "unidad": "Botella 750ml",
+  "thumbnails": [
+    "https://storage.googleapis.com/liquidos-public/products/large/1451353.png"
+  ],
+  "description": "Vino tinto reserva de calidad premium, ideal para maridar con carnes rojas.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6a"
+  },
+  "code": "bebida-02",
+  "title": "Cerveza Artesanal +56 Growler Ámbar",
+  "price": 8990,
+  "stock": 20,
+  "unidad": "Barril 1 Lt",
+  "thumbnails": [
+    "/img/56Ambar.webp"
+  ],
+  "description": "Cerveza artesanal elaborada con ingredientes naturales, refrescante y sabrosa.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6b"
+  },
+  "code": "bebida-03",
+  "title": "Pisco Bou Barroeta Romanet 40º",
+  "price": 29990,
+  "stock": 15,
+  "unidad": "Botella 750cc",
+  "thumbnails": [
+    "https://tost.cl/cdn/shop/files/20PS1010_1200x.png?v=1700669179"
+  ],
+  "description": "Pisco Bou Barroeta Romanet 40° 750cc.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6c"
+  },
+  "code": "bebida-04",
+  "title": "Kit Fernet Branca",
+  "price": 2500,
+  "stock": 18,
+  "unidad": "Pack 750cc + 3L",
+  "thumbnails": [
+    "https://http2.mlstatic.com/D_NQ_NP_2X_624764-MLA53280974856_012023-F.webp"
+  ],
+  "description": "Kit Fernet Branca 750ml + Coca Cola + Vaso",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6d"
+  },
+  "code": "bebida-05",
+  "title": "Jägermeister 1000cc",
+  "price": 16490,
+  "stock": 25,
+  "unidad": "Botella 1000ml",
+  "thumbnails": [
+    "https://desaonline.vteximg.com.br/arquivos/ids/156206-1000-850/LI45705.jpg?v=637306151394970000p"
+  ],
+  "description": "Oscuro, atrevido y lleno de sabor intenso, Jägermeister no se parece a ningún licor que hayas probado antes. Originalmente una bebida de celebración para los cazadores (de ahí el 'jäger'), es la bebida ideal para marcar cada gran victoria, o incluso un fin de semana bien merecido. Jäger tiene una prueba de 70, así que sabes que este licor va en serio. Un verdadero clásico, la receta de Jägermeister no ha cambiado desde que se hizo por primera vez en 1878 en Wolfenbüttel, Alemania. Este licor de color oscuro está elaborado con 56 hierbas y especias diferentes, que incluyen regaliz, anís, jengibre, bayas de enebro y cáscara de cítricos. La mezcla de hierbas y especias se sumerge en agua y alcohol y se envejece en barricas de roble durante un año. Luego se mezcla con azúcar y alcohol antes de embotellarlo y enviarlo directamente a la puerta de su casa. Incluso la botella de Jägermeister es personalizada. Según cuenta la historia, el destilador Curt Mast y sus amigos pasaban mucho tiempo cazando y necesitaban una botella que pudiera resistir su estilo de vida al aire libre. Mast hizo lo que cualquiera haría y dejó caer un montón de botellas al suelo hasta que encontró una forma que resistió sus pruebas. La forma más fácil de disfrutar de Jägermeister es en forma de un chupito helado, preferiblemente frío a cero grados. Pero si eres más aficionado a los cócteles, prueba un Jäger Tonic con agua tónica, ralladura de cítricos y hielo.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6e"
+  },
+  "code": "bebida-06",
+  "title": "Café Molido",
+  "price": 15500,
+  "stock": 12,
+  "unidad": "Paquete 283g",
+  "thumbnails": [
+    "https://jumbo.vtexassets.com/arquivos/ids/426836/Cafe-grano-molido-balanceado-organico-283-g.jpg?v=637528066296500000"
+  ],
+  "description": "Café Juan Valdez Envase 283 g, Orgánico Molido, ideal para disfrutar en cualquier momento del día.",
+  "status": true,
+  "category": "Bebidas",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c6f"
+  },
+  "code": "accesorio-01",
+  "title": "Set de Utensilios",
+  "price": 10000,
+  "stock": 10,
+  "unidad": "Set 10 herramientas parrilla + caja garras de oso",
+  "thumbnails": [
+    "https://http2.mlstatic.com/D_NQ_NP_2X_887956-MLC52463580985_112022-F.webp"
+  ],
+  "description": "Set parrillero con 10 herramientas y bolso para traslado, ideal para llevar contigo a todos los asados.",
+  "status": true,
+  "category": "Accesorios",
+  "caracteristicas": {
+    "Terminación": "Metal y madera",
+    "contenido": "2 Garras de oso, Espátula, Pinza, Pincel, Tenedor, Espadas y Pinchos",
+    "Incluye": "Bolso negro portátil hecho de poliéster 600D."
+  },
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c70"
+  },
+  "code": "accesorio-02",
+  "title": "Tabla de Picar",
+  "price": 8000,
+  "stock": 15,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://magentaestudio.cl/store/wp-content/uploads/2020/07/tabla-rustica-para-asado-1-400x400.jpg"
+  ],
+  "description": "Tabla de picar de madera de raulí, ideal para cortar y preparar alimentos.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c71"
+  },
+  "code": "accesorio-03",
+  "title": "Termómetro para Carnes",
+  "price": 5000,
+  "stock": 20,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://sodimac.scene7.com/is/image/SodimacCL/2929244_21"
+  ],
+  "description": "Termómetro digital para cocina, preciso y fácil de usar.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c72"
+  },
+  "code": "accesorio-04",
+  "title": "Pinzas para asado",
+  "price": 3000,
+  "stock": 25,
+  "unidad": "Unidad",
+  "thumbnails": [
+    "https://http2.mlstatic.com/D_NQ_NP_684568-MLC49637094996_042022-O.webp"
+  ],
+  "description": "Pinzas de cocina de acero inoxidable, prácticas y resistentes.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c73"
+  },
+  "code": "accesorio-05",
+  "title": "Guantes para el asador",
+  "price": 6000,
+  "stock": 18,
+  "unidad": "Par",
+  "thumbnails": [
+    "https://www.casayquincho.cl/cdn/shop/products/D_734582-MLC49863708266_052022-O.jpg"
+  ],
+  "description": "Guantes resistentes al calor, ideales para manipular alimentos en la parrilla.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+},
+{
+  "_id": {
+    "$oid": "66de51726b5ddd8a94c05c74"
+  },
+  "code": "accesorio-06",
+  "title": "Cubiertos de Acero para asado",
+  "price": 12000,
+  "stock": 12,
+  "unidad": "Juego",
+  "thumbnails": [
+    "https://s3.amazonaws.com/satelital-resources/products/71965_1_0d421852-86f6-47b0-b2c8-fc64ba2c0a0e_Big.webp"
+  ],
+  "description": "Set de cubiertos de acero inoxidable, elegantes y duraderos.",
+  "status": true,
+  "category": "Accesorios",
+  "owner": "gonzaloroldan@gmail.com"
+}]

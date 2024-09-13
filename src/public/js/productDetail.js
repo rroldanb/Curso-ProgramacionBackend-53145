@@ -7,6 +7,15 @@
         });
     });
 
+    const statusSpans = document.querySelectorAll(".status-span");
+    statusSpans.forEach((span) => {
+      const status = span.textContent.trim();
+      if (status === "Disponible") {
+        span.style.color = "#4bc44e";
+      } else {
+        span.style.color = "red";
+      }
+    });
 
     document.addEventListener("DOMContentLoaded", () => {
         const addToCartButton = document.querySelector(".add-to-cart-btn");

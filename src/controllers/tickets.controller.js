@@ -1,8 +1,4 @@
-const {
-  CartsService,
-  TicketsService,
-  ProductsService,
-} = require("../services/index");
+const {CartsService,TicketsService,ProductsService} = require("../services/index");
 
 class TicketsController {
   constructor() {

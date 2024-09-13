@@ -1,13 +1,29 @@
-<main>
-  <div class="bienvenida">
-    <h1>{{nombre_completo}} Bienvenido a nuestro e-commerce</h1>
-    <h2> Estos son nuestros productos</h2>
-<p id="notMocking" class="d-none">{{notMocking}}</p>
+<main class="">
+  <div class="">
 
 
-
+  <div class="bienvenida mt-2 mt-md-5">
+    {{!-- hero --}}
+    <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
+      <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+        <a href="/">
+              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+      </div>
+      <div class="mensaje  text-center">
+        <h1 class="text-center">{{nombre_completo}} Bienvenido a nuestro e-commerce</h1>
+        <h2> Estos son nuestros productos</h2>
+      </div>
+      <div class="position-absolute top-2 end-0 rounded-4 me-3">
+        <a href="/">
+              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+      </div>
+    </div>
+    <p id="notMocking" class="d-none">{{notMocking}}</p>
     <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
-    <div class="container d-flex justify-content-between mt-4 mx-2 pt-4 rounded-top-4" style="background-color: #213547;">
+    {{!-- menu --}}
+    <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
       <div class="flex ">
       {{#if admin}}
         <a href="/realtimeproducts" class="btn btn-dark " id="btn-rtp"><i class="bi bi-pencil-square me-2"></i>Mantenedor de productos</a>
@@ -30,7 +46,7 @@
         {{#if uid}}
           <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
           <button class="btn btn-success" id="btn-tickets" onclick="redirectToTickets()"><i class="bi bi-card-checklist me-2"></i>Ver mis compras anteriores </button>
-          <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+          <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
         {{else}}
           {{!-- {{#if premium}}
             <a href="/profile/{{uid}}" class="btn btn-warning" id="btn-profile"><i class="bi bi-person-circle me-2"></i>Mi perfil </a>
@@ -51,30 +67,34 @@
       </div>
     </div>
   </div>
-  <div class="container rounded-bottom-4" style="background-color: #213547;">
+  </div>
+
+  {{!-- filters, productos y paginador--}}
+    <div class="container rounded-bottom-4 rrShadow z-3" style="background-color: #213547;">
     {{>filters}}
-{{!-- Despliega Productos --}}
+  {{!-- Productos --}}
     {{#each products}}
-      <div class="card bg-dark text-white" id="product-{{_id}}">
+      <div class="card bg-gradient text-white" style="background-color:rgb(97, 129, 137);" id="product-{{_id}}">
         <a href="/products/{{_id}}">
-        <div class="thumbnail-display-area align-content-center">
-          <img class="main-image" src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto" >
-        </div>
+        <div class="thumbnail-display-area d-flex align-items-center justify-content-center bg-light rounded-4">
+  <img class="main-image rounded-4 " src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
+</div>
+
         </a>
         <div class="thumbnails">
           {{#each this.thumbnails}}
             <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
           {{/each}}
         </div>
+        <p class="card-price text-center mt-1" style="color: rgb(255, 231, 186);">{{ this.price}}</p>
         <h3 class="text-center prodName text-white">{{this.title}}</h3>
-        <p class="text-white card-price text-center">{{ this.price}}</p>
-        <p class="text-white">
+        {{!-- <p class="text-white">
           <strong>Estado:</strong>
           <span class="status-span">
             {{#if this.status}} Disponible {{else}} No disponible {{/if}}
           </span>
         </p>
-        <p class="text-white"><strong>Categoría:</strong> {{this.category}}</p>
+        <p class="text-white"><strong>Categoría:</strong> {{this.category}}</p> --}}
         <p class="d-none owner" id="owner">{{this.owner}}</p>
         <div class="container-fluid d-flex justify-content-around">
 
@@ -91,12 +111,11 @@
 
       </div>
     {{/each}}
-<div class="container">
-
-    {{>paginator}}
-</div>
+    {{!-- paginador --}}
+    <div class="container">
+        {{>paginator}}
+    </div>
   </div>
-
 <!-- Modal Login-->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -151,7 +170,7 @@
           <div class="mb-3 d-flex justify-content-between ">
             <div class="">
               <label for="birthDate" class="fw-bold" id="birthDate_label">Fecha de nacimiento</label>
-              <input type="date" name="birthDate" id="birthDate" class="form-control" required/>
+              <input type="date" name="birthDate" id="birthDate" class="form-control" />
             </div>
             <div class="mx-2">
               <label for="age"  id="age_label">Edad</label>
@@ -166,7 +185,7 @@
             <label for="password" class="fw-bold">Password</label>
             <div class="input-group">
               <input type="password" class="form-control toggle-password" id="password" name="password" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="mostrar-ocultar-password" required>
-              <button class="btn btn-outline-secondary toggle-password-btn" type="button">
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button" tabindex="-1">
                 <i class="bi bi-eye"></i>
               </button>
             </div>
@@ -175,13 +194,13 @@
             <label for="confirmPassword" class="fw-bold">Confirmar Nueva Contraseña</label>
             <div class="input-group">
             <input type="password" class="form-control toggle-password" id="confirmPassword" name="confirmPassword"  placeholder="Contraseña" aria-label="Confirmar contraseña" aria-describedby="mostrar-ocultar-password"  required>
-              <button class="btn btn-outline-secondary toggle-password-btn" type="button">
+              <button class="btn btn-outline-secondary toggle-password-btn" type="button" tabindex="-1">
                 <i class="bi bi-eye"></i>
               </button>
             </div>
             </div>
-          <button class="btn btn-outline-primary w-100 mt-3"><i class="bi bi-person-plus me-2"></i>Registrarse </button>
-          {{!-- <a href="#" class="btn btn-outline-warning w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Volver al Login <i class="bi bi-person"></i></a> --}}
+          <button class="btn btn-outline-warning w-100 mt-3"><i class="bi bi-person-plus me-2"></i>Registrarse </button>
+          <a href="#" class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal" id="btn-login"> Ir al Login <i class="bi bi-person"></i></a>
           {{!-- <button type="button" class="btn btn-outline-danger w-100 mt-3" data-bs-dismiss="modal">Cerrar <i class="bi bi-x-circle"></i></button> --}}
         </form>
       </div>

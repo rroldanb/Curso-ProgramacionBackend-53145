@@ -293,6 +293,7 @@ class UsersController {
     //         res.status(500).send({ status: "error", message: "No se pudo eliminar el usuario" });
     //     }
     // } 
+    
       if (user.last_connection < twoDaysAgo) {
         try {
           const response = await this.usersService.deleteById(uid);

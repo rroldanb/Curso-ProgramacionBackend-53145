@@ -44,11 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const productContainer = event.target.closest(".card");
         const productNameElement = productContainer.querySelector(".prodName");
         const productName = productNameElement
+
           ? productNameElement.innerText
           : "Producto desconocido";
-
-        const productId = event.target.getAttribute("data-product-id");
-
+          const productId = event.target.getAttribute("data-product-id");
         fetch(`/api/carts/${cartId}/product/${productId}`, {
           method: "POST",
           headers: {
@@ -140,8 +139,26 @@ function logout() {
     .catch((error) => console.error("Error:", error));
 }
 
+
 function register(event) {
   event.preventDefault();
+
+  let newPassword = document.getElementById("password").value;
+  let confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
+    event.preventDefault();
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Las contraseñas no coinciden. Por favor, intente nuevamente.",
+      position: "top",
+      timer:2500,
+      confirmButtonText: "Aceptar",
+    });
+    return;
+  }
+
   const form = event.target;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData.entries());
@@ -363,5 +380,37 @@ document.addEventListener("DOMContentLoaded", () => {
         // alert('Hubo un problema al intentar enviar el correo de recuperación. Por favor, intenta de nuevo más tarde.');
       }
     });
+  }
+});
+
+
+const calculateAge = (birthDate) => {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  
+  let age = today.getFullYear() - birth.getFullYear();
+  let monthDiff = today.getMonth() - birth.getMonth();
+  let dayDiff = today.getDate() - birth.getDate();
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+      monthDiff += 12; 
+  }
+  if (dayDiff < 0) {
+      monthDiff--;
+      const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+      dayDiff += lastMonth.getDate(); 
+  }
+
+  return `${age} años ${monthDiff} meses ${dayDiff-1} días`;
+};
+
+document.getElementById("birthDate").addEventListener("change", function() {
+  const birthDateValue = this.value;
+  
+  if (birthDateValue) {
+      const age = calculateAge(birthDateValue);
+      document.getElementById("age").value = age;
+  } else {
+      document.getElementById("age").value = "";
   }
 });

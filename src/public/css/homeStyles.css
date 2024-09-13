@@ -1,12 +1,35 @@
-body{
-    /* background-color:cadetblue; */
-    background-color: #213547;
+body {
+  /* position: relative; */
+  margin: 0;
+  padding: 0;
 }
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/img/blueFlames.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat-y;
+  filter: blur(0px) brightness(0.7); /* Aplicar blur y restar brillo */
+  z-index: -1; /* Asegurarse de que el fondo esté detrás del contenido */
+}
+
+/* Asegurar que el contenido esté encima del fondo */
+/* body * {
+  position: relative;
+  z-index: 1;
+} */
+
 h1 {
-    color: blue
+    color: rgb(148, 148, 239)
 }
 h2 {
-    color: yellow;
+    color:gold;
 }
 h3 {
     color: green;
@@ -18,9 +41,27 @@ p{
     margin-bottom: 4px;
 }
 
+.btn{
+  border: rgb(44, 44, 44) 1px solid;
+}
+
+.pagination{
+  width:100%;
+}
+
+.pagination .page-link {
+  background: #213547;
+  color: white;
+}
+
 #newProdDetails{
   background-color: rgb(143, 167, 191);
 }
+
+.rrShadow{
+  box-shadow:  0px 0px 80px 80px  rgba(133, 223, 248, 0.8);
+}
+
 #editBoxTitle{
   margin-bottom: 1rem;
 }
@@ -96,33 +137,21 @@ left: 28px;
 }
 
 
-.main-image{
-    border-top-left-radius: 1rem;
-    border-top-right-radius : 1rem;
-    max-height: 270px;
-    min-height: 270px;
-    /* width: 100%; */
-    /* object-fit:cover */
+.thumbnail-display-area {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 270px; 
+  width: 100%;
+  
 }
 
-  .thumbnail-display-area {
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .thumbnail-display-area img {
-    /* position: absolute; */
-  /* top: 50%;
-  left: 50%; */
-    /* max-width: 100%; */
-    /* max-height: 200px; */
-    margin-bottom: 10px;
-    height: 200px;
-    /* width: auto;  */
-    overflow: hidden;
+.main-image {
+  max-height: 99%;
+  max-width: 99%;
+  object-fit: contain; 
+}
 
-  }
   
   .thumbnails {
     display: flex;

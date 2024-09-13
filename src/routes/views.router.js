@@ -21,6 +21,7 @@ router.get("/realtimeproducts", authorization(["premium", "admin"]), isLoggedIn,
 
 router.get("/carts",authorization(["user", "premium"]),isLoggedIn,cartsViewsController.renderCarts);
 router.get("/carts/:cid",authorization(["user", "premium"]),isLoggedIn,cartsViewsController.renderCart);
+
 router.get("/carts/:cid/purchase",authorization(["user", "premium"]),cartsViewsController.purchase);
 router.get("/carts/:cid/cancel/:tCode",authorization(["user", "premium"]),cartsViewsController.cancelPurchase);
 router.get("/carts/:cid/tickets",authorization(["user", "premium"]),cartsViewsController.renderTickets);

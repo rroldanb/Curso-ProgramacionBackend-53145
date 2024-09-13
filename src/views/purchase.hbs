@@ -1,46 +1,52 @@
 <main>
   <div class="bienvenida mt-4">
-    <h1>Hola {{email}}, bienvenido a nuestro e-commerce</h1>
-    <h2>Tu ticket de compra es el siguiente</h2>
-    <div
-      class="container rounded-3 p-2 d-flex justify-content-between align-items-center"
-      style="background-color: rgb(193, 193, 193);"
-    >
-      {{! <a href="/products" class="btn btn-dark ms-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a> }}
-      <a
-        href="#"
-        id="btn-store"
-        class="btn btn-dark ms-4"
-        data-cart-id="{{cid}}"
-      >Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
 
-      <p class="my-auto d-none" >CartID: 
-        <strong id="cart_id">{{cid}} </strong></p>
-      <button
-        class="btn btn-secondary"
-        id="btn-cart"
-        data-cart-id="{{cid}}"
-      >Volver al carrito <i class="bi bi-cart"></i></button>
-      {{! <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()">Volver al carrito <i class="bi bi-cart"></i></button> }}
-    </div>
+      <div class="container position-relative mt-4 bg-dark rounded-top-4 p-2">
+        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+          <a href="/">
+                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+        <div class="mensaje text-center">
+          <h1>Confirmación de compra</h1>
+          <h2>El detalle de tu compra es el siguiente</strong></h2>
+        </div>
+        <div class="position-absolute top-2 end-0 rounded-4 me-3">
+          <a href="/">
+                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+      </div>
+      {{!-- menu --}}
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary" style="background-color: #213547;">
+        <div class="flex ">
+          <a href="#" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+        </div>
+              <p class="my-auto d-none" >CartID: <strong id="cart_id">{{cid}} </strong></p>
+              <h3 class="my-auto text-white" >Código del Ticket: <strong id="ticketCode" class="text-white">{{code}} </strong></h3>
+        <div class="flex mx-2">
+          <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" data-cart-id="{{cid}}"><i class="bi bi-cart me-2"></i>Volver al carrito </button>
+        </div>
+      </div>
+
   </div>
 
-  <section class="w-75 mx-auto mt-4">
-    <div class="container">
-      <div class="carrito-productos container">
+  <section class=" mx-auto mt-0" >
+    <div class="container rounded-bottom-4" style="background-color: #213547;">
+      <div class="carrito-productos container ">
         {{#if purchasedProducts.length}}
-          <div class="d-flex flex-column align-items-center mb-2">
+          <div class="d-flex flex-column align-items-center mt-3 mb-2">
 
-            <h3>Productos comprados:</h3>
-            <p class="my-auto" >Código del Ticket: 
-              <strong id="ticketCode">{{code}} </strong></p>
+            <h3 class="text-warning">Productos comprados exitosamente:</h3>
+
           </div>
           {{#each purchasedProducts}}
             <div
-              class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center"
+              class="row carrito-producto  mb-1 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center justify-content-evenly"
               id="product-{{@index}}"
+              style="background-color: rgb(193, 193, 193);"
             >
-              <div class="col-md-2">
+              <div class="col-md-2" >
                 <img
                   class="carrito-producto-imagen w-50"
                   src="{{this.product.thumbnails.[0]}}"
@@ -57,16 +63,7 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <div
-                  class="carrito-producto-stock d-flex flex-column align-items-center"
-                >
-                  <small>Stock</small>
-                  <h4
-                    id="carrito-stock-{{this.product._id}}"
-                  >{{this.product.stock}}</h4>
-                </div>
-              </div>
+
 
               <div class="col-md-1">
                 <div
@@ -97,37 +94,38 @@
             </div>
           {{/each}}
           <div
-            class="carrito-footer mb-3 d-flex flex-nowrap flex-row container rounded-3 p-8 align-items-center justify-content-around"
-            style="background-color: rgb(193, 193, 193);"
+            class="carrito-footer mb-3 d-flex flex-nowrap flex-row container 
+            rounded-3 p-8 align-items-center justify-content-around bg-secondary"
+            
           >
             {{! <button type="submit" class="btn btn-danger">Seguir comprando <i class="bi bi-cart"></i></button> }}
-            <button
+            {{!-- <button
               id="cancel-purchase"
               class="btn btn-danger ticket-acciones-cancelar"
               data-cart-id="{{cid}}"
-            >Seguir comprando <i class="bi bi-cart"></i></button>
+            >Seguir comprando <i class="bi bi-cart"></i></button> --}}
 
             <div
               class="carrito-footer-cantidad d-flex flex-column align-items-center"
             >
-              <p>Cantidad de artículos:</p>
-              <h4 id="cant">{{purchasedProducts.length}}</h4>
+              <p class="text-light">Cantidad de artículos comprados:</p>
+              <h4 id="cant" class="text-warning">{{purchasedProducts.length}}</h4>
             </div>
             <div
               class="carrito-footer-total d-flex flex-column align-items-center"
             >
-              <p>Total Compra:</p>
-              <h3 id="total" class="price">{{totalAmount}}</h3>
+              <p class="text-light">Total Compra:</p>
+              <h3 id="total" class="price text-warning">{{totalAmount}}</h3>
             </div>
 
-            <form
+            {{!-- <form
               id="purchase-form"
               method="POST"
               action="/carts/{{cid}}/purchase/confirm"
             >
               <button type="submit" class="btn btn-primary">Proceder al pago
                 <i class="bi bi-credit-card"></i></button>
-            </form>
+            </form> --}}
 
           </div>
         {{else}}
@@ -141,11 +139,12 @@
       {{! productos sin stock }}
       <div class="carrito-productos container">
         {{#if failedProducts.length}}
-          <h3>Productos no comprados por falta de stock:</h3>
+          <h3 class="text-warning">Productos devueltos al carrito por falta de stock:</h3>
           {{#each failedProducts}}
             <div
-              class="row carrito-producto bg-body mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center align-content-center"
+              class="row carrito-producto  mb-3 d-flex flex-nowrap flex-row container-fluid rounded-3 p-2 align-items-center  justify-content-evenly"
               id="product-{{@index}}"
+              style="background-color: rgb(245, 191, 191);"
             >
               <div class="col-md-2">
                 <img
@@ -168,18 +167,18 @@
                 <div
                   class="carrito-producto-stock d-flex flex-column align-items-center"
                 >
-                  <small>Stock</small>
+                  <small>Stock actual</small>
                   <h4
                     id="carrito-stock-{{this.product._id}}"
                   >{{this.product.stock}}</h4>
                 </div>
               </div>
 
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <div
                   class="carrito-producto-cantidad d-flex flex-column align-items-center"
                 >
-                  <small>Cantidad</small>
+                  <small>Cantidad solicitada</small>
                   <h4 id="ticket-cantidad">{{this.quantity}}</h4>
                 </div>
               </div>

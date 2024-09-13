@@ -105,11 +105,26 @@ const initializePassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, age } = req.body;
         try {
-          //debo voler aqui para validadr la fecha de la edad
-          // if (isNaN(age)) {
-          //   logger.error("La edad debe ser un número");
+          
+          const isAdult = (birthDate) => {
+            const today = new Date();
+            const birthDateObj = new Date(birthDate);
+          
+            let age = today.getFullYear() - birthDateObj.getFullYear();
+            const monthDifference = today.getMonth() - birthDateObj.getMonth();
+          
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+              age--;
+            }
+          
+            return age >= 18;
+          };
+          
+          // if (birthDate && !isAdult(birthDate)) {
+          //   logger.error("El usuario debe ser mayor de edad");
           //   return done(null, false);
           // }
+          
           let userFound = await userService.getUserBy({ email: username });
           if (userFound) {
             logger.error("El usuario ya existe");

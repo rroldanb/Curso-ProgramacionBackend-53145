@@ -40,5 +40,4 @@ class ProductDaoMongo {
   }
 }
 
-
 module.exports = ProductDaoMongo;

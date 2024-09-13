@@ -1,5 +1,5 @@
 function redirectToCart() {
-    const cartIdElement = document.getElementById("cart_id");
+  const cartIdElement = document.getElementById("cart_id");
   const cid = cartIdElement ? cartIdElement.textContent.split : null;
 
    window.location.href =`/carts/${cid}`
@@ -43,28 +43,28 @@ function redirectToCart() {
       }
     }
   
-    const cancelButton = document.getElementById("cancel-purchase");
-    if (cancelButton) {
-      cancelButton.addEventListener("click", () => {
-        const cartId = cancelButton.getAttribute("data-cart-id");
-        handleCancel(cartId, "/carts/" + cartId);
-      });
-    }
+    // const cancelButton = document.getElementById("cancel-purchase");
+    // if (cancelButton) {
+    //   cancelButton.addEventListener("click", () => {
+    //     const cartId = cancelButton.getAttribute("data-cart-id");
+    //     handleCancel(cartId, "/carts/" + cartId);
+    //   });
+    // }
   
     const cartButton = document.getElementById("btn-cart");
     if (cartButton) {
       cartButton.addEventListener("click", () => {
-        const cartId = cartButton.getAttribute("data-cart-id");
-        handleCancel(cartId, "/carts/" + cartId);
+        // const cartId = cartButton.getAttribute("data-cart-id");
+        // handleCancel(cartId, "/carts/" + cartId);
       });
     }
   
     const storeButton = document.getElementById("btn-store");
     if (storeButton) {
       storeButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        const cartId = storeButton.getAttribute("data-cart-id");
-        handleCancel(cartId, "/products");
+        // event.preventDefault();
+        // const cartId = storeButton.getAttribute("data-cart-id");
+        // handleCancel(cartId, "/products");
       });
     }
   });

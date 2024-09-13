@@ -89,7 +89,7 @@ document.getElementById("profile-form").addEventListener("submit", async functio
     formData.append("first_name", form.first_name.value);
     formData.append("last_name", form.last_name.value);
     formData.append("birthDate", form.birthDate.value);
-    formData.append("age", form.age.value);
+    // formData.append("age", form.age.value);
     formData.append("email", form.email.value);
     const userId = document.getElementById("userId");
     const uid = userId.value;

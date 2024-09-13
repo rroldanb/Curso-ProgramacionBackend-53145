@@ -80,7 +80,7 @@ async function RenderView(req, res, urlFrom) {
   try {
     let {
       numPage = 1,
-      limitParam = 4,
+      limitParam = 8,
       categoryParam = null,
       availableOnly = null,
       orderBy = null,
@@ -292,19 +292,27 @@ class ProductsViewsController {
     const pid=req.params.pid
     const user=req.session.user
     const producto = await productsManager.getProductById(pid)
-    console.log(user)
-    const greeting = `Bienvenido a la tienda ${user.email}` ;
+    let greeting =  'Bienvenido a la tienda, registrate con tu cuenta para tener acceso a tu carro' ;
     const message = 'Explora los detalles del producto';
-
+    let cart_id = "";
+    let username = ""
+    let loggedUser = false
+    if (user){
+      loggedUser = true
+      cart_id =  user.cart_id
+      greeting = `Bienvenido a la tienda ${user.email}`
+      username = user.email
+    }
     res.render('productDetail', {
-      cart_id: user.cart_id,
-      username:user.email,
-        producto,
-        greeting,
-        message,
-        isAdded: false, 
-        cantidad: 1, 
-        styles: "homeStyles.css",
+      cart_id,
+      loggedUser,
+      username,
+      producto,
+      greeting,
+      message,
+      isAdded: false, 
+      cantidad: 1, 
+      styles: "homeStyles.css",
     });
   };
 

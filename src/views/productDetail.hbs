@@ -1,20 +1,47 @@
 
-    <header class="bienvenida">
-                <h1 class="titulo">{{greeting}}</h1>
-        <h2>{{message}}</h2>
-    </header>
-      <!-- Fila de botones -->
+    <header class="bienvenida mt-2 mt-md-5">
 
-    <section class="ItemDetailContainer container text-center">
-    <h3 class="cart_id  d-none" id="cart_id" >cart id {{cart_id}} </h3>
-    <h3 class="username  d-none" id="username" >{{username}} </h3>
-
-        <div class="d-flex justify-content-between my-2 mx-5 pt-2 container">
-            <a href="/products" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
-            <button class="btn btn-secondary" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+        <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
+            <div class="position-absolute top-4 start-0 rounded-4 mt-3 ms-3">
+                <a href="/">
+                    <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+                </a>
+            </div>
+            <div class="mensaje text-center">
+                <h1 class="titulo w-75 mx-auto">{{greeting}}</h1>
+                <h2>{{message}}</h2>
+                {{!-- <h1>{{nombre_completo}} Bienvenido a nuestro e-commerce</h1>
+                <h2> Estos son nuestros productos</h2> --}}
+            </div>
+            {{#if loggedUser}}
+            <div class="position-absolute top-4 end-0 rounded-4 mt-3 me-3">
+            {{else}}
+            <div class="position-absolute top-4 end-0 rounded-4 mt-3 me-3">
+            {{/if}}    
+                <a href="/">
+                    <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+                </a>
+            </div>
         </div>
+    <!-- Fila de botones -->
+
+        <div class="d-flex justify-content-between my-0 mx-5 pt-2 container bg-secondary p-2 w-100 z-3">
+            <a href="/" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+            {{#if loggedUser}}
+                <button class="btn btn-warning" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+            {{else}}
+                <button class="btn btn-warning" id="btn-cart" disabled onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+            {{/if}}
+        </div>
+    </header>
+
+    <section class="ItemDetailContainer container text-center  pb-4 rounded-bottom-4 rrShadow " style="background-color: #22384b;">
+        <h3 class="cart_id  d-none" id="cart_id" >cart id {{cart_id}} </h3>
+        <h3 class="username  d-none" id="username" >{{username}} </h3>
+
+
         <div class="row justify-content-evenly container ">
-            <h3 class="mt-4 text-center product-detail-title">{{capitalize producto.title}}</h3>
+            <h3 class="mt-4 text-center product-detail-title z-3">{{capitalize producto.title}}</h3>
             <h3 class="text-white mb-4">Detalles del producto:</h3>
             <div class="col-6 details-left container">
                 <div class="itemDetailContainer">
@@ -35,30 +62,30 @@
 
             </div>
 
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-4 ">
+                <div class="d-flex align-items-start flex-column mb-3 h-100">
+
                 <div class="descripcionDetail  " id="descripcionDetail">
                     {{#if producto.unidad}}
                         <p class="product-detail-item"><strong style="color: orange;" class="me-3">Presentación:</strong> {{producto.unidad}}</p>
                     {{/if}}
-                    <p class="product-detail-item"><strong style="color: orange;" class="me-3">Precio:</strong> {{toPesos producto.price}}</p>
-                    <p class="product-detail-item"><strong style="color: orange;" class="me-3">Stock:</strong> {{producto.stock}}</p>
+                    <p class="product-detail-item "><strong style="color: orange;" class="me-3">Precio:</strong> {{toPesos producto.price}}</p>
+                    <p class="product-detail-item "><strong style="color: orange;" class="me-3">Stock:</strong> {{producto.stock}}</p>
                     {{#if producto.precioxkilo}}
-                        <p class="product-detail-item"><strong style="color: orange;" class="me-3">Precio por Kilo:</strong> {{toPesos producto.precioxkilo}}</p>
+                        <p class="product-detail-item "><strong style="color: orange;" class="me-3">Precio por Kilo:</strong> {{toPesos producto.precioxkilo}}</p>
                     {{/if}}
-                </div>
+                    <div class="descripcionDetail">
+                        <p class="product-detail-item "><strong style="color: orange;" class="me-3">Vendido por:</strong>
+                        <span id="owner"> {{producto.owner}}</span>
+                        </p>
+                    </div>
 
+                </div>
                 {{#if producto.description}}
                     <div class="product-description">
                         <p><strong style="color: orange;" class="me-3">Descripción:</strong> {{producto.description}}</p>
                     </div>
                 {{/if}}
-                <div class="descripcionDetail">
-                    <p>
-
-                    <strong style="color: orange;" class="product-detail-item">Vendido por:</strong>
-                    </p>
-                        <p class="product-detail-item mb-2" id="owner"> {{producto.owner}}</p>
-                    </div>
             {{#if producto.caracteristicas}}
                 <div class="caracteristicasDetail" id="caracteristicasDetail" style="color: white; text-align: left;">
                     <h3 style="text-decoration: underline; margin: 2rem 0;">Características:</h3>
@@ -74,14 +101,20 @@
 
 
 
-                <div>
+                <div class="mt-auto mb-5 w-100">
+                    <p class="product-detail-item mt-auto me-3"><strong style="color: orange;">Estado:
+                    <span class="status-span ">
+                        {{#if producto.status}} Disponible {{else}} No disponible {{/if}}
+                    </span>
+                    </p>
                     {{#if producto.status}}
-                        <button class="btn btn-warning add-to-cart-btn w-100" id="add-to-cart-btn" data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
+                        <button class="btn btn-warning add-to-cart-btn w-100 mt-auto" id="add-to-cart-btn" data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
                     {{else}}
-                        <button class="btn btn-warning add-to-cart-btn w-100" id="add-to-cart-btn" disabled data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
+                        <button class="btn btn-warning add-to-cart-btn w-100 mt-auto" id="add-to-cart-btn" disabled data-product-id="{{producto._id}}"><i class="bi bi-cart-plus me-2"></i>Agregar al carrito </button>
                     {{/if}}
                 </div>
             </div>
+                </div>
         </div>
     </section>
 <script src="/js/productDetail.js"></script>

@@ -6,18 +6,19 @@ body {
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-image: url('/img/blueFlames.png');
   background-position: center;
-  background-size: cover;
+  background-size:cover;
   background-repeat: repeat-y;
-  filter: blur(0px) brightness(0.7); /* Aplicar blur y restar brillo */
-  z-index: -1; /* Asegurarse de que el fondo esté detrás del contenido */
+  filter: blur(0px) brightness(0.7);
+  z-index: -1; 
 }
+
 
 h1 {
     color: rgb(148, 148, 239)
@@ -126,6 +127,7 @@ left: 28px;
 
 .hero-image {
   background-image: url('/img/warriorRR.png');
+
   background-size: cover;
   background-position: center;
   width: 100px;

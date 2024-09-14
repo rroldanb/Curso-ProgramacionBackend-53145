@@ -202,7 +202,7 @@ async function RenderView(req, res, urlFrom) {
     if (urlFrom === "realtimeproducts") {
       req.io.on("connection", async (socket) => {
         req.io.emit("Server:loadProducts", docs);
-        (title = "Edit mercadito || Gago"), (renderPage = "/realTimeProducts/");
+        (title = "Edit mercadito || Gago"), (renderPage = "/realtimeproducts/");
       });
     }
 

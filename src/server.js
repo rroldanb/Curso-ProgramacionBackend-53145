@@ -15,8 +15,6 @@ const { logger } = require("./config/logger.config");
 const { loggerMiddleware } = require("./middlewares/logger.middleware");
 
 
-
-
 // Inicialización de la aplicación Express
 const app = express();
 dotenv.config();

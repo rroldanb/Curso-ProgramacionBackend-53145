@@ -74,9 +74,9 @@
     {{>filters}}
   {{!-- Productos --}}
     {{#each products}}
-      <div class="card bg-gradient text-white" style="background-color:rgb(97, 129, 137);" id="product-{{_id}}">
-        <a href="/products/{{_id}}">
-        <div class="thumbnail-display-area d-flex align-items-center justify-content-center bg-light rounded-4">
+      <div class="card justify-content-center text-white" style="background-color:rgb(97, 129, 137);" id="product-{{_id}}">
+        <a href="/products/{{_id}}" class="justify-content-center">
+        <div class="thumbnail-display-area d-flex align-items-center justify-content-center bg-light rounded-4 mx-auto">
   <img class="main-image rounded-4 " src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
 </div>
 

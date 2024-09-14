@@ -1,127 +1,132 @@
 <main>
-    <div class="bienvenida">
-      {{!-- hero --}}
-      <div class="container position-relative mt-4 bg-dark rounded-top-4 p-2">
-        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
-          <a href="/">
-                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
-          </a>
-        </div>
-        <div class="mensaje text-center">
-          <h1>Carrrito de compras</h1>
-          <h2>Contenido del Carrito de <strong>{{nombre}} {{apellido}}:</strong></h2>
-        </div>
-        <div class="position-absolute top-2 end-0 rounded-4 me-3">
-          <a href="/">
-                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
-          </a>
-        </div>
+
+
+  <div class="bienvenida ">
+    {{!-- hero --}}
+    <div class="container position-relative mt-4 bg-dark rounded-top-4 px-2 rrShadow">
+      <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+        <a href="/">
+              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
       </div>
-      {{!-- menu --}}
-      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary" style="background-color: #213547;">
-        <div class="flex ">
-          <a href="/" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
-          <button class="btn btn-danger empty-cart-btn me-4" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </button>
-        </div>
-        <div class="flex mx-2">
-          <button class="btn btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}"> <i class="bi bi-cash-coin me-2"></i>Finalizar Compra</button>
-        </div>
+      <div class="mensaje text-center py-1">
+        <h1 class="py-4">Carrito de compras</h1>
       </div>
-        <p class="my-auto d-none" >CartID: <strong> {{cid}} </strong> </p>
+      <div class="position-absolute top-2 end-0 rounded-4 me-3">
+        <a href="/">
+              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+      </div>
     </div>
+    {{!-- menu --}}
+    <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
+      <div class="flex ">
+        <a href="/" class="btn btn-dark"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+      </div>
+      <div class="text-center justify-content-center mx-auto">
 
+        <h2 class="text-center">Contenido del Carrito de <strong>{{nombre}} {{apellido}}:</strong></h2>
+      </div>
 
-<section class="mx-auto">
-  <div class="container rounded-bottom-4 " style="background-color: #213547;">
+      <form action="/api/payments/create-checkout-session" method="POST"></form>
+        <button type="submit"  class="btn btn-primary checkout-button" data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+      </form>
+    </div>
+  </div>
+      <p class="my-auto d-none" >CartID: <strong> {{cid}} </strong> </p>
 
-    <div class="carrito-productos my-4 ">
-      {{#if products.length}}
-        {{#each products}}
-          <div class="row carrito-producto  mb-1 d-flex 
-          flex-nowrap flex-row  mx-auto rounded-2
-          align-items-center align-content-center" style="background-color: rgb(198, 198, 198);" id="product-{{@index}}">
-            <div class="col-1 p-2">
-              <img class="carrito-producto-imagen w-100" src="{{this.pid.thumbnails.[0]}}" alt="{{this.pid.title}}">
+  <section class="mx-auto ">
+    <div class="container rounded-bottom-4 rrShadow" style="background-color: #213547;">
+{{!-- Contenido Carrito --}}
+      <div class="carrito-productos my-4 ">
+        {{#if products.length}}
+          {{#each products}}
+            <div class="row carrito-producto  mb-1 d-flex 
+            flex-nowrap flex-row  mx-auto rounded-2
+            align-items-center align-content-center" style="background-color: rgb(198, 198, 198);" id="product-{{@index}}">
+              <div class="col-1 p-2">
+                <img class="carrito-producto-imagen w-100" src="{{this.pid.thumbnails.[0]}}" alt="{{this.pid.title}}">
+              </div>
+
+                  <div class="col-4">
+                    <div class="carrito-producto-titulo d-flex flex-column align-items-center">
+                      <small>Producto</small>
+                      <h3>{{this.pid.title}}</h3>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1 ">
+                    <div class="carrito-producto-stock d-flex flex-column align-items-center">
+                      <small>Stock</small>
+                      <h4 id="carrito-stock-{{this.pid._id}}">{{this.pid.stock}}</h4>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1 ">
+                    <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
+                      <small>Cantidad</small>
+                      <input class="carrito-producto-cantidad-input form-control border border-dark fs-5" type="number" value="{{this.quantity}}">
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="carrito-producto-precio d-flex flex-column align-items-center">
+                      <small>Precio</small>
+                      <h4>{{this.pid.price}}</h4>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
+                      <small>Subtotal</small>
+                      <h4>{{multiply this.pid.price this.quantity}}</h4>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-danger remove-from-cart-btn" data-cart-id="{{../cid}}" data-product-id="{{this.pid._id}}"><i class="bi bi-trash-fill me-2"></i>Quitar del carrito </button>
+                  </div>
             </div>
-
-                <div class="col-4">
-                  <div class="carrito-producto-titulo d-flex flex-column align-items-center">
-                    <small>Producto</small>
-                    <h3>{{this.pid.title}}</h3>
-                  </div>
-                </div>
-
-                <div class="col-md-1 ">
-                  <div class="carrito-producto-stock d-flex flex-column align-items-center">
-                    <small>Stock</small>
-                    <h4 id="carrito-stock-{{this.pid._id}}">{{this.pid.stock}}</h4>
-                  </div>
-                </div>
-
-                <div class="col-md-1 ">
-                  <div class="carrito-producto-cantidad d-flex flex-column align-items-center">
-                    <small>Cantidad</small>
-                    <input class="carrito-producto-cantidad-input form-control border border-dark fs-5" type="number" value="{{this.quantity}}">
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <div class="carrito-producto-precio d-flex flex-column align-items-center">
-                    <small>Precio</small>
-                    <h4>{{this.pid.price}}</h4>
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="carrito-producto-subtotal d-flex flex-column align-items-center">
-                    <small>Subtotal</small>
-                    <h4>{{multiply this.pid.price this.quantity}}</h4>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <button class="btn btn-danger remove-from-cart-btn" data-cart-id="{{../cid}}" data-product-id="{{this.pid._id}}"><i class="bi bi-trash-fill me-2"></i>Quitar del carrito </button>
-                </div>
+          {{/each}}
+        {{else}}
+          <div class="carrito-vacio text-center">
+            <h2 class="mx-auto">Su carrito está vacío <i class="bi bi-emoji-frown"></i></h2>
+          <a href="/" class="btn btn-dark my-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
           </div>
-        {{/each}}
-      {{else}}
-        <div class="carrito-vacio text-center">
-          <h2 class="mx-auto">Su carrito está vacío <i class="bi bi-emoji-frown"></i></h2>
-        <a href="/" class="btn btn-dark my-4">Volver a la tienda <i class="bi bi-arrow-return-left"></i></a>
+        {{/if}}
+      </div>
+{{!-- Totales carrito y finalizar --}}
+      {{#if products.length}}
+        <div class="carrito-footer mb-3 d-flex mx-auto
+            flex-row container rounded-3  
+            align-items-center justify-content-around bg-secondary" style="background-color: rgb(193, 193, 193);">
+          <div class="">
+          <button class="btn btn-lg btn-danger empty-cart-btn" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </i></button>
+          </div>
+            <div class="carrito-footer-cantidad d-flex flex-column align-items-center">
+              <p class="text-light">Cantidad de artículos:</p>
+              <h4 id="cantidad-total" class="text-warning">{{calculateQtty products}}</h4>
+            </div>
+            <div class="carrito-footer-total d-flex flex-column align-items-center">
+              <p class=" text-light">Total Carrito:</p>
+              <h3 id="total" class="text-warning fw-bold">  {{calculateTotal products}}  </h3>
+            </div>
+          
+          <button class="btn btn-lg btn-primary carrito-acciones-comprar d-none" data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+      <form action="/api/payments/create-checkout-session" method="POST"></form>
+        <button type="submit"  class="btn btn-primary btn-lg checkout-button"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+      </form>
+
+            {{!-- <button class="carrito-acciones-comprar " data-bs-toggle="modal" data-bs-target="#modalPago">Finalizar Compra</button> --}}
+
         </div>
       {{/if}}
     </div>
+  </section>
 
-    {{#if products.length}}
-      <div class="carrito-footer mb-3 d-flex mx-auto
-          flex-row container rounded-3  
-          align-items-center justify-content-around bg-secondary" style="background-color: rgb(193, 193, 193);">
-        <div class="">
-        <button class="btn btn-lg btn-danger empty-cart-btn" data-cart-id="{{cid}}"><i class="bi bi-cart-x me-2"></i>Vaciar carrito </i></button>
-        </div>
-          <div class="carrito-footer-cantidad d-flex flex-column align-items-center">
-            <p class="text-light">Cantidad de artículos:</p>
-            <h4 id="cantidad-total" class="text-warning">{{calculateQtty products}}</h4>
-          </div>
-          <div class="carrito-footer-total d-flex flex-column align-items-center">
-            <p class=" text-light">Total Carrito:</p>
-            <h3 id="total" class="text-warning fw-bold">  {{calculateTotal products}}  </h3>
-          </div>
-        
-        <button class="btn btn-lg btn-primary carrito-acciones-comprar" data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
-
-          {{!-- <button class="carrito-acciones-comprar " data-bs-toggle="modal" data-bs-target="#modalPago">Finalizar Compra</button> --}}
-
-      </div>
-    {{/if}}
-  </div>
-</section>
-
-
-
-    <footer class="container">
+    <footer class="container mt-4">
       {{!-- <p class="texto-footer mx-auto text-light">@ Gagolabs 2024</p> --}}
     </footer>
-  </div>
+
 </main>
 
-<script src="/js/home.js"></script>
 <script src="/js/cart.js"></script>
+<script src="https://js.stripe.com/v3/"></script>

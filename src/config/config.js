@@ -21,5 +21,7 @@ exports.objectConfig = {
   app_url: process.env.APP_URL,
   git_hub_id: process.env.GITHUB_CLIENT_ID,
   git_hub_secret: process.env.GITHUB_CLIENT_SECRET,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+  stripe_public_key: process.env.STRIPE_PUBLIC_KEY,
 };
 

@@ -47,6 +47,8 @@ class CartRepository {
   updateProductQuantity = async (cid, pid, newQuantity) =>{
     return await this.cartDao.updateProductQuantity(cid, pid, newQuantity);
   }
+
+
 }
 
 module.exports = CartRepository;

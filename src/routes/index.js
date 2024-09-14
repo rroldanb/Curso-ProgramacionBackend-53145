@@ -12,6 +12,7 @@ const loggerRouter = require("./api/logger.router.js");
 const swaggerUiExpress = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const { swaggerOptions } = require("../config/swagger.config.js");
+const paymentsRouter = require("./api/payment.router.js");
 
 const router = Router();
 const specs = swaggerJsDoc(swaggerOptions);
@@ -19,6 +20,8 @@ const specs = swaggerJsDoc(swaggerOptions);
 router.use("/", viewsRouter);
 router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
+router.use('/api/payments', paymentsRouter)
+
 router.use("/api/tickets", ticketsRouter);
 
 router.use("/api/users", usersRouter);

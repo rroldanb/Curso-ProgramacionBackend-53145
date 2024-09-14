@@ -321,7 +321,7 @@ class ProductsViewsController {
   };
 
   realTimeProducts = async (req, res) => {
-    await RenderView(req, res, "realtimeproducts");
+    await RenderView(req, res, "realTimeProducts");
   };
 }
 

@@ -19,12 +19,6 @@ body::before {
   z-index: -1; /* Asegurarse de que el fondo esté detrás del contenido */
 }
 
-/* Asegurar que el contenido esté encima del fondo */
-/* body * {
-  position: relative;
-  z-index: 1;
-} */
-
 h1 {
     color: rgb(148, 148, 239)
 }
@@ -130,6 +124,13 @@ p{
 left: 28px;
 }
 
+.hero-image {
+  background-image: url('/img/warriorRR.png');
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+}
 
 
 .edit-detail-title{

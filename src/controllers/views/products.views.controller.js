@@ -95,7 +95,7 @@ async function RenderView(req, res, urlFrom) {
     if (categoryParam) filter.category = categoryParam;
     if (typeof availableOnly === "boolean") filter.status = availableOnly;
     if (
-      urlFrom === "productsadmin" &&
+      urlFrom === "productsAdmin" &&
       req.user.role.toLowerCase() === "premium"
     ) {
       filter.owner = req.user.email;
@@ -199,10 +199,10 @@ async function RenderView(req, res, urlFrom) {
     if (docs.length > 0) {
       formatearProductos(docs);
     } else docs = [];
-    if (urlFrom === "productsadmin") {
+    if (urlFrom === "productsAdmin") {
       req.io.on("connection", async (socket) => {
         req.io.emit("Server:loadProducts", docs);
-        (title = "Edit mercadito || Gago"), (renderPage = "/productsAdmin");
+        (title = "Edit mercadito || Gago"), (renderPage = "productsAdmin");
       });
     }
 
@@ -321,7 +321,7 @@ class ProductsViewsController {
   };
 
   realTimeProducts = async (req, res) => {
-    await RenderView(req, res, "productsadmin");
+    await RenderView(req, res, "productsAdmin");
   };
 }
 

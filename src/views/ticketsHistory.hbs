@@ -1,54 +1,94 @@
+  <div class="bienvenida-full">
+
+
+  <div class="bienvenida mt-2 mt-md-5">
+    {{!-- hero --}}
+    <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
+      <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+        <a href="/">
+              <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+      </div>
+      <div class="mensaje  text-center">
+        <h1 class="text-center">Historial de compras de </h1>
+        <h2> {{nombre}} {{apellido}}</h2>
+      </div>
+      <div class="position-absolute top-2 end-0 rounded-4 me-3">
+        <a href="/">
+              <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+      </div>
+    </div>
+    <p id="notMocking" class="d-none">{{notMocking}}</p>
+    <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
+    {{!-- menu --}}
+    <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3 rounded-bottom-4" style="background-color: #213547;">
+      <div class="flex ">
+      </div>
+      <div class="flex mx-2">
+          <a href="/" class="btn btn-dark" ><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
 <main>
-  <div class="container mt-4">
-    <div class="bienvenida mt-4 bg-info p-2 rounded-4">
-      <h2>Tickets de <strong>{{nombre}} {{apellido}}</strong></h2>
-      <h1 class="text-center text-wrap">Hola {{username}}, aquí están tus tickets de compra anteriores</h1>
+  <div class="container mt-0 z-3 ">
+
+
+    <div class="container rrPrimaryBG bg-gradient rounded-4 mt-0 pb-4 rrShadow">
+      <h2 class="mt-2 ">Listado de Tickets</h2>
+
+
+
+
+
+
+      
+    <div class="container tickets-table-container">
+
+          {{#if tickets.length}}
+            <table class="table-tickets  mt-2">
+              <thead>
+                <tr>
+                  <th>Código del Ticket</th>
+                  <th>Fecha de Compra</th>
+                  <th>Monto</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each tickets}}
+                  <tr id="{{_id}}">
+                    <td>{{this.code}}</td>
+                    <td>{{formatDate this.purchase_datetime}}</td>
+                    <td>{{toPesos this.amount}}</td>
+                    <td>
+                      <form action="/carts/:cid/tickets{{_id}}" method="GET">
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-search me-2"></i>Revisar Ticket</button>
+                      </form>
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{else}}
+            <div class="tickets-vacio">
+              <h2 class="text-dark">No tienes tickets de compra <i class="bi bi-emoji-frown"></i></h2>
+            </div>
+          {{/if}}
     </div>
 
-    <div class="container bg-warning bg-gradient rounded-4 mt-4">
-      <h1 class="mt-2">Listado de Tickets</h1>
-<div class="container">
 
-      {{#if tickets.length}}
-        <table class="table-tickets  mt-2">
-          <thead>
-            <tr>
-              <th>Código del Ticket</th>
-              <th>Fecha de Compra</th>
-              <th>Monto</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each tickets}}
-              <tr id="{{_id}}">
-                <td>{{this.code}}</td>
-                <td>{{formatDate this.purchase_datetime}}</td>
-                <td>{{toPesos this.amount}}</td>
-                <td>
-                  <form action="/carts/:cid/tickets{{_id}}" method="GET">
-                    <button class="btn btn-primary" type="submit"><i class="bi bi-search me-2"></i>Revisar Ticket</button>
-                  </form>
-                </td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{else}}
-        <div class="tickets-vacio">
-          <h2 class="text-dark">No tienes tickets de compra <i class="bi bi-emoji-frown"></i></h2>
-        </div>
-      {{/if}}
-</div>
-
-      <button class="btn btn-dark mt-4 mb-4" type="button" onclick="window.history.back();">
-        <i class="bi bi-shop-window me-2"></i>Volver a la tienda 
-      </button>
 
     </div>
   </div>
 
   <footer class="container">
-    <p class="texto-footer mx-auto text-light">© 2024 Gagolabs</p>
+  
   </footer>
 </main>
+
+<script src="/js/util.js"></script>

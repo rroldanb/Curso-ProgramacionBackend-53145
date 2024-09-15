@@ -1,19 +1,52 @@
+  <div class="">
+
+
+  <div class="bienvenida mt-2 mt-md-5">
+      <div class="container position-relative mt-4 bg-dark rounded-top-4 p-2 rrShadow">
+        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+        <a href="/">
+              <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+        </div>
+        <div class="mensaje text-center">
+          <h1>Bienvenido al chat de tu e-commerce</h1>
+          <h2>Comunicación en tiempo real</strong></h2>
+        </div>
+        <div class="position-absolute top-2 end-0 rounded-4 me-3">
+        <a href="/">
+              <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+        </a>
+        </div>
+      </div>
+      {{!-- menu --}}
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
+        <div class="flex ">
+        </div>
+        <div class="flex mx-2">
+          <a href="/" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+        </div>
+      </div>
+  </div>
+</div>
+    <div class="container rounded-bottom-4 rrShadow rrPrimaryBG z-3 pb-4" >
+
 
   <section id="chat">
-    <div class="container d-flex flex-column">
-  <a href="/products" class="btn btn-dark w-100">Volver a la vista de productos</a>
+    <div class="container d-flex flex-column  mx-auto">
     <p class="mx-auto card w-100 p-2" > Conectado como: <strong> {{username}} </strong>  </p>
     <p class="d-none" id="username">  {{username}}  </p>
 
     </div>
-    <ul id="messages"></ul>
-    <form id="form">
-      <input type="text" name="message" id="input" placeholder="Type a message" autocomplete="off" />
+    <ul id="messages" class="chat-messages"></ul>
+    <form id="form" class="chat-form">
+      <input type="text" class="chat-input" name="message" id="input" placeholder="Type a message" autocomplete="off" />
       <button type="submit">Enviar</button>
     </form>
   </section>
-  <img src="" alt="">
+</div>
+
 
 <script src="/socket.io/socket.io.js"></script>
 <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
 <script src="/js/chat.js"></script>
+<script src="/js/util.js"></script>

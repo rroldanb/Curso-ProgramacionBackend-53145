@@ -130,7 +130,7 @@ class UsersViewsController {
     const user = req.user;
     res.render("chat", {
       title: "Chat mercadito || Gago",
-      styles: "chat.css",
+      styles: "homeStyles.css",
       user: JSON.stringify(user),
       username: user.email,
     });

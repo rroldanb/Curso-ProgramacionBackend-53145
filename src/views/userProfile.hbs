@@ -1,11 +1,43 @@
+  <div class="bienvenida-full"></div>
+    <div class="bienvenida mt-2 mt-md-5">
+      {{!-- hero --}}
+      <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
+        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+          <a href="/">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+        <div class="mensaje  text-center">
+          <h1 class="text-center">Perfil de Usuario</h1>
+          <h2> {{first_name}} {{last_name}}</h2>
+        </div>
+        <div class="position-absolute top-2 end-0 rounded-4 me-3">
+          <a href="/">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+      </div>
+      <p id="notMocking" class="d-none">{{notMocking}}</p>
+      <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
+      {{!-- menu --}}
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3 " style="background-color: #213547;">
+        <div class="flex ">
+        </div>
+        <div class="flex mx-2">
+            <a href="/" class="btn btn-dark" ><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+        </div>
+      </div>
+    </div>
+  </div>
 <main>
-  <div class="container  d-flex flex-column mt-4"></div>
-    <div class="container">
+  <div class="container  d-flex flex-column mt-0"></div>
+    <div class="container rrPrimaryBG pb-4 rrShadow">
 
     <form id="profile-form" userId={{userId}} action="/api/users/{{userId}}/documents" 
     class="bg-info p-4 rounded-3 mt-4 bg-gradient" method="POST" enctype="multipart/form-data">
-    <h1 class="text-center bg-warning mb-2 rounded-3 ">Perfil de Usuario</h1>
-        
+
+    <h3 class="justify-content-center text-center fs-2"> {{first_name}} {{last_name}}</h3>
+    
     <input type="text" class="d-none" name="userId" id="userId" value="{{userId}}">
       <div class="d-flex container mt-4">
         <div class="profile-img-cont upload  ">
@@ -183,3 +215,4 @@
 </div>
 </main>
 <script src="/js/userProfile.js"></script>
+<script src="/js/util.js"></script>

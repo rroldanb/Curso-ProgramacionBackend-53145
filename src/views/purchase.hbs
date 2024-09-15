@@ -1,24 +1,27 @@
 <main>
-  <div class="bienvenida mt-4">
 
-      <div class="container position-relative mt-4 bg-dark rounded-top-4 p-2">
+
+  <div class="bienvenida-full"></div>
+    <div class="bienvenida mt-2 mt-md-5">
+      {{!-- hero --}}
+      <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
         <div class="position-absolute top-2 start-0 rounded-4 ms-3">
           <a href="/">
-                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
           </a>
         </div>
-        <div class="mensaje text-center">
+        <div class="mensaje  text-center">
           <h1>Confirmación de compra</h1>
           <h2>El detalle de tu compra es el siguiente</strong></h2>
         </div>
         <div class="position-absolute top-2 end-0 rounded-4 me-3">
           <a href="/">
-                <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
           </a>
         </div>
       </div>
       {{!-- menu --}}
-      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary" style="background-color: #213547;">
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
         <div class="flex ">
           <a href="#" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
         </div>
@@ -28,11 +31,14 @@
           <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" data-cart-id="{{cid}}"><i class="bi bi-cart me-2"></i>Volver al carrito </button>
         </div>
       </div>
-
+    </div>
   </div>
 
+
+
+
   <section class=" mx-auto mt-0" >
-    <div class="container rounded-bottom-4" style="background-color: #213547;">
+    <div class="container rounded-bottom-4 rrPrimaryBG rrShadow" >
       <div class="carrito-productos container ">
         {{#if purchasedProducts.length}}
           <div class="d-flex flex-column align-items-center mt-3 mb-2">
@@ -163,7 +169,7 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
+              <div class="col-md-3">
                 <div
                   class="carrito-producto-stock d-flex flex-column align-items-center"
                 >
@@ -174,7 +180,7 @@
                 </div>
               </div>
 
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <div
                   class="carrito-producto-cantidad d-flex flex-column align-items-center"
                 >
@@ -183,23 +189,7 @@
                 </div>
               </div>
 
-              <div class="col-md-1">
-                <div
-                  class="carrito-producto-precio d-flex flex-column align-items-center"
-                >
-                  <small>Precio</small>
-                  <h4 class="price">{{this.product.price}}</h4>
-                </div>
-              </div>
 
-              <div class="col-md-2">
-                <div
-                  class="carrito-producto-subtotal d-flex flex-column align-items-center"
-                >
-                  <small>Subtotal</small>
-                  <h4>{{multiply this.product.price this.quantity}}</h4>
-                </div>
-              </div>
             </div>
           {{/each}}
         {{else}}
@@ -213,9 +203,21 @@
     </div>
   </section>
 
-  <footer class="container">
-    <p class="texto-footer mx-auto text-light">© 2024 Gagolabs</p>
+  <footer class="container mb-4">
+    <h4 class=" mx-auto text-light">
+
+    ¡Agradecemos su preferencia! Se envió un correo electrónico de confirmación a <span id="customer-email"></span>.
+    </h4>
+    <h4 class=" mx-auto text-light">
+
+Si tiene alguna pregunta, envíe un correo electrónico a <a href="mailto:ruben.roldan@gmail.com">ruben.roldan@gmail.com</a>.
+    </h4>
   </footer>
+
+
+
+
 </main>
 
 <script src="/js/purchase.js"></script>
+<script src="/js/util.js"></script>

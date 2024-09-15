@@ -414,3 +414,4 @@ document.getElementById("birthDate").addEventListener("change", function() {
       document.getElementById("age").value = "";
   }
 });
+

@@ -1,8 +1,42 @@
-<body>
-    <div class="container mt-4">
 
-    <div class="container bg-warning rounded-4 mt-4">
-    <h1 class="mt-2">Listado de Usuarios</h1>
+
+
+  <div class="bienvenida-full"></div>
+    <div class="bienvenida mt-2 mt-md-5">
+      {{!-- hero --}}
+      <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
+        <div class="position-absolute top-2 start-0 rounded-4 ms-3">
+          <a href="/">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+        <div class="mensaje  text-center">
+          <h1 class="text-center">Listado de Usuarios</h1>
+          <h2> Usuarios actualmente registrados</h2>
+        </div>
+        <div class="position-absolute top-2 end-0 rounded-4 me-3">
+          <a href="/">
+                <img src="" class="rounded-4 hero-image" style="width: 100px; height: 100px;" alt="logo e-commerce">
+          </a>
+        </div>
+      </div>
+      <p id="notMocking" class="d-none">{{notMocking}}</p>
+      <h3 class="cart_id d-none " id="cart_id" >cart id {{cart_id}} </h3>
+      {{!-- menu --}}
+      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3 " style="background-color: #213547;">
+        <div class="flex ">
+        </div>
+        <div class="flex mx-2">
+            <a href="/" class="btn btn-dark" ><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <div class="container rrPrimaryBG rrShadow rounded-bottom-4 mt-0 z-3">
 
     <table class="mt-2">
         <thead>
@@ -60,9 +94,7 @@
             {{/each}}
         </tbody>
     </table>
-    <button class="btn btn-danger my-2" type="button" onclick="window.history.back();">Volver</button>
 
     </div>
-    </div>
 
-</body>
+<script src="/js/util.js"></script>

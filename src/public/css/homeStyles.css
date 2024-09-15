@@ -61,6 +61,14 @@ p{
   box-shadow:  0px 0px 80px 50px  rgba(64, 121, 177, 0.8);
 }
 
+.hero-image {
+  background-image: url('/img/warriorRR.png');
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+}
+
 #editBoxTitle{
   margin-bottom: 1rem;
 }
@@ -129,14 +137,7 @@ p{
 left: 28px;
 }
 
-.hero-image {
-  background-image: url('img/warriorRR.png');
 
-  background-size: cover;
-  background-position: center;
-  width: 100px;
-  height: 100px;
-}
 
 
 .edit-detail-title{
@@ -474,4 +475,78 @@ td:nth-child(3){
   color: orange;
   font-size: 4rem;
   font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+.chat-messages {
+  background-color:rgb(201, 205, 205);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  height: 100%;
+  scroll-behavior: smooth;
+  padding-bottom: 48px;
+}
+
+.chat-messages>li {
+  padding: .5rem 1rem;
+}
+
+.chat-messages>li:nth-child(odd) {
+  background: #d2cfcf;
+}
+
+#chat {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 350px;
+  height: 100%;
+  position: relative;
+}
+
+.message_head{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-form {
+  bottom: 0;
+  display: flex;
+  height: 48px;
+  left: 0;
+  padding: 4px;
+  position: absolute;
+  right: 0;
+}
+
+.chat-input {
+  border-radius: 9999px;
+  border: 1px solid #eee;
+  flex: 1;
+  margin: 4px;
+  padding: 0 8px;
+}
+
+.chat-input:focus {
+  outline: 0;
+}
+
+.chat-form>button {
+  background: #09f;
+  color: #fff;
+  border: 0;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+.chat-form>button:hover {
+  background: #0cf;
+}
+
+small{
+    font-size: smaller;
+    font-weight: bold;
 }

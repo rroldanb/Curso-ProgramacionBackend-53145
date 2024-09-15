@@ -7,6 +7,7 @@
     <div class="container position-relative mt-2 mt-md-5 bg-dark rounded-top-4 p-2 rrShadow">
       <div class="position-absolute top-2 start-0 rounded-4 ms-3 hero-image">
         <a href="/">
+              <img src="img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
         </a>
       </div>
       <div class="mensaje  text-center">
@@ -15,6 +16,7 @@
       </div>
       <div class="position-absolute top-2 end-0 rounded-4 me-3 hero-image">
         <a href="/">
+              <img src="img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
         </a>
       </div>
     </div>
@@ -68,7 +70,7 @@
   </div>
 
   {{!-- filters, productos y paginador--}}
-    <div class="container rounded-bottom-4 rrShadow z-3" style="background-color: #213547;">
+    <div class="container rounded-bottom-4 rrShadow rrPrimaryBG z-3" >
     {{>filters}}
   {{!-- Productos --}}
     {{#each products}}
@@ -78,12 +80,12 @@
             <img class="main-image rounded-4 " src="{{this.thumbnails.[0]}}" alt="Imagen principal del producto">
           </div>
         </a>
-        <div class="thumbnails">
+        <div class="thumbnails ">
           {{#each this.thumbnails}}
             <img class="thumbnail" src="{{this}}" alt="Thumbnail del producto">
           {{/each}}
         </div>
-        <p class="card-price text-center mt-1" style="color: rgb(255, 231, 186);">{{ this.price}}</p>
+        <p class="card-price fw-bold text-center mt-1" style="color: rgb(249, 238, 218);">{{ this.price}}</p>
         <h3 class="text-center prodName text-white">{{this.title}}</h3>
         {{!-- <p class="text-white">
           <strong>Estado:</strong>

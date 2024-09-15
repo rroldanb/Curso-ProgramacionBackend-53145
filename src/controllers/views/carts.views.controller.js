@@ -132,7 +132,7 @@ class CartsViewsController {
         email: req.session.user.email,
         cid,
         code,
-        title: "carrito || Gago",
+        title: "Comprobante de compra || Gago",
         styles: "homeStyles.css",
       });
     } catch (error) {

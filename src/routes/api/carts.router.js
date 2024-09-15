@@ -3,9 +3,8 @@ const router = Router();
 
 const { CartsController } = require("../../controllers/carts.controller");
 const { authorization } = require("../../middlewares/auth.middleware");
-const { purchaseCart } = require("../../controllers/tickets.controller");
-const { objectConfig } = require("../../config/config");
-
+const { TicketsController } = require("../../controllers/tickets.controller");
+const ticketscontroller = new TicketsController()
 const {
   getCart,
   createCart,
@@ -24,7 +23,7 @@ router.put("/:cid", authorization(["user", "premium"]), addProductsToCart);
 router.put("/:cid/product/:pid",authorization(["user", "premium"]),updateProductQuantity);
 
 // router.post("/",authorization(['user', 'premium']),  createCart);
-// router.post("/:cid/purchase",authorization(['user']),  purchaseTicket)
+router.post("/:cid/purchase",authorization(['user']),  ticketscontroller.purchaseCart)
 
 
 module.exports = {

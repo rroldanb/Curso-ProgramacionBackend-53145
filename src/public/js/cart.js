@@ -208,21 +208,19 @@ const checkoutbuttons = document.querySelectorAll('.checkout-button');
 checkoutbuttons.forEach(button =>{
 
   button.addEventListener('click', async () => {
+    const cartId = button.getAttribute("data-cart-id");
+
       const res = await fetch('/api/payments/create-checkout-session', {
           method: 'POST',
-          // headers: {
-          //     'Content-Type': 'application/json'
-          // },
-          // body: JSON.stringify({
-          //     amount: 1000,
-          //     currency: 'usd',
-          //     paymentMethodType: 'card',
-          //     paymentMethod: 'pm_card_visa',
-          //     confirm: true
-          // })
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cartId,
+          })
       })
       const data = await res.json();
-      console.log('data recibida de session', data)
+      // console.log('data recibida de session', data)
       window.location.href = data.url;
   })
 })

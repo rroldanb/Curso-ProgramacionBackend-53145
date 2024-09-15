@@ -246,52 +246,71 @@ function updateProductCard(productId, updatedProduct) {
 
 const renderProductUI = (product) => {
 
-
+// crea Card
   const productCard = document.createElement("div");
   productCard.classList.add("card");
-  productCard.style.minWidth = "250px";
+  productCard.classList.add("adminProdCard");
+  productCard.style.minWidth = "300px";
   productCard.id = `product-${product._id}`;
 
+// Imagen principal contenedor  
   const thumbnailDisplayArea = document.createElement("div");
   thumbnailDisplayArea.classList.add("thumbnail-display-area");
+  thumbnailDisplayArea.classList.add("bg-secondary");
+  thumbnailDisplayArea.classList.add("rounded-top-3");
+
+// Imagen principal imagen  
   const mainImage = document.createElement("img");
   mainImage.classList.add("main-image");
   mainImage.src = product.thumbnails[0];
   mainImage.alt = "Imagen principal del producto";
+//Anida imagen principal
   thumbnailDisplayArea.appendChild(mainImage);
   productCard.appendChild(thumbnailDisplayArea);
 
+
+// Miniaturas  
   const thumbnailsDiv = document.createElement("div");
   thumbnailsDiv.classList.add("thumbnails");
+  
   product.thumbnails.forEach((thumbnailUrl) => {
+// miniaturas contenedor    
+    const thumnailContainer = document.createElement("div")
+    thumnailContainer.classList.add('bg-info')
+    thumnailContainer.classList.add('rounded-4')
+
+// miniaturas imagen    
     const thumbnailImg = document.createElement("img");
     thumbnailImg.classList.add("thumbnail");
     thumbnailImg.src = thumbnailUrl;
     thumbnailImg.alt = "Thumbnail del producto";
-    thumbnailsDiv.appendChild(thumbnailImg);
+//anida miniaturas    
+    thumnailContainer.appendChild(thumbnailImg);
+    thumbnailsDiv.appendChild(thumnailContainer);
 
+//magia desplegar miniatura en principal
     thumbnailImg.addEventListener("click", function () {
       const productCard = thumbnailImg.closest(".card");
       const mainImage = productCard.querySelector(".main-image");
       mainImage.src = thumbnailImg.src;
     });
   });
-
+// inserta imagen a card
   productCard.appendChild(thumbnailsDiv);
 
+// detalles producto
   const details = document.createElement("div");
 
-
     details.innerHTML = `
-        <h3 class="text-center edit-detail-title">${product.title}</h3>
+        <h3 class="text-center text-primary edit-detail-title">${product.title}</h3>
+
         <span><strong>Descripción:</strong> </span>
-        <textarea name="newProdDescription" id="newProdDescription" class="w-100" rows="6" >${product.description}</textarea>
+        <textarea name="newProdDescription" id="newProdDescription" disabled class="w-100" rows="4" >${product.description}</textarea>
        
         <p><strong>Código:</strong> ${product.code}</p>
         <p><strong>Precio:</strong> ${product.price}</p>
-        <p>
-        <strong>Estado:</strong> 
-  
+
+        <p><strong>Estado:</strong> 
           <span style="color: ${product.status ? "green" : "red"}">
           ${product.status ? "Disponible" : "No disponible"}</span>
         </p>
@@ -299,8 +318,9 @@ const renderProductUI = (product) => {
         <p><strong>Stock:</strong> ${product.stock}</p>
         <p><strong>Categoría:</strong> ${product.category}</p>
         
-        <p><strong>Propietario:</strong> ${product.owner}</p>
-  
+        <p class="justify-content-center mb-0"><strong class"mb-0">Vendido por:</strong> 
+        </p>
+        <p class="justify-content-center mt-0 text-center"> ${product.owner} </p>
         <div class=" d-flex justify-content-between mb-0 mt-4">
           <button class="btn btn-danger delete" data-id="${
             product._id

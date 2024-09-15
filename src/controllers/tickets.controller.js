@@ -6,6 +6,7 @@ class TicketsController {
   }
 
   purchaseCart = async (req, res) => {
+    console.log('ticker controller params', req.params.cid)
     const { cid } = req.params;
     const cart = await CartsService.getCartById(cid);
 
@@ -46,14 +47,14 @@ class TicketsController {
       );
       await CartsService.updateCart(cart._id, cart);
       return res.status(400).json({
-        error: "Some products could not be purchased",
+        error: "Algunos productos no pudieron ser comprados",
         failedProducts,
       });
     } else {
       await CartsService.emptyCart(cart._id);
       return res
         .status(200)
-        .json({ message: "Purchase completed successfully", ticket });
+        .json({ message: "Compra exitosa", ticket });
     }
   };
 

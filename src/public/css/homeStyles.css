@@ -49,8 +49,12 @@ p{
   color: white;
 }
 
-#newProdDetails{
+.adminProdCard{
   background-color: rgb(143, 167, 191);
+}
+
+.rrPrimaryBG{
+  background-color: #213547df;
 }
 
 .rrShadow{
@@ -126,7 +130,7 @@ left: 28px;
 }
 
 .hero-image {
-  background-image: url('/img/warriorRR.png');
+  background-image: url('img/warriorRR.png');
 
   background-size: cover;
   background-position: center;

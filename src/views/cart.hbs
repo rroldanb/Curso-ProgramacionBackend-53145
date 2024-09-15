@@ -6,7 +6,7 @@
     <div class="container position-relative mt-4 bg-dark rounded-top-4 px-2 rrShadow">
       <div class="position-absolute top-2 start-0 rounded-4 ms-3">
         <a href="/">
-              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+              <img src="img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
         </a>
       </div>
       <div class="mensaje text-center py-1">
@@ -14,7 +14,7 @@
       </div>
       <div class="position-absolute top-2 end-0 rounded-4 me-3">
         <a href="/">
-              <img src="/img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
+              <img src="img/warriorRR.png" class="rounded-4" style="width: 100px; height: 100px;" alt="logo e-commerce">
         </a>
       </div>
     </div>
@@ -110,9 +110,9 @@
               <h3 id="total" class="text-warning fw-bold">  {{calculateTotal products}}  </h3>
             </div>
           
-          <button class="btn btn-lg btn-primary carrito-acciones-comprar d-none" data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+          <button class="btn btn-lg btn-warning carrito-acciones-comprar " data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
       <form action="/api/payments/create-checkout-session" method="POST"></form>
-        <button type="submit"  class="btn btn-primary btn-lg checkout-button"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+        <button type="submit" data-cart-id="{{cid}}" class="btn btn-primary btn-lg checkout-button"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
       </form>
 
             {{!-- <button class="carrito-acciones-comprar " data-bs-toggle="modal" data-bs-target="#modalPago">Finalizar Compra</button> --}}

@@ -110,7 +110,7 @@
               <h3 id="total" class="text-warning fw-bold">  {{calculateTotal products}}  </h3>
             </div>
           
-          <button class="btn btn-lg btn-warning carrito-acciones-comprar " data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
+          {{!-- <button class="btn btn-lg btn-warning carrito-acciones-comprar " data-cart-id="{{cid}}"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button> --}}
       <form action="/api/payments/create-checkout-session" method="POST"></form>
         <button type="submit" data-cart-id="{{cid}}" class="btn btn-primary btn-lg checkout-button"><i class="bi bi-cash-coin me-2"></i>Finalizar Compra </button>
       </form>

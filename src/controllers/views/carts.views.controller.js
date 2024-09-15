@@ -119,13 +119,12 @@ class CartsViewsController {
           amount: totalAmount,
           purchaser: req.session.user.email,
         };
-
         await ticketsManager.createTicket(newTicket);
         await cartsManager.emptyCart(cid);
         await cartsManager.addProductsToCart(cid, failedProducts);
       }
 
-      res.render("purchase", {
+      res.render("ticket", {
         purchasedProducts,
         failedProducts,
         totalAmount,
@@ -141,39 +140,7 @@ class CartsViewsController {
     }
   };
 
-  cancelPurchase = async (req, res) => {
-    const { cid, tCode } = req.params;
-    try {
-      const cart = await cartsManager.getCartById(cid);
-      const ticket = await ticketsManager.getTicketBy({ code: tCode });
 
-      if (!cart) {
-        return res.status(404).json({ error: "Carrito no encontrado" });
-      }
-
-      if (!ticket) {
-        return res.status(404).json({ error: "Ticket no encontrado" });
-      }
-
-      for (const item of ticket.purchase) {
-        const product = await productsManager.getProductById(item.pid);
-        product.stock += item.quantity;
-        await productsManager.updateProduct(product._id, product);
-      }
-
-      const updatedCart = [...cart.products, ...ticket.purchase];
-
-      await cartsManager.emptyCart(cid);
-      await cartsManager.addProductsToCart(cid, updatedCart);
-
-      await ticketsManager.deleteTicket(ticket._id);
-
-      return res.json({ success: true });
-    } catch (error) {
-      console.error("Error al cancelar:", error);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
 
   renderTickets = async (req, res) => {
     try {

@@ -60,26 +60,6 @@ class PaymentController {
   };
   
 
-  handleCancel= async(cartId, redirectUrl)=> {
-    try {
-      const response = await fetch(`/carts/${cartId}/cancel/${tCode}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        window.location.href = redirectUrl;
-      } else {
-        const result = await response.json();
-        alert(`Error: ${result.error}`);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
 
 }
 

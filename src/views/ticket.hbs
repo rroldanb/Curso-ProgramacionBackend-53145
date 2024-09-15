@@ -21,12 +21,16 @@
         </div>
       </div>
       {{!-- menu --}}
-      <div class="container d-flex justify-content-between mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
+      <div class="container d-flex justify-content-between align-items-center mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
         <div class="flex ">
-          <a href="#" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+          <a href="/" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
         </div>
+        <div class="d-flex flex-column">
+
               <p class="my-auto d-none" >CartID: <strong id="cart_id">{{cid}} </strong></p>
               <h3 class="my-auto text-white" >Código del Ticket: <strong id="ticketCode" class="text-white">{{code}} </strong></h3>
+              <p class="text-warning justify-content-center">Fecha de la compra {{formatDate date}}</p>
+        </div>
         <div class="flex mx-2">
           <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" data-cart-id="{{cid}}"><i class="bi bi-cart me-2"></i>Volver al carrito </button>
         </div>
@@ -37,8 +41,8 @@
 
 
 
-  <section class=" mx-auto mt-0" >
-    <div class="container rounded-bottom-4 rrPrimaryBG rrShadow" >
+  <section class=" mx-auto mt-0 mb-4" >
+    <div class="container rounded-bottom-4 rrPrimaryBG rrShadow mb-4" >
       <div class="carrito-productos container ">
         {{#if purchasedProducts.length}}
           <div class="d-flex flex-column align-items-center mt-3 mb-2">
@@ -193,9 +197,9 @@
             </div>
           {{/each}}
         {{else}}
-          <div class="carrito-vacio">
-            <h2>Todos los productos tienen stock suficiente
-              <i class="bi bi-emoji-smile"></i></h2>
+          <div class="carrito-vacio py-3">
+            {{!-- <h2>Todos los productos tienen stock suficiente
+              <i class="bi bi-emoji-smile"></i></h2> --}}
           </div>
         {{/if}}
       </div>
@@ -203,14 +207,14 @@
     </div>
   </section>
 
-  <footer class="container mb-4">
+  <footer class="container my-4 py-4 rrPrimaryBG rrShadow rounded-4">
     <h4 class=" mx-auto text-light">
 
-    ¡Agradecemos su preferencia! Se envió un correo electrónico de confirmación a <span id="customer-email"></span>.
+    ¡Agradecemos su preferencia! Se envió un correo electrónico de confirmación a <span id="customer-email" class="text-warning"> {{email}} </span>.
     </h4>
     <h4 class=" mx-auto text-light">
 
-Si tiene alguna pregunta, envíe un correo electrónico a <a href="mailto:ruben.roldan@gmail.com">ruben.roldan@gmail.com</a>.
+  Si tiene alguna pregunta, envíe un correo electrónico a <a href="mailto:ruben.roldan.b@gmail.com" class="text-warning">ruben.roldan@gmail.com</a>.
     </h4>
   </footer>
 

@@ -66,7 +66,7 @@
                     <td>{{formatDate this.purchase_datetime}}</td>
                     <td>{{toPesos this.amount}}</td>
                     <td>
-                      <form action="/carts/:cid/tickets{{_id}}" method="GET">
+                      <form action="/tickets/{{_id}}" method="GET">
                         <button class="btn btn-primary" type="submit"><i class="bi bi-search me-2"></i>Revisar Ticket</button>
                       </form>
                     </td>
@@ -76,7 +76,7 @@
             </table>
           {{else}}
             <div class="tickets-vacio">
-              <h2 class="text-dark">No tienes tickets de compra <i class="bi bi-emoji-frown"></i></h2>
+              <h2 class="text-danger">No tienes tickets de compra <i class="bi bi-emoji-frown"></i></h2>
             </div>
           {{/if}}
     </div>

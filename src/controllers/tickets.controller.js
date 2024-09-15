@@ -73,5 +73,20 @@ try {
 }
 
   };
+  getUserTicket = async (req, res) => {
+    const tid = req.query;
+try {
+  
+  const tickets = await this.ticketsService.getTicketsBy({_id: tid});
+  res.send({
+    status: "success",
+    payload: tickets
+  });
+} catch (error) {
+  console.error("Error al obtener los tickets del usuario:", error);
+  res.status(500).json({ error: "Error al obtener los tickets del usuario." });
+}
+
+  };
 }
 module.exports = { TicketsController };

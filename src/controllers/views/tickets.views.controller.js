@@ -35,7 +35,7 @@ class TicketsViewsController {
         try {
           const tid = req.params.tid;
           let user = req.user;
-          const products = [];
+          const purchasedProducts = [];
       
           if (user && user.user) {
             user = user.user;
@@ -49,7 +49,7 @@ class TicketsViewsController {
               const quantity = item.quantity
       
               if (product) {
-                products.push({
+                purchasedProducts.push({
                   ...item,   
                   product,   
                   quantity,
@@ -62,7 +62,7 @@ class TicketsViewsController {
           }
       
           res.render("ticket", {
-            purchasedProducts: products,
+            purchasedProducts,
             totalAmount: ticket.amount,
             email: ticket.purchaser,
             code: ticket.code,

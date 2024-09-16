@@ -13,6 +13,8 @@
         <div class="mensaje  text-center">
           <h1>Confirmación de compra</h1>
           <h2>El detalle de tu compra es el siguiente</strong></h2>
+    <h3 class="cart_id text-danger d-none " id="cart_id" >cart id {{cid}} </h3>
+
         </div>
         <div class="position-absolute top-2 end-0 rounded-4 me-3">
           <a href="/">
@@ -23,7 +25,10 @@
       {{!-- menu --}}
       <div class="container d-flex justify-content-between align-items-center mt-0 mx-2 py-3 bg-secondary z-3" style="background-color: #213547;">
         <div class="flex ">
-          <a href="/" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}"><i class="bi bi-shop-window me-2"></i>Volver a la tienda</a>
+          <a href="/" class="btn btn-dark" id="btn-store" data-cart-id="{{cid}}">
+  <i class="bi bi-shop-window me-2"></i> Volver a la tienda
+</a>
+
         </div>
         <div class="d-flex flex-column">
 
@@ -32,7 +37,10 @@
               <p class="text-warning justify-content-center">Fecha de la compra {{formatDate date}}</p>
         </div>
         <div class="flex mx-2">
-          <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" data-cart-id="{{cid}}"><i class="bi bi-cart me-2"></i>Volver al carrito </button>
+      <button class="btn btn-danger " onclick="logout()" id="btn-logout"><i class="bi bi-door-closed me-2"></i>LogOut </button>
+          <button class="btn btn-secondary btn-cart border border-dark" id="btn-cart" onclick="redirectToCart()"><i class="bi bi-cart me-2"></i>Ir al carrito </button>
+
+          <a href="/carts/{{cid}}" class="btn btn-secondary btn-cart border border-dark d-none" id="btn-cart" data-cart-id="{{cid}}"><i class="bi bi-cart me-2"></i>Volver al carrito </a>
         </div>
       </div>
     </div>

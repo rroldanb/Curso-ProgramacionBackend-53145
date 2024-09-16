@@ -74,9 +74,11 @@ const deleteProductEmail = async (userEmail, product) => {
   });
 };
 
-const purchaseSuccess = async (userEmail, ticket) => {
+
+const purchaseSuccessEmailTest = async (userEmail, ownerEmail, ticket) => {
   return await transport.sendMail({
     from: "RR_Ecommerce <ruben.roldan.b@gmail.com>",
+    cco: ownerEmail,
     to: userEmail,
     subject: "Compra exitosa",
     html: `
@@ -107,10 +109,88 @@ const purchaseSuccess = async (userEmail, ticket) => {
   });
 };
 
+const purchaseSuccessEmailUser = async (userEmail, ticket) => {
+  const productDetails = ticket.purchase.map(item => {
+    const { product } = item;
+    return `
+      <p>
+        <strong style="color: green;">Nombre:</strong> 
+        ${product.title}
+      </p>
+      <p>
+        <strong style="color: green;">Descripción:</strong> 
+        ${product.description}
+      </p>
+      <p>
+        <strong style="color: green;">Código:</strong> 
+        ${product.code}
+      </p>
+      <p>
+        <strong style="color: green;">Categoría:</strong> 
+        ${product.category}
+      </p>
+    `;
+  }).join('');
+
+  return await transport.sendMail({
+    from: "RR_Ecommerce <ruben.roldan.b@gmail.com>",
+    to: userEmail,
+    subject: "Compra exitosa",
+    html: `
+      <div>
+        <h1 style="color: blue;">Felicitaciones por tu compra en nuestro e-commerce</h1>
+        <p>A continuación el detalle de tu compra:</p>
+        <h3><strong style="color: green;">Código del ticket:</strong> ${ticket.code}</h3>
+        ${productDetails}
+        <h3><strong style="color: green;">Total de tu compra:</strong> ${ticket.amount}</h3>
+      </div>
+    `,
+  });
+};
+
+const purchaseSuccessEmailOwner = async (ownerEmail, ticket) => {
+  const productDetails = ticket.purchase
+    .filter(item => item.product.owner === ownerEmail)
+    .map(item => {
+      const { product } = item;
+      return `
+        <p>
+          <strong style="color: green;">Producto vendido:</strong> 
+          ${product.title}
+        </p>
+        <p>
+          <strong style="color: green;">Código:</strong> 
+          ${product.code}
+        </p>
+        <p>
+          <strong style="color: green;">Cantidad vendida:</strong> 
+          ${item.quantity}
+        </p>
+      `;
+    }).join('');
+
+  return await transport.sendMail({
+    from: "RR_Ecommerce <ruben.roldan.b@gmail.com>",
+    to: ownerEmail,
+    subject: "Notificación de Venta de Producto",
+    html: `
+      <div>
+        <h1 style="color: blue;">Uno de tus productos ha sido vendido en nuestro e-commerce</h1>
+        <p>Detalles de la venta:</p>
+        ${productDetails}
+        <h3><strong style="color: green;">Comprador:</strong> ${ticket.purchaser}</h3>
+      </div>
+    `,
+  });
+};
+
+
+
 module.exports = {
   transport,
   testEmail,
   resetEmail,
   deleteProductEmail,
-  purchaseSuccess,
+  purchaseSuccessEmailUser,
+  purchaseSuccessEmailOwner
 };

@@ -6,6 +6,7 @@ const cartsManager = new CartsDaoMongo();
 const productsManager = new ProductsManager();
 const ticketsManager = new TicketsManager();
 
+const { purchaseSuccessEmailUser, purchaseSuccessEmailOwner } = require("../../config/sendMail.config");
 const renderUtils = require("../../public/js/renderUtils.js");
 
 function formatearProductosAnidados(products) {
@@ -84,18 +85,21 @@ class CartsViewsController {
     try {
       const { cid } = req.params;
       const cart = await cartsManager.getCartById(cid);
-
+      const userEmail = req.session.user.email;
+      
       if (!cart) {
-        return res.status(404).json({ error: "Cart not found" });
+        return res.status(404).json({ error: "Carrito no encontrado" });
       }
-
+  
       let totalAmount = 0;
       const purchasedProducts = [];
       const failedProducts = [];
       const code = `TCK-${Date.now()}`;
+      
+      const ownersSet = new Set(); // Para mantener una lista única de dueños
       for (const item of cart.products) {
         const product = await productsManager.getProductById(item.pid);
-
+        
         if (product.stock >= item.quantity) {
           product.stock -= item.quantity;
           await productsManager.updateProduct(product._id, product);
@@ -104,6 +108,10 @@ class CartsViewsController {
             ...item,
             product,
           });
+  
+          if (product.owner !== 'admin') {
+            ownersSet.add(product.owner); 
+          }
         } else {
           failedProducts.push({
             ...item,
@@ -111,34 +119,42 @@ class CartsViewsController {
           });
         }
       }
-
+  
       if (purchasedProducts.length > 0) {
         const newTicket = {
           code,
           purchase: purchasedProducts,
           amount: totalAmount,
-          purchaser: req.session.user.email,
+          purchaser: userEmail,
         };
-        await ticketsManager.createTicket(newTicket);
+        const ticket = await ticketsManager.createTicket(newTicket);
         await cartsManager.emptyCart(cid);
         await cartsManager.addProductsToCart(cid, failedProducts);
-      }
+  
+        // Enviar correos
+        await purchaseSuccessEmailUser(userEmail, newTicket);
+        for (const ownerEmail of ownersSet) {
+          await purchaseSuccessEmailOwner(ownerEmail, newTicket);
+        }
+        res.render("ticket", {
+          purchasedProducts,
+          failedProducts,
+          totalAmount,
+          email: userEmail,
+          cid,
+          code,
+          title: "Comprobante de compra || RR-ecommerce",
+          styles: "homeStyles.css",
+          date: ticket.purchase_datetime,
 
-      res.render("ticket", {
-        purchasedProducts,
-        failedProducts,
-        totalAmount,
-        email: req.session.user.email,
-        cid,
-        code,
-        title: "Comprobante de compra || RR-ecommerce",
-        styles: "homeStyles.css",
-      });
+        });
+      }
     } catch (error) {
       console.error("Error procesando la compra:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
+  
 
 
 

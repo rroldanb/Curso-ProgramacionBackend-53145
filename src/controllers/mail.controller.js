@@ -47,6 +47,7 @@ class MailController {
     }
   };
 
+
   sendDeleteProductEmail = async (req, res) => {
     const { email, product } = req.body;
     try {
@@ -71,6 +72,35 @@ class MailController {
         });
     }
   };
+  sendPurchaseSuccessEmail = async (req, res) => {
+    const { userEmail, ownerEmail, ticket, purchasedProducts } = req.body;
+    try {
+      const user = await usersManager.getUserBy({ email:userEmail });
+      if (!user) {
+        return res.status(404).send("Usuario no encontrado");
+      }
+      if  ( ownerEmail.toLowerCase() !== 'admin'){
+
+        const owner = await usersManager.getUserBy({ email:userEmail });
+      }
+      await deleteProductEmail(userEmail, ownerEmail, ticket, purchasedProducts);
+      res
+        .status(200)
+        .json({
+          message:
+            "Correo de notificación de compra de producto enviado con éxito",
+        });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({
+          error:
+            "Error al enviar el correo de notificación de compra de producto",
+        });
+    }
+  };
+
 }
 
 module.exports = { MailController };

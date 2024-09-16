@@ -40,7 +40,7 @@ class TicketsViewsController {
           if (user && user.user) {
             user = user.user;
           }
-      
+          const cid =user.cart_id
           const ticket = await this.ticketsManager.getTicketBy({ _id: tid });
       
           if (ticket && Array.isArray(ticket.purchase)) {
@@ -64,6 +64,7 @@ class TicketsViewsController {
           res.render("ticket", {
             purchasedProducts,
             totalAmount: ticket.amount,
+            cid,
             email: ticket.purchaser,
             code: ticket.code,
             title: "Comprobante de compra || RR-ecommerce",

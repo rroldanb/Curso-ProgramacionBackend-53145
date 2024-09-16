@@ -341,6 +341,7 @@ class ProductsController {
           .json({ error: `No existe un producto con id: ${pid}` });
       }
 
+      
       await this.productsService.deleteProduct(pid);
       if (product) {
         const userEmail = product.owner;

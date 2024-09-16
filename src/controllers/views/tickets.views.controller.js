@@ -18,7 +18,7 @@ class TicketsViewsController {
           res.render("ticketsHistory", {
             tickets,
             cid,
-            title: "carrito || Gago",
+            title: "carrito || RR-ecommerce",
             username: user.email,
             nombre: user.first_name,
             apellido: user.last_name,
@@ -66,7 +66,7 @@ class TicketsViewsController {
             totalAmount: ticket.amount,
             email: ticket.purchaser,
             code: ticket.code,
-            title: "Comprobante de compra || Gago",
+            title: "Comprobante de compra || RR-ecommerce",
             styles: "homeStyles.css",
             date: ticket.purchase_datetime,
           });

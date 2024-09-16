@@ -62,14 +62,14 @@ class CartsViewsController {
           apellido: user.last_name,
           admin: user.admin,
           cid,
-          title: "carrito || Gago",
+          title: "carrito || RR-ecommerce",
           products,
           styles: "homeStyles.css",
         });
       } else {
         res.render("cart", {
           cid,
-          title: "carrito || Gago",
+          title: "carrito || RR-ecommerce",
           products,
           styles: "homeStyles.css",
         });
@@ -131,7 +131,7 @@ class CartsViewsController {
         email: req.session.user.email,
         cid,
         code,
-        title: "Comprobante de compra || Gago",
+        title: "Comprobante de compra || RR-ecommerce",
         styles: "homeStyles.css",
       });
     } catch (error) {
@@ -154,7 +154,7 @@ class CartsViewsController {
       res.render("ticketsHistory", {
         tickets,
         cid,
-        title: "carrito || Gago",
+        title: "carrito || RR-ecommerce",
         username: user.email,
         nombre: user.first_name,
         apellido: user.last_name,

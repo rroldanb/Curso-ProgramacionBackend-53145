@@ -191,7 +191,7 @@ async function RenderView(req, res, urlFrom) {
     };
     const { nextLink, prevLink, firstLink, lastLink, urlBase } =
       generatePaginationLinks(pagLinksParams);
-    let title = "Mercadito || Gago";
+    let title = "Mercadito || RR-ecommerce";
     let styles = "homeStyles.css";
 
     let renderPage = "/";
@@ -202,7 +202,7 @@ async function RenderView(req, res, urlFrom) {
     if (urlFrom === "productsAdmin") {
       req.io.on("connection", async (socket) => {
         req.io.emit("Server:loadProducts", docs);
-        (title = "Edit mercadito || Gago"), (renderPage = "productsAdmin");
+        (title = "Edit mercadito || RR-ecommerce"), (renderPage = "productsAdmin");
       });
     }
 

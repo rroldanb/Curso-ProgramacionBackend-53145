@@ -129,7 +129,7 @@ class UsersViewsController {
   renderChat = async (req, res) => {
     const user = req.user;
     res.render("chat", {
-      title: "Chat mercadito || Gago",
+      title: "Chat mercadito || RR-ecommerce",
       styles: "homeStyles.css",
       user: JSON.stringify(user),
       username: user.email,

@@ -12,7 +12,7 @@ class ChatController {
             const messages = await this.chatService.find({});
             req.io.emit("server_message", { messages });
             res.render("chat", {
-              title: "Chat mercadito || Gago",
+              title: "Chat mercadito || RR-ecommerce",
               styles: "chat.css",
             });
           } catch (error) {

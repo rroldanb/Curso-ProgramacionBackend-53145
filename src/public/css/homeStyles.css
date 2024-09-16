@@ -62,9 +62,6 @@ p{
 }
 
 .hero-image {
-  background-image: url('/img/warriorRR.png');
-  background-size: cover;
-  background-position: center;
   width: 100px;
   height: 100px;
 }
